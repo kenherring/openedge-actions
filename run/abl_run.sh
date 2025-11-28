@@ -17,6 +17,7 @@ OPTIONS=()
 [ -n "${OPT_PARAMETER:-}" ] && OPTIONS+=(-param "$OPT_PARAMETER")
 
 if [[ "$OPT_PARAMETER" =~ ^CFG= ]]; then
+    ABLUNIT_JSON="${OPT_PARAMETER#CFG=}"
 
     echo "ABLUNIT_JSON=$ABLUNIT_JSON"
     echo "ABLUNIT_JSON.path=$(pwd)/$ABLUNIT_JSON"
@@ -24,9 +25,8 @@ if [[ "$OPT_PARAMETER" =~ ^CFG= ]]; then
         echo "DIR=$(dirname "$ABLUNIT_JSON")"
         ls -al "$(dirname "$ABLUNIT_JSON")"
 
-        CFG_FILE="${OPT_PARAMETER#CFG=}"
-        if [ ! -f "$CFG_FILE" ]; then
-            echo "::error file=$0::Configuration file specified in parameter does not exist: $CFG_FILE"
+        if [ ! -f "$ABLUNIT_JSON" ]; then
+            echo "::error file=$0::Configuration file specified in parameter does not exist: $ABLUNIT_JSON"
             find . -name "ablunit.json"
             exit 1
         fi
