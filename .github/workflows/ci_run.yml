@@ -26,8 +26,8 @@ jobs:
         id: debug-0
         shell: bash
         run: |
-          echo '12345
-          ABCDE
+          echo '12345 \
+          ABCDE \
           XY98R' >> "$GITHUB_OUTPUT"
 
       ## simple test
