@@ -4,5 +4,8 @@
         "github.vscode-github-actions",
         "kherring.ablunit-test-runner",
         "timonwong.shellcheck",
+        "riversidesoftware.openedge-abl-lsp",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
     ]
 }

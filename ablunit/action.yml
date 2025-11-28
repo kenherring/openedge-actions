@@ -53,7 +53,7 @@ runs:
 
     - name: set-github-path
       shell: bash
-      run: echo '${{ github.action_path }}/ablunit' >> $GITHUB_PATH
+      run: echo '${{ github.action_path }}' >> $GITHUB_PATH
 
     - id: ablunit-init
       shell: bash
