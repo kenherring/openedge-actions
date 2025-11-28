@@ -79,6 +79,6 @@ runs:
     - id: analyze-results
       shell: bash
       env:
-        ABLUNIT_JSON: ${{ inputs.ablunit-json }}
+        ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.ablunit-json }}
         DELETE_ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.created-ablunit-json }}
       run: analyze_results.sh

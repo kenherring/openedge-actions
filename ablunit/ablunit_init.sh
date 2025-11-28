@@ -3,6 +3,11 @@ set -euo pipefail
 ${ACTIONS_STEP_DEBUG:-false} && set -x
 
 rm -f results.xml
+## if ABLUNIT_JSON is not absolute, prepend pwd
+if [[ "$ABLUNIT_JSON" != /* ]]; then
+    ABLUNIT_JSON="$(pwd)/$ABLUNIT_JSON"
+fi
+echo "ablunit-json=$ABLUNIT_JSON" >> "$GITHUB_OUTPUT"
 
 if [ -f "${ABLUNIT_JSON}" ]; then
     echo "::notice file=$0::Using existing ABLUnit JSON configuration file: ${ABLUNIT_JSON}"
