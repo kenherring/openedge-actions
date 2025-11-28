@@ -53,9 +53,10 @@ runs:
       shell: bash
       run: echo '${{ github.action_path }}' >> $GITHUB_PATH
 
-    - id: setup-abl
-      name: setup-abl
-      uses: kenherring/openedge-actions/setup@${{ github.ref }}
+    - uses: actions/checkout@v5
+
+    - uses: ./setup
+      # uses: kenherring/openedge-actions/setup@${{ github.ref }}
       with:
         license: ${{ inputs.license }}
         version: ${{ inputs.version }}
