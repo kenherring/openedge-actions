@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: CI - Setup
 
 on:
   pull_request:
@@ -30,12 +30,8 @@ jobs:
         id: test-1-id
         shell: bash
         run: |
-          set -x
-          echo "DLC=$DLC"
-          ls -al "$DLC"
-          env
           command -v _progres || (echo "::error::_progres command not found!" && exit 1)
-          PROGRESS_OUTPUT=$(_progres -b -p test/test_message.p)
+          PROGRESS_OUTPUT=$(_progres -b -p setup/test/test_message.p)
           [ "$PROGRESS_OUTPUT" = 'LONG LIVE OPENEDGE' ] || (echo "::error::did not get expected output calling _progres" && exit 1)
           [ "$(awk '{print $3}' "$DLC/version")" != '' ] || (echo "::error::could not determine abl version" && exit 1)
 
@@ -82,7 +78,7 @@ jobs:
         run: |
           [ "$(awk '{print $3}' "$DLC/version")" = "12.8.1" ] || (echo "::error::could not set abl version to 12.8.1" && exit 1)
           command -v _progres
-          _progres -b -p test/test_message.p > tmp.log || true
+          _progres -b -p setup/test/test_message.p > tmp.log || true
           [ "$(cat tmp.log)" = 'Unable to read progress.cfg, reason=-6. (1732)' ] || (echo "::error::expected execution failure due to missing license" && exit 1)
 
       ## setup should use inputted DLC
