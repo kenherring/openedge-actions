@@ -63,10 +63,13 @@ runs:
         echo "ACTION_REPOSITORY=$ACTION_REPOSITORY"
         echo "ACTION_REF=$ACTION_REF"
         echo "REPOSITORY=$REPOSITORY"
-        if [ "$ACTION_REPOSITORY" = "$REPOSITORY" ]; then
+        if [ "$REPOSITORY" = "kenherring/openedge-actions" ]; then
           echo "MATCH!"
           echo "action-ref=${{ github.ref }}"
           echo "action-ref=${{ github.ref }}" >> $GITHUB_OUTPUTS
+        else
+          echo "TBD"
+          exit 1
         fi
 
         # echo "github.action_path=${{ github.action_path }}"
