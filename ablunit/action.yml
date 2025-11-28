@@ -74,7 +74,7 @@ runs:
         cache-key: ${{ inputs.cache-key }}
         propath: '$DLC/src/ablunit'
         startup-procedure: ${{ inputs.startup-procedure }}
-        parameter: "CFG=${{ inputs.ablunit-json }}"
+        parameter: "CFG=${{ steps.ablunit-init.outputs.ablunit-json }}"
 
     - id: analyze-results
       shell: bash
