@@ -50,6 +50,7 @@ runs:
   steps:
 
     - name: set-github-path
+      id: set-github-path
       shell: bash
       env:
         ACTION_REPOSITORY: ${{ github.action_repository }}
