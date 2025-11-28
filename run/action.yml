@@ -60,7 +60,7 @@ runs:
       run: |
         env | sort
 
-        # echo '${{ github.action_path }}' >> $GITHUB_PATH
+        echo '${{ github.action_path }}' >> $GITHUB_PATH
 
         echo "ACTION_REPOSITORY=$ACTION_REPOSITORY"
         echo "ACTION_REF=$ACTION_REF"
