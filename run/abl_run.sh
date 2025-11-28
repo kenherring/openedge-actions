@@ -18,5 +18,6 @@ OPTIONS=()
 
 ## Run the startup procedure
 echo "::notice file=$0::RUNNING STARTUP_PROCEDURE=$OPT_STARTUP_PROCEDURE"
+echo "::notice file=$0,title=run command::_progres ${OPTIONS[*]}"
 _progres "${OPTIONS[@]}"
 echo "::notice file=$0::COMPLETED STARTUP_PROCEDURE=$OPT_STARTUP_PROCEDURE"
