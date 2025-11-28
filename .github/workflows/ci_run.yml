@@ -35,8 +35,8 @@ jobs:
       - name: run-1
         uses: ./run
         with:
-          license: ${{ steps.debug-0.outputs.LICENSE }}
-          # license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          # license: ${{ steps.debug-0.outputs.LICENSE }}
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           startup-procedure: run/test/test_run.p
 
       ## simple test - non-latest version

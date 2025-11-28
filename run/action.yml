@@ -105,7 +105,7 @@ runs:
         uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
         # the `with` needs to be converted to a valid json string
         with: |
-          {  "license": ${{ inputs.license }},
+          {  "license": "${{ inputs.license }}",
               "version": ${{ inputs.version }},
               "dlc": ${{ inputs.dlc }},
               "download-ade-source": ${{ inputs.download-ade-source }},

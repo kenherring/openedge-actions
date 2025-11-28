@@ -14,7 +14,7 @@ create-license-file () {
     else
         echo "::notice file=$0::Saved license to $DLC/progress.cfg"
         echo "LICENSE_FILE='$LICENSE_FILE'"
-        echo "$LICENSE_FILE" | tr -d '\n' ' ' | base64 -d > "$DLC/progress.cfg"
+        echo "$LICENSE_FILE" | base64 -d > "$DLC/progress.cfg"
     fi
 }
 
