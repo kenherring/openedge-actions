@@ -58,7 +58,7 @@ runs:
       run: |
         env | sort
 
-        echo '${{ github.action_path }}' >> $GITHUB_PATH
+        # echo '${{ github.action_path }}' >> $GITHUB_PATH
 
         echo "ACTION_REPOSITORY=$ACTION_REPOSITORY"
         echo "ACTION_REF=$ACTION_REF"
@@ -71,6 +71,7 @@ runs:
           echo "TBD"
           exit 1
         fi
+        echo "set-github-path successful!"
 
         # echo "github.action_path=${{ github.action_path }}"
         # ls -al "${{ github.action_path }}"
