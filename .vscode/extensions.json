@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "davidanson.vscode-markdownlint",
+        "github.vscode-github-actions",
+        "kherring.ablunit-test-runner",
+        "timonwong.shellcheck",
+    ]
+}

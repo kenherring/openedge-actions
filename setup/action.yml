@@ -1,0 +1,98 @@
+name: actions-setup-abl
+description: Execute an OpenEdge procedure within a Docker container
+author: kenherring
+
+inputs:
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  download-ade-source:
+    description: Download progress/ADE and add it to the propath when 'true' (all other values evaluates to false)
+    required: false
+    default: 'false'
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+    default: '0.0'
+
+outputs:
+  skipped:
+    description: A boolean value to indicate the ABL installation with matching version was already present at DLC
+    value: ${{ steps.setup-abl.outputs.skipped }}
+  cache-hit:
+    description: A boolean value to indicate if a cache was hit
+    value: ${{ steps.cache-abl-restore.outputs.cache-hit }}
+  cache-saved:
+    description: A boolean value to indicate if the cache was saved
+    value: ${{ steps.check-abl-license-before-cache-save.outputs.cache-saved }}
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      shell: bash
+      run: echo '${{ github.action_path }}/setup' >> $GITHUB_PATH
+
+    - name: setup-abl-init
+      id: setup-abl-init
+      shell: bash
+      env:
+        DLC: ${{ inputs.dlc }}
+        CACHE_KEY: ${{ inputs.cache-key }}
+        CACHE_TOKEN: ${{ inputs.cache-token || '0.0' }}
+        INPUTS_DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
+        INPUTS_VERSION: ${{ inputs.version }}
+        RUNNER_OS: ${{ runner.os }}
+      run: setup-abl-init.sh
+
+    - name: cache-abl-restore
+      id: cache-abl-restore
+      if: ${{ steps.setup-abl-init.outputs.cache-key != 'null' }}
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ steps.setup-abl-init.outputs.dlc }}
+        key: ${{ steps.setup-abl-init.outputs.cache-key }}
+
+    - name: setup-abl
+      id: setup-abl
+      shell: bash
+      if: ${{ steps.cache-abl-restore.outputs.cache-hit != 'true' }}
+      env:
+        ABL_VERSION: ${{ inputs.version }}
+        DLC: ${{ steps.setup-abl-init.outputs.dlc }}
+        DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
+      run: setup-abl.sh
+
+    - name: check-abl-license-before-cache-save
+      id: check-abl-license-before-cache-save
+      if: ${{ steps.cache-abl-restore.outputs.cache-hit != 'true' && steps.setup-abl-init.outputs.cache-key != 'null' }}
+      shell: bash
+      run: |
+        echo "cache-saved=true" >> "$GITHUB_OUTPUT"
+        [ ! -f "$DLC/progress.cfg" ] || [ ! -s "$DLC/progress.cfg" ] || (echo "::warning::progress.cfg exists and is not empty, deleting before cache save!" && ls -al "$DLC/progress.cfg" && rm "$DLC/progress.cfg")
+
+    - name: cache-abl-save
+      if: ${{ steps.cache-abl-restore.outputs.cache-hit != 'true' && steps.setup-abl-init.outputs.cache-key != 'null' }}
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ steps.setup-abl-init.outputs.dlc }}
+        key: ${{ steps.cache-abl-restore.outputs.cache-primary-key }}
+
+    ## runs after saving the cache so that the license file does not get saved in the cache
+    - name: setup-abl-env
+      shell: bash
+      env:
+        DLC: ${{ steps.setup-abl-init.outputs.dlc }}
+        LICENSE_FILE: ${{ inputs.license }}
+      run: setup-abl-env.sh
