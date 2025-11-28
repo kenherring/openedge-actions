@@ -51,55 +51,68 @@ runs:
 
     - name: set-github-path
       shell: bash
+      env:
+        ACTION_REPOSITORY: ${{ github.action_repository }}
+        ACTION_REF: ${{ github.action_ref }}
+        REPOSITORY: ${{ github.repository }}
       run: |
         env | sort
 
-        echo "github.action_path=${{ github.action_path }}"
-        ls -al "${{ github.action_path }}"
-        DIR_1="$(dirname "${{github.action_path}}")"
-        echo "DIR_1=$DIR_1"
-        cd "$DIR_1"
-        ls -al
+        echo '${{ github.action_path }}' >> $GITHUB_PATH
 
-        ## only when called from another repo
-        echo "github.ref=${{ github.ref }}"
-        echo "github.repo=${{ github.repo }}"
-
-        if [ "${{ github.repo }}" == "kenherring/openedge-actions" ]; then
+        echo "ACTION_REPOSITORY=$ACTION_REPOSITORY"
+        echo "ACTION_REF=$ACTION_REF"
+        echo "REPOSITORY=$REPOSITORY"
+        if [ "$ACTION_REPOSITORY" = "$REPOSITORY" ]; then
+          echo "MATCH!"
           echo "action-ref=${{ github.ref }}"
           echo "action-ref=${{ github.ref }}" >> $GITHUB_OUTPUTS
-        else
-          echo "action-ref=$(basename "$DIR_1")
-          echo "action-ref=$(basename "$DIR_1")" >> $GITHUB_OUTPUTS
         fi
 
-        echo '${{ github.action_path }}' >> $GITHUB_PATH
-        echo "$(dirname '${{ github.action_path }}')" >> $GITHUB_PATH
+        # echo "github.action_path=${{ github.action_path }}"
+        # ls -al "${{ github.action_path }}"
+        # DIR_1="$(dirname "${{github.action_path}}")"
+        # echo "DIR_1=$DIR_1"
+        # cd "$DIR_1"
+        # ls -al
+
+        # ## only when called from another repo
+        # echo "github.ref=${{ github.ref }}"
+        # echo "github.repo=${{ github.repo }}"
+
+        # if [ "${{ github.repo }}" == "kenherring/openedge-actions" ]; then
+        #   echo "action-ref=${{ github.ref }}"
+        #   echo "action-ref=${{ github.ref }}" >> $GITHUB_OUTPUTS
+        # else
+        #   echo "action-ref=$(basename "$DIR_1")
+        #   echo "action-ref=$(basename "$DIR_1")" >> $GITHUB_OUTPUTS
+        # fi
 
 
-    # - uses: jenseng/dynamic-uses@v1
-    #   with:
-    #     # now you can use expressions 🥳
-    #     uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
-    #     # the `with` needs to be converted to a valid json string
-    #     with: |
-    #       '{  "license": "${{ inputs.license }}",
-    #           "version": "${{ inputs.version }}",
-    #           "dlc": "${{ inputs.dlc }}",
-    #           "download-ade-source": "${{ inputs.download-ade-source }}",
-    #           "cache-key": "${{ inputs.cache-key }}",
-    #           "cache-token": "${{ inputs.cache-token }}"
-    #       }'
 
-    - uses: ./setup
-      # uses: kenherring/openedge-actions/setup@${{ github.ref }}
+    - uses: jenseng/dynamic-uses@v1
       with:
-        license: ${{ inputs.license }}
-        version: ${{ inputs.version }}
-        dlc: ${{ inputs.dlc }}
-        download-ade-source: ${{ inputs.download-ade-source }}
-        cache-key: ${{ inputs.cache-key }}
-        cache-token: ${{ inputs.cache-token }}
+        # now you can use expressions 🥳
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        # the `with` needs to be converted to a valid json string
+        with: |
+          '{  "license": "${{ inputs.license }}",
+              "version": "${{ inputs.version }}",
+              "dlc": "${{ inputs.dlc }}",
+              "download-ade-source": "${{ inputs.download-ade-source }}",
+              "cache-key": "${{ inputs.cache-key }}",
+              "cache-token": "${{ inputs.cache-token }}"
+          }'
+
+    # - uses: ./setup
+    #   # uses: kenherring/openedge-actions/setup@${{ github.ref }}
+    #   with:
+    #     license: ${{ inputs.license }}
+    #     version: ${{ inputs.version }}
+    #     dlc: ${{ inputs.dlc }}
+    #     download-ade-source: ${{ inputs.download-ade-source }}
+    #     cache-key: ${{ inputs.cache-key }}
+    #     cache-token: ${{ inputs.cache-token }}
 
     - id: run-abl
       name: run-abl
