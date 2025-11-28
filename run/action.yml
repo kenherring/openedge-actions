@@ -65,13 +65,16 @@ runs:
         echo "REPOSITORY=$REPOSITORY"
         if [ "$REPOSITORY" = "kenherring/openedge-actions" ]; then
           echo "MATCH!"
+          echo 100
           echo "action-ref=${{ github.sha }}"
-          echo "action-ref=${{ github.sha }}" >> $GITHUB_OUTPUTS
+          echo 101
+          echo "action-ref=${{ github.sha }}" >> "$GITHUB_OUTPUTS"
+          echo 102
         else
-          echo "TBD"
-          exit 1
+          echo 110
         fi
-        echo "set-github-path successful!"
+        echo 120
+        echo "set-github-path successful"
 
         # echo "github.action_path=${{ github.action_path }}"
         # ls -al "${{ github.action_path }}"
