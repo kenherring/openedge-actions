@@ -74,30 +74,13 @@ runs:
           echo 102
         else
           echo 110
+          echo "action-ref=$ACTION_REF"
+          echo 111
+          echo "action-ref=$ACTION_REF" >> "$GITHUB_OUTPUT"
+          echo 112
         fi
         echo 120
         echo "set-github-path successful"
-
-        # echo "github.action_path=${{ github.action_path }}"
-        # ls -al "${{ github.action_path }}"
-        # DIR_1="$(dirname "${{github.action_path}}")"
-        # echo "DIR_1=$DIR_1"
-        # cd "$DIR_1"
-        # ls -al
-
-        # ## only when called from another repo
-        # echo "github.ref=${{ github.ref }}"
-        # echo "github.repo=${{ github.repo }}"
-
-        # if [ "${{ github.repo }}" == "kenherring/openedge-actions" ]; then
-        #   echo "action-ref=${{ github.ref }}"
-        #   echo "action-ref=${{ github.ref }}" >> $GITHUB_OUTPUTS
-        # else
-        #   echo "action-ref=$(basename "$DIR_1")
-        #   echo "action-ref=$(basename "$DIR_1")" >> $GITHUB_OUTPUTS
-        # fi
-
-
 
     - uses: jenseng/dynamic-uses@v1
       with:
