@@ -63,9 +63,9 @@ runs:
 
         ## only when called from another repo
         echo "github.ref=${{ github.ref }}"
-        echo "repo=${{ repo }}"
+        echo "github.repo=${{ github.repo }}"
 
-        if [ "${{ repo }}" == "kenherring/openedge-actions" ]; then
+        if [ "${{ github.repo }}" == "kenherring/openedge-actions" ]; then
           echo "action-ref=${{ github.ref }}"
           echo "action-ref=${{ github.ref }}" >> $GITHUB_OUTPUTS
         else
