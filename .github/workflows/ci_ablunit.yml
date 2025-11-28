@@ -1,0 +1,57 @@
+name: CI - ABLUnit
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-action:
+    name: test-action/ablunit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v5
+
+      ## ablunit.json provided
+      - name: ablunit-1
+        id: ablunit-1
+        uses: ./ablunit
+        continue-on-error: true
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          ablunit-json: ablunit/test/test1/ablunit.json
+      - name: test-1
+        shell: bash
+        run: |
+          [ "${{ steps.ablunit-1.outputs.test-count }}" -eq 4 ] || (echo "expected test-count=4, got ${{ steps.ablunit-1.outputs.test-count }}" && exit 1)
+          [ "${{ steps.ablunit-1.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-1.outputs.error-count }}" && exit 1)
+          [ "${{ steps.ablunit-1.outputs.failure-count }}" -eq 2 ] || (echo "expected failure-count=2, got ${{ steps.ablunit-1.outputs.failure-count }}" && exit 1)
+
+      ## generate ablunit.json
+      - name: ablunit-2
+        id: ablunit-2
+        uses: ./ablunit
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          test-file-pattern: 'ablunit/*/test2/*.cls,ablunit/*/test2/*.p'
+      - name: test-2
+        shell: bash
+        run: |
+          [ "${{ steps.ablunit-2.outputs.test-count }}" -eq 3 ] || (echo "expected test-count=3, got ${{ steps.ablunit-2.outputs.test-count }}" && exit 1)
+          [ "${{ steps.ablunit-2.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-2.outputs.error-count }}" && exit 1)
+          [ "${{ steps.ablunit-2.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-2.outputs.failure-count }}" && exit 1)
+          [ "${{ steps.ablunit-2.outputs.skipped-count }}" -eq 1 ] || (echo "expected skipped-count=1, got ${{ steps.ablunit-2.outputs.skipped-count }}" && exit 1)
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh ablunit

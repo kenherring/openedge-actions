@@ -1,0 +1,8 @@
+*.bk
+*.cfg
+*.tar.gz
+/ablunit.json
+ADE-*/
+DEV_NOTES.md
+results.json
+results.xml

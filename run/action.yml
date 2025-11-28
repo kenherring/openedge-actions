@@ -1,0 +1,76 @@
+name: openedge-actions/run
+description: Execute an OpenEdge source program
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  download-ade-source:
+    description: Download progress/ADE and add it to the propath when 'true' (all other values evaluates to false)
+    required: false
+    default: 'false'
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  propath:
+    description: Initial propath, set via PROPATH environment variable
+    required: false
+    default: .
+  ##### startup parameters #####
+  batch-mode:
+    description: Startup parameter -b
+    required: false
+    default: 'true'
+  startup-procedure:
+    description: Startup parameter -p
+    required: true
+  temp-directory:
+    description: Startup parameter -T
+    required: false
+    default: /tmp
+  parameter:
+    description: Startup parameter -param
+    required: false
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      shell: bash
+      run: echo '${{ github.action_path }}' >> $GITHUB_PATH
+
+    - id: setup-abl
+      name: setup-abl
+      uses: ./setup
+      with:
+        license: ${{ inputs.license }}
+        version: ${{ inputs.version }}
+        dlc: ${{ inputs.dlc }}
+        download-ade-source: ${{ inputs.download-ade-source }}
+        cache-key: ${{ inputs.cache-key }}
+        cache-token: ${{ inputs.cache-token }}
+
+    - id: run-abl
+      name: run-abl
+      shell: bash
+      env:
+        OPT_PROPATH: ${{ inputs.propath }}
+        OPT_BATCH_MODE: ${{ inputs.batch-mode }}
+        OPT_PARAMETER: ${{ inputs.parameter }}
+        OPT_STARTUP_PROCEDURE: ${{ inputs.startup-procedure }}
+        OPT_TEMP_DIRECTORY: ${{ inputs.temp-directory }}
+      run: abl_run.sh

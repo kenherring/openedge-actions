@@ -1,0 +1,51 @@
+name: CI - Run
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-action:
+    name: test-action/run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v5
+
+      ## simple test
+      - name: run-1
+        uses: ./run
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          startup-procedure: run/test/test_run.p
+
+      ## simple test - non-latest version
+      - name: run-2
+        uses: ./run
+        with:
+          version: 12.8.1
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          startup-procedure: run/test/test_run.p
+
+      ## set propath
+      - name: run-3
+        uses: ./run
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          download-ade-source: true
+          startup-procedure: run/test/search_ablunitcore.p
+          propath: '$DLC/src/ablunit'
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh run
