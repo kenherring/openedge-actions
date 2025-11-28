@@ -16,9 +16,6 @@ OPTIONS=()
 [ -n "${OPT_STARTUP_PROCEDURE:-}" ] && OPTIONS+=(-p "$OPT_STARTUP_PROCEDURE")
 [ -n "${OPT_PARAMETER:-}" ] && OPTIONS+=(-param "$OPT_PARAMETER")
 
-echo "DLC=$DLC" ## remove me
-ls -al "$DLC/progress.cfg" ## remove me
-
 ## Run the startup procedure
 echo "::notice file=$0::RUNNING STARTUP_PROCEDURE=$OPT_STARTUP_PROCEDURE"
 _progres "${OPTIONS[@]}"

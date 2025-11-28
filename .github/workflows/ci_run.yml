@@ -48,4 +48,4 @@ jobs:
 
       - name: pre-merge-validation
         shell: bash
-        run: ./.github/workflows/pre_merge_validation.sh
+        run: ./.github/workflows/pre_merge_validation.sh run
