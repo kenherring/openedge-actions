@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 ${ACTIONS_STEP_DEBUG:-false} && set -x
-set -x
 
 rm -f results.xml
 ## if ABLUNIT_JSON is not absolute, prepend pwd
