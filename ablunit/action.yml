@@ -62,8 +62,6 @@ runs:
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
       run: ablunit_init.sh
 
-    - uses: actions/checkout@v5
-
     - uses: ./run
       # uses: kenherring/openedge-actions/run@${{ github.ref }}
       with:
