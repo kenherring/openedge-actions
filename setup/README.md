@@ -17,6 +17,10 @@ jobs:
           version: 12.8.9
 ```
 
+## Usage
+
+* `runs-on` must be a Linux runner with docker support
+
 ## Inputs
 
 | Input          | Required | Default | Description                     |

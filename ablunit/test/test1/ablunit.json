@@ -1,0 +1,19 @@
+{
+    "options": {
+        "output": {
+            "filename": "results",
+            "format": "xml"
+        },
+        "quitOnEnd": true,
+        "showErrorMessage": true,
+        "throwError": true
+    },
+    "tests": [
+        {
+            "test": "ablunit/test/test1/test_class.cls"
+        },
+        {
+            "test": "ablunit/test/test1/test_program.p"
+        }
+    ]
+}
