@@ -39,5 +39,7 @@ jq -n --argjson tests "$TESTS_ARRAY" '{
     "tests": $tests
 }' > "$ABLUNIT_JSON"
 
+echo "DIR=$(dirname "$ABLUNIT_JSON")"
+ls -al "$(dirname "$ABLUNIT_JSON")"
 echo "::notice file=$0::Wrote configuration to $ABLUNIT_JSON"
 echo "created-ablunit-json=true" >> "$GITHUB_OUTPUT"
