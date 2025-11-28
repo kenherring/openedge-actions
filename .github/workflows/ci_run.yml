@@ -26,9 +26,9 @@ jobs:
         id: debug-0
         shell: bash
         run: |
-          echo '12345 \
-          ABCDE \
-          XY98R' >> "$GITHUB_OUTPUT"
+          LICENSE="$(echo '12345 ABCDE XY98R' | tr ' ' '\n')"
+          echo "LICENSE=$LICENSE"
+          echo "LICENSE=$LICENSE" >> "$GITHUB_OUTPUT"
 
       ## simple test
       - name: run-1
