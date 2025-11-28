@@ -57,14 +57,11 @@ runs:
         DIR_1="$(dirname "${{github.action_path}}")"
         echo "DIR_1=$DIR_1"
         ls -al "$DIR_1"
-        DIR_2="$(dirname "$DIR_1")"
-        echo "DIR_2=$DIR_2"
-        ls -al "$DIR_2"
 
         echo '${{ github.action_path }}' >> $GITHUB_PATH
         echo "$(dirname '${{ github.action_path }}')" >> $GITHUB_PATH
 
-    - uses: ./setup
+    - uses: setup
       # uses: kenherring/openedge-actions/setup@${{ github.ref }}
       with:
         license: ${{ inputs.license }}
