@@ -65,8 +65,8 @@ runs:
         echo "REPOSITORY=$REPOSITORY"
         if [ "$REPOSITORY" = "kenherring/openedge-actions" ]; then
           echo "MATCH!"
-          echo "action-ref=${{ github.ref }}"
-          echo "action-ref=${{ github.ref }}" >> $GITHUB_OUTPUTS
+          echo "action-ref=${{ github.sha }}"
+          echo "action-ref=${{ github.sha }}" >> $GITHUB_OUTPUTS
         else
           echo "TBD"
           exit 1
