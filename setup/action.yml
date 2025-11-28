@@ -42,7 +42,7 @@ runs:
 
     - name: set-github-path
       shell: bash
-      run: echo '${{ github.action_path }}/setup' >> $GITHUB_PATH
+      run: echo '${{ github.action_path }}' >> $GITHUB_PATH
 
     - name: setup-abl-init
       id: setup-abl-init
@@ -54,7 +54,7 @@ runs:
         INPUTS_DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
         INPUTS_VERSION: ${{ inputs.version }}
         RUNNER_OS: ${{ runner.os }}
-      run: setup-abl-init.sh
+      run: setup/setup-abl-init.sh
 
     - name: cache-abl-restore
       id: cache-abl-restore
@@ -72,7 +72,7 @@ runs:
         ABL_VERSION: ${{ inputs.version }}
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
         DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
-      run: setup-abl.sh
+      run: setup/setup-abl.sh
 
     - name: check-abl-license-before-cache-save
       id: check-abl-license-before-cache-save
@@ -95,4 +95,4 @@ runs:
       env:
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
         LICENSE_FILE: ${{ inputs.license }}
-      run: setup-abl-env.sh
+      run: setup/setup-abl-env.sh
