@@ -26,9 +26,14 @@ jobs:
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           cache-key: 'null'
-      - name: test-1
+      - name: test-1-name
+        id: test-1-id
         shell: bash
         run: |
+          set -x
+          echo "DLC=$DLC"
+          ls -al "$DLC"
+          env
           command -v _progres || (echo "::error::_progres command not found!" && exit 1)
           PROGRESS_OUTPUT=$(_progres -b -p test/test_message.p)
           [ "$PROGRESS_OUTPUT" = 'LONG LIVE OPENEDGE' ] || (echo "::error::did not get expected output calling _progres" && exit 1)
