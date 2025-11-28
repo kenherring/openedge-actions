@@ -54,6 +54,7 @@ runs:
       env:
         ACTION_REPOSITORY: ${{ github.action_repository }}
         ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
         REPOSITORY: ${{ github.repository }}
       run: |
         env | sort
@@ -66,9 +67,9 @@ runs:
         if [ "$REPOSITORY" = "kenherring/openedge-actions" ]; then
           echo "MATCH!"
           echo 100
-          echo "action-ref=${{ github.sha }}"
+          echo "action-ref=$GITHUB_SHA"
           echo 101
-          echo "action-ref=${{ github.sha }}" >> "$GITHUB_OUTPUTS"
+          echo "action-ref=$GITHUB_SHA" >> "$GITHUB_OUTPUTS"
           echo 102
         else
           echo 110
