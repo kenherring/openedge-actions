@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test-action:
-    name: GitHub Actions Test
+    name: test-action/run
     runs-on: ubuntu-latest
 
     steps:

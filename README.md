@@ -170,10 +170,10 @@ If your runner already has a license file available you can provide that path in
   * `kenherring/openedeg-actions/sonarqube`
 * kenherring/openedge-actions-samples - repo with sample projects
   * setup -> compile
-  * setup -> ant compile
+  * setup -> ant compile (and other ANT tasks)
   * run
   * ablunit
+  * ablunit - run tests against multiple OE versions with `matrix`
   * setup -> create database -> ablunit
   * setup -> create-database -> start-database -> run
-  *
 -->
