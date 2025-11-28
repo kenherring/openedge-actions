@@ -1,0 +1,15 @@
+name: openedge-actions
+description: openedge-actions root action - setup OpenEdge with default values
+author: kenherring
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      shell: bash
+      run: echo '${{ github.action_path }}' >> $GITHUB_PATH
+
+    - id: setup-abl
+      name: setup-abl
+      uses: kenherring/openedge-actions/setup

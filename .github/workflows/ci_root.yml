@@ -1,0 +1,30 @@
+name: CI - Root
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-action:
+    name: test-action/root
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      ## setup latest version
+      - name: root-1
+        uses: ./
+      - name: test-1
+        shell: bash
+        run: |
+          command -v _progres || (echo "::error::_progres command not found!" && exit 1)
+          [ "$(awk '{print $3}' "$DLC/version")" != '' ] || (echo "::error::could not determine abl version" && exit 1)
