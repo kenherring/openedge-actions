@@ -62,7 +62,7 @@ runs:
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
       run: ablunit_init.sh
 
-    - uses: kenherring/openedge-actions/run@ecec1d6253ac7fd91e0d54de40347f9b51d94f65
+    - uses: ./run
       with:
         license: ${{ inputs.license }}
         version: ${{ inputs.version }}
