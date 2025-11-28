@@ -27,7 +27,7 @@ jobs:
         uses: ./run
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          startup-procedure: test/test_run.p
+          startup-procedure: run/test/test_run.p
 
       ## simple test - non-latest version
       - name: run-2
@@ -35,7 +35,7 @@ jobs:
         with:
           version: 12.8.1
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          startup-procedure: test/test_run.p
+          startup-procedure: run/test/test_run.p
 
       ## set propath
       - name: run-3
@@ -43,7 +43,7 @@ jobs:
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           download-ade-source: true
-          startup-procedure: test/search_ablunitcore.p
+          startup-procedure: run/test/search_ablunitcore.p
           propath: '$DLC/src/ablunit'
 
       - name: pre-merge-validation
