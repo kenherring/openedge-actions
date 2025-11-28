@@ -22,11 +22,20 @@ jobs:
         id: checkout
         uses: actions/checkout@v5
 
+      - name: debug-0
+        id: debug-0
+        shell: bash
+        run: |
+          echo '12345
+          ABCDE
+          XY98R' >> "$GITHUB_OUTPUT"
+
       ## simple test
       - name: run-1
         uses: ./run
         with:
-          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          license: ${{ steps.debug-0.outputs.LICENSE }}
+          # license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           startup-procedure: run/test/test_run.p
 
       ## simple test - non-latest version
