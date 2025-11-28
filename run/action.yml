@@ -69,7 +69,7 @@ runs:
           echo 100
           echo "action-ref=$GITHUB_SHA"
           echo 101
-          echo "action-ref=$GITHUB_SHA" >> "$GITHUB_OUTPUTS"
+          echo "action-ref=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
           echo 102
         else
           echo 110
