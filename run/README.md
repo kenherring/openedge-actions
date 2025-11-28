@@ -1,20 +1,23 @@
-# kenherring/openedge-actions/setup
+# kenherring/openedge-actions/run
 
-![CI](https://github.com/kenherring/opendge-actions/actions/workflows/ci_setup.yml/badge.svg)
+![CI](https://github.com/kenherring/opendge-actions/actions/workflows/ci_run.yml/badge.svg)
 
-GitHub Action to setup and cache OpenEdge ABL version and adds `$DLC/bin` to the `PATH`.
+GitHub Action that executes an OpenEdge procedure
 
 ## Sample
 
 ```yml
 jobs:
   my-job:
+    name: run openedge procedure
     runs-on: ubuntu-latest
     steps:
-      - uses: kenherring/openedge-actions/setup@v0
+      - name: Run ABL Procedure
+        id: run-procedure
+        uses: kenherring/openedge-actions/run@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          version: 12.8.9
+          startup-procedure: "src/my-procedure.p"
 ```
 
 ## Inputs
@@ -27,11 +30,8 @@ jobs:
 | `download-ade-source` | false | `false` | Download progress/ADE and add it to the propath when 'true' (all other values evaluates to false) |
 | `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
-
-## Outputs
-
-| Output | Description |
-| ------ | ----------- |
-| `skipped` | A boolean value to indicate the ABL installation with matching version was already present at DLC |
-| `cache-hit` | A boolean value to indicate if a cache was hit |
-| `cache-saved` | description: A boolean value to indicate if the cache was saved |
+| `propath` | false | `.` | Initial propath, set via PROPATH environment variable |
+| `batch-mode` | false | `true` | Startup parameter -b |
+| `startup-procedure` | true | | Startup parameter -p |
+| `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
+| `parameter` | false | | Startup parameter -param |

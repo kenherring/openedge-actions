@@ -1,5 +1,5 @@
-name: actions-setup-abl
-description: Execute an OpenEdge procedure within a Docker container
+name: openedge-actions/setup
+description: Install and configure openedge
 author: kenherring
 
 inputs:

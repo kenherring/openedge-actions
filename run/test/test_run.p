@@ -1,0 +1,1 @@
+message "LONG LIVE OPENEDGE".
