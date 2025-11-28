@@ -31,7 +31,7 @@ echo "SKIPPED_COUNT=$SKIPPED_COUNT"
     echo "failure-count=$FAILURE_COUNT"
     echo "error-count=$ERROR_COUNT"
     echo "skipped-count=$SKIPPED_COUNT"
-} > "$GITHUB_OUTPUT"
+} >> "$GITHUB_OUTPUT"
 
 if [ "$TEST_COUNT" -eq 0 ]; then
     echo "::error file=$0::No tests executed, check your configuration..."

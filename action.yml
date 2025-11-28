@@ -12,4 +12,4 @@ runs:
 
     - id: setup-abl
       name: setup-abl
-      uses: kenherring/openedge-actions/setup
+      uses: ./setup

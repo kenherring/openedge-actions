@@ -12,7 +12,7 @@ if [ -z "${TEST_FILE_PATTERN:-}" ]; then
     TEST_FILE_PATTERN='**/*.cls,**/*.p'
 fi
 
-echo "::notice file=create_ablunit_json.sh::Creating $ABLUNIT_JSON configuration..."
+echo "::notice file=$0::Creating $ABLUNIT_JSON configuration..."
 
 IFS=" " read -r -a TEST_FILE_PATTERNS <<< "$(echo "$TEST_FILE_PATTERN" | tr ',' ' ')"
 echo "processing ${#TEST_FILE_PATTERNS[@]} test file patterns..."
@@ -33,4 +33,4 @@ jq -n --argjson tests "$TESTS_ARRAY" '{
     "tests": $tests
 }' > "$ABLUNIT_JSON"
 
-echo "created-ablunit-json=true" > "$GITHUB_OUTPUT"
+echo "created-ablunit-json=true" >> "$GITHUB_OUTPUT"
