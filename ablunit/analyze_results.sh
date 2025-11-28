@@ -43,7 +43,6 @@ if [ "$FAILURE_COUNT" -gt 0 ] || [ "$ERROR_COUNT" -gt 0 ]; then
     exit 1
 fi
 
-echo "ABLUNIT_JSON=$ABLUNIT_JSON" ## REMOVE ME
 if [ "${DELETE_ABLUNIT_JSON:-false}" = 'true' ] && [ -f "$ABLUNIT_JSON" ]; then
     rm "$ABLUNIT_JSON"
 fi

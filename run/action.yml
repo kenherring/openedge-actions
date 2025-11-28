@@ -51,7 +51,10 @@ runs:
 
     - name: set-github-path
       shell: bash
-      run: echo '${{ github.action_path }}' >> $GITHUB_PATH
+      run: |
+        set -x
+        echo '${{ github.action_path }}' >> $GITHUB_PATH
+        echo "$(dirname '${{ github.action_path }}')" >> $GITHUB_PATH
 
     - uses: actions/checkout@v5
 
