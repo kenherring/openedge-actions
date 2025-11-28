@@ -1,7 +1,7 @@
 block-level on error undo, throw.
 using OpenEdge.Core.Assert.
 
-class test.test2.test_class:
+class ablunit.test.test2.test_class:
     @Test.
     method public void methodName_pass () :
         Assert:Equals(1, 1).
