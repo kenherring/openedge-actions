@@ -53,10 +53,8 @@ runs:
       id: set-github-path
       shell: bash
       env:
-        ACTION_REPOSITORY: ${{ github.action_repository }}
         ACTION_REF: ${{ github.action_ref }}
         GITHUB_SHA: ${{ github.sha }}
-        REPOSITORY: ${{ github.repository }}
       run: |
         echo '${{ github.action_path }}' >> $GITHUB_PATH
         echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"

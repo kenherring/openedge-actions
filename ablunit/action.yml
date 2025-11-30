@@ -52,8 +52,14 @@ runs:
   steps:
 
     - name: set-github-path
+      id: set-github-path
       shell: bash
-      run: echo '${{ github.action_path }}' >> $GITHUB_PATH
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> $GITHUB_PATH
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
     - id: ablunit-init
       shell: bash
