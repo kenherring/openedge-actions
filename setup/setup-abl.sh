@@ -51,26 +51,6 @@ copy-dlc-from-container () {
     docker rm setup_abl >/dev/null
 }
 
-download-ade-source () {
-    [ "$DOWNLOAD_ADE_SOURCE" = 'true' ] || return 0
-    local ADE_VERSION TEMP TAR_BASENAME TAR_PATH
-    echo "::notice file=$0::Downloading progress/ADE source to $DLC/src"
-
-    ADE_VERSION="$(awk '{print $3}' "$DLC/version")"
-    [ "$(awk -F '.' '{print $3}' <<< "$ADE_VERSION")" = '' ] && ADE_VERSION="${ADE_VERSION}.0"
-    [ "$(awk -F '.' '{print $4}' <<< "$ADE_VERSION")" = '' ] && ADE_VERSION="${ADE_VERSION}.0"
-
-    TEMP=$RUNNER_TEMP
-    TAR_BASENAME="v${ADE_VERSION}.tar.gz"
-    TAR_PATH="$TEMP/$TAR_BASENAME"
-
-    if [ ! -f "$TAR_PATH" ]; then
-        curl -L -o "$TAR_PATH" "https://github.com/progress/ADE/archive/refs/tags/$TAR_BASENAME"
-    fi
-    tar --strip-components=1 -xzf "$TAR_PATH" -C "$DLC/src"
-    rm "$TAR_PATH"
-}
-
 create-configuration () {
     [ -n "$JAVA_HOME" ] || JAVA_HOME="$(which java)"
     echo "JAVA_HOME=$JAVA_HOME" > "$DLC/properties/java.properties"
@@ -108,6 +88,5 @@ create-configuration () {
 ########## MAIN BLOCK ##########
 initialize
 copy-dlc-from-container
-download-ade-source
 create-configuration
 echo "::notice file=$0,title=SETUP ABL SUCCESSFUL::OpenEdge $ABL_VERSION setup at DLC=$DLC successfully"

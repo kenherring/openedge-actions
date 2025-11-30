@@ -72,15 +72,15 @@ runs:
       with:
         uses: kenherring/openedge-actions/run@${{ steps.set-github-path.outputs.action-ref }}
         with: |
-          {  "license": "${{ inputs.license }}",
-              "version": ${{ inputs.version }},
-              "dlc": ${{ inputs.dlc }},
-              "download-ade-source": true,
-              "cache-key": ${{ inputs.cache-key }},
-              "cache-token": ${{ inputs.cache-token }},
-              "propath": ${{ inputs.propath }},
-              "startup-procedure": ${{ inputs.startup-procedure }},
-              "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }}
+          { "license": "${{ inputs.license }}",
+            "version": ${{ inputs.version }},
+            "dlc": ${{ inputs.dlc }},
+            "download-ade-source": true,
+            "cache-key": ${{ inputs.cache-key }},
+            "cache-token": ${{ inputs.cache-token }},
+            "propath": ${{ inputs.propath }},
+            "startup-procedure": ${{ inputs.startup-procedure }},
+            "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }}
           }
 
     ## need to use dynamic uses above because actions local to the first action called don't work
