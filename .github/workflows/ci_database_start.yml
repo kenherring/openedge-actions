@@ -59,4 +59,4 @@ jobs:
 
       - name: pre-merge-validation
         shell: bash
-        run: ./.github/workflows/pre_merge_validation.sh start-database
+        run: ./.github/workflows/pre_merge_validation.sh database-start
