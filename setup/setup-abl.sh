@@ -39,6 +39,7 @@ check-existing-dlc () {
 }
 
 copy-dlc-from-container () {
+    check-existing-dlc && return 0
     echo "::notice file=$0::Copying DLC contents from container"
     ## copy DLC from docker container
     docker run --name setup_abl "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" bash -c 'exit 0'
@@ -47,7 +48,6 @@ copy-dlc-from-container () {
 }
 
 create-configuration () {
-    check-existing-dlc && return 0
     [ -n "$JAVA_HOME" ] || JAVA_HOME="$(which java)"
     echo "JAVA_HOME=$JAVA_HOME" > "$DLC/properties/java.properties"
 
