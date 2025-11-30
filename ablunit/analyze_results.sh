@@ -8,7 +8,7 @@ if [ ! -f results.xml ]; then
 fi
 
 if ! command -v xq &>/dev/null; then
-    echp "::group::xq command not found, installing..."
+    echo "::group::xq command not found, installing..."
     sudo apt install xq
     echo "::endgroup::"
 fi
