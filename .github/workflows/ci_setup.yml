@@ -109,6 +109,7 @@ jobs:
       - name: test-6
         shell: bash
         run: |
+          echo "DLC=$DLC"
           ls -al "$DLC/src"
           ls -al "$DLC/src/ablunit"
           [ -f "$DLC/src/ablunit/ABLUnitCore.p" ] || (echo "::error::expected file $DLC/src/ablunit/ABLUnitCore.p to exist" && exit 1)

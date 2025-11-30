@@ -18,6 +18,7 @@ download-ade-source () {
     if [ ! -f "$TAR_PATH" ]; then
         curl -L -o "$TAR_PATH" "https://github.com/progress/ADE/archive/refs/tags/$TAR_BASENAME"
     fi
+    echo "DLC=$DLC"
     ls -al "$DLC/src"
     tar --strip-components=1 -xzf "$TAR_PATH" -C "$DLC/src"
     ls -al "$DLC/src"
