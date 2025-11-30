@@ -20,6 +20,9 @@ inputs:
     description: Value added to cache key, used to forcefully expire the cache if needed
     required: false
 
+  working-directory:
+    description: The working directory to run ABLUnit in
+    required: false
   test-file-pattern:
     description: Pattern to match ABLUnit test files
     required: false
@@ -63,6 +66,7 @@ runs:
 
     - id: ablunit-init
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       env:
         ABLUNIT_JSON: ${{ inputs.ablunit-json }}
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
@@ -97,6 +101,7 @@ runs:
 
     - id: analyze-results
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       env:
         ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.ablunit-json }}
         DELETE_ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.created-ablunit-json }}

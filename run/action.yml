@@ -25,6 +25,9 @@ inputs:
     description: Value added to cache key, used to forcefully expire the cache if needed
     required: false
   ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
   propath:
     description: Initial propath, set via PROPATH environment variable
     required: false
@@ -86,6 +89,7 @@ runs:
     - id: run-abl
       name: run-abl
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       env:
         OPT_PROPATH: ${{ inputs.propath }}
         OPT_BATCH_MODE: ${{ inputs.batch-mode }}
