@@ -1,0 +1,80 @@
+name: openedge-actions/setup
+description: Install and configure openedge
+author: kenherring
+
+inputs:
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  download-ade-source:
+    description: Download progress/ADE and add it to the propath when 'true' (all other values evaluates to false)
+    required: false
+    default: 'false'
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+    default: '0.0'
+
+  path:
+    description: Database path
+    required: true
+  port:
+    description: Database port
+    required: true
+  minport:
+    description: minport
+    required: true
+  maxport:
+    description: maxport
+    required: true
+  additional-parameters:
+    description: Additional database startup parameters
+    required: false
+
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.0.2
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - name: start-database
+      id: start-database
+      shell: bash
+      run: |
+        proserve ${{ inputs.path }} \
+          -S ${{ inputs.port }} \
+          -minport ${{ inputs.minport }} \
+          -maxport ${{ inputs.maxport }}
+          # ${{ inputs.additional-parameters }}
