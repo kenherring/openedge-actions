@@ -38,6 +38,7 @@ jobs:
 
       ## a simple compile test with dest-dir
       - name: compile-1B
+        id: compile-1B
         uses: ./compile
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
