@@ -62,17 +62,32 @@ runs:
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
       run: ablunit_init.sh
 
-    - uses: ./run
-      # uses: kenherring/openedge-actions/run@${{ github.ref }}
+    - uses: jenseng/dynamic-uses@v1
       with:
-        license: ${{ inputs.license }}
-        version: ${{ inputs.version }}
-        dlc: ${{ inputs.dlc }}
-        download-ade-source: true
-        cache-key: ${{ inputs.cache-key }}
-        propath: '$DLC/src/ablunit'
-        startup-procedure: ${{ inputs.startup-procedure }}
-        parameter: "CFG=${{ steps.ablunit-init.outputs.ablunit-json }}"
+        uses: kenherring/openedge-actions/run@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }},
+              "propath": ${{ inputs.propath }},
+              "startup-procedure": ${{ inputs.startup-procedure }},
+              "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }}
+          }
+
+    ## need to use dynamic uses above because actions local to the first action called don't work
+    # - uses: ./run
+    #   with:
+    #     license: ${{ inputs.license }}
+    #     version: ${{ inputs.version }}
+    #     dlc: ${{ inputs.dlc }}
+    #     download-ade-source: true
+    #     cache-key: ${{ inputs.cache-key }}
+    #     propath: '$DLC/src/ablunit'
+    #     startup-procedure: ${{ inputs.startup-procedure }}
+    #     parameter: "CFG=${{ inputs.ablunit-json }}"
 
     - id: analyze-results
       shell: bash
