@@ -36,6 +36,7 @@ jobs:
           [ -f "source_program1.r" ] || (echo "::error::Expected compiled file source_program1.r but it was not found" && exit 1)
           [ -f "src/source_program2.r" ] || (echo "::error::Expected compiled file src/source_program2.r but it was not found" && exit 1)
 
+      ## a simple compile test with dest-dir
       - name: compile-1B
         uses: ./compile
         with:

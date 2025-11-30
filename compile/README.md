@@ -34,4 +34,5 @@ jobs:
 | `artifact-name` | false | | Upload the dest-dir as an artifact |
 -->
 | `dest-dir` | false | | Directory where to put compiled code |
-| `stop-on-error` | false | | If set to true, stop compilation as soon as an error occurs. |
+| `stop-on-error` | false | `false` | If set to true, stop compilation as soon as an error occurs. |
+| `force-compile` | false | `false` | Always compile everything. |

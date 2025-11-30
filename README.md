@@ -144,6 +144,7 @@ jobs:
 | `propath` | false | `.` | Initial propath, set via PROPATH environment variable |
 | `dest-dir` | false | | Directory where to put compiled code |
 | `stop-on-error` | false | | If set to true, stop compilation as soon as an error occurs. |
+| `force-compile` | false | `false` | Always compile everything. |
 
 <!--
 ## Outputs
