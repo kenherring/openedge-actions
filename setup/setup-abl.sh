@@ -29,10 +29,6 @@ check-existing-dlc () {
                 TARGET_VERSION=$ABL_VERSION
             fi
             if [ "$EXISTING_VERSION" = "$TARGET_VERSION" ]; then
-                if [ "$DOWNLOAD_ADE_SOURCE" = 'true' ] && [ ! -f "$DLC/src/ablunit/ABLUnitCore.p" ]; then
-                    echo "::warning file=$0::DLC directory $DLC already installed, but ADE source needs to be downloaded, continuing setup..."
-                    return 0
-                fi
                 echo "::notice file=$0::DLC directory $DLC already contains the required OpenEdge version $EXISTING_VERSION. Skipping setup."
                 echo "skipped=true" >> "$GITHUB_OUTPUT"
                 exit 0
