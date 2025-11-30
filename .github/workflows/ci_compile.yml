@@ -21,18 +21,35 @@ jobs:
       - uses: actions/checkout@v5
 
       ## a simple compile test
-      - name: compile-1
+      - name: compile-1A
+        uses: ./compile
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: compile/test/test1
+      - name: test-1A
+        shell: bash
+        working-directory: compile/test/test1
+        run: |
+          find . -name "*.r"
+          RCODE_COUNT=$(find . -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+          [ -f "source_program1.r" ] || (echo "::error::Expected compiled file source_program1.r but it was not found" && exit 1)
+          [ -f "src/source_program2.r" ] || (echo "::error::Expected compiled file src/source_program2.r but it was not found" && exit 1)
+
+      - name: compile-1B
         uses: ./compile
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
             working-directory: compile/test/test1
             dest-dir: rcode
-      - name: test-1
+      - name: test-1B
         shell: bash
-        # working-directory: compile/test/test1
+        working-directory: compile/test/test1
         run: |
-          find . -name "*.r"
-          [ -f "rcode/source_program1.r" ] || (echo "::error::Expected compiled file rcode/source_program.r but it was not found" && exit 1)
+          RCODE_COUNT=$(find rcode -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+          [ -f "rcode/source_program1.r" ] || (echo "::error::Expected compiled file rcode/source_program1.r but it was not found" && exit 1)
+          [ -f "rcode/src/source_program2.r" ] || (echo "::error::Expected compiled file rcode/src/source_program2.r but it was not found" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
