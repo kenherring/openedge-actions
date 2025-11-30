@@ -10,6 +10,8 @@ A collection of GitHub Actions simplifying CI/CD workflows for OpenEdge ABL proj
   * similar to [actions/setup-node](https://github.com/actions/setup-node)
 * `kenherring/openedge-actions/run` - execute OpenEdge code
 * `kenherring/openedge-actions/ablunit` - execute ABLUnit tests
+* `kenherring/openedge-actions/database-start` - start an OpenEdge database server
+* `kenherring/openedge-actions/database-stop` - stop an OpenEdge database server
 
 See [kenherring/openedge-actions-samples](https://github.com/kenherring/openedge-actions-samples) for advanced usage examples.
 
@@ -37,7 +39,7 @@ jobs:
 
       - name: run ablunit
         id: run-ablunit
-        uses: kenherring/openedge-actions/ablunit@v1
+        uses: kenherring/openedge-actions/ablunit@v0
         with:
           version: 12.8.9 ## default=latest
           license: ${{ secrets.PROGRESS_CFG_LICENSE }} ## base64 encoded progress.cfg
@@ -115,7 +117,7 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 ```yml
     - name: run ablunit
       id: run-ablunit
-      uses: kenherring/openedge-actions/ablunit@v1
+      uses: kenherring/openedge-actions/ablunit@v0
       with:
         version: 12.8.9 ## default=latest
         license: ${{ secrets.PROGRESS_CFG_LICENSE }} ## base64 encoded progress.cfg
@@ -163,24 +165,3 @@ If your runner already has a license file available you can provide that path in
 * [GitHub Docs - Workflow syntax for GitHub Actions](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
 * [DockerHub - progresssoftware](https://hub.docker.com/u/progresssoftware)
 * [kenherring/ablunit-test-runner](https://github.com/kenherring/ablunit-test-runner)
-
-<!--
-
-* Tasks
-  * Ensure ant & PCT are configured
-  * Leverage `openedge-project.json` when possible
-* Future Actions
-  * `kenherring/openedge-actions/compile`
-  * `kenherring/openedge-actions/database-create`
-  * `kenherring/openedge-actions/database-start`
-  * `kenherring/openedge-actions/pasoe-start`
-  * `kenherring/openedeg-actions/sonarqube`
-* kenherring/openedge-actions-samples - repo with sample projects
-  * setup -> compile
-  * setup -> ant compile (and other ANT tasks)
-  * run
-  * ablunit
-  * ablunit - run tests against multiple OE versions with `matrix`
-  * setup -> create database -> ablunit
-  * setup -> create-database -> start-database -> run
--->
