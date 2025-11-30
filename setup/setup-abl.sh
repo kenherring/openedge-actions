@@ -79,6 +79,7 @@ create-configuration () {
         echo "TERM=$TERM"
         echo "WRKDIR=$WRKDIR"
     } >> "$DLC/.env"
+    cat "$DLC/.env" >> "$GITHUB_OUTPUT"
 }
 
 ########## MAIN BLOCK ##########
