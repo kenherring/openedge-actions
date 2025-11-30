@@ -1,11 +1,8 @@
 #!/bin/bash
 set -euo pipefail
-set -x
 
 download-ade-source () {
-    echo "DLC=$DLC"
-    echo "checking $DLC/src/ablunit/ABLUnitCore.p"
-    [ -f "$DLC/src/ablunit/ABLUnitCore.p" ] || return 0
+    [ -f "$DLC/src/ablunit/ABLUnitCore.p" ] && return 0
     local ADE_VERSION TEMP TAR_BASENAME TAR_PATH
     echo "::notice file=$0::Downloading progress/ADE source to $DLC/src"
 
