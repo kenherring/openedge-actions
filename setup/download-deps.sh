@@ -24,11 +24,16 @@ download-ade-source () {
 }
 
 download-pct () {
+    local ORIG_DIR
     echo '::group::Downloading PCT...'
     mkdir -p ~/.ant/lib
+
+    ORIG_DIR=$(pwd)
     cd ~/.ant/lib
     curl -O https://github.com/Riverside-Software/pct/releases/download/v230/PCT.jar
-    cd -
+    cd "$ORIG_DIR"
+
+    ls -al ~/.ant/lib ## REMOVE ME
     echo '::endgroup::'
 }
 
