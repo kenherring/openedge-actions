@@ -33,18 +33,18 @@ jobs:
         uses: ./start-database
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          path: start-database/target/db/sp2k
+          path: start-database/test/target/db/sp2k
           port: 2000
           minport: 3000
           maxport: 3100
       - name: start-database-1D
         uses: ./run
         with:
-          working-directory: start-database
-          parameter-file: test/db.pf
-          startup-procedure: test/customer_count.p
+          working-directory: start-database/test
+          parameter-file: db.pf
+          startup-procedure: customer_count.p
       - name: test-1
         shell: bash
-        working-directory: start-database
+        working-directory: start-database/test
         run: |
           ls -al
