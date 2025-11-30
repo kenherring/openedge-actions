@@ -20,6 +20,7 @@ fi
 
 if [ -z "${TEST_FILE_PATTERN:-}" ]; then
     TEST_FILE_PATTERN='**/*.cls,**/*.p'
+    # TEST_FILE_PATTERN='**/*.cls,**/*.p,*.cls,*.p'
 fi
 
 echo "::notice file=$0::Creating $ABLUNIT_JSON configuration..."
@@ -27,12 +28,17 @@ IFS=" " read -r -a TEST_FILE_PATTERNS <<< "$(echo "$TEST_FILE_PATTERN" | tr ',' 
 echo "processing ${#TEST_FILE_PATTERNS[@]} test file patterns..."
 
 TESTS_ARRAY='[]'
-    # shellcheck disable=SC2086
+PATTERNS_WITH_MATCH=0
 for PATTERN in "${TEST_FILE_PATTERNS[@]}"; do
+
+    # shellcheck disable=SC2086
     if ! find ./$PATTERN &>/dev/null; then
         echo "::warning file=$0::No test files found for pattern '$PATTERN', skipping..."
         continue
     fi
+    PATTERNS_WITH_MATCH=$((PATTERNS_WITH_MATCH + 1))
+
+    # shellcheck disable=SC2086
     TESTS_ARRAY_PART=$(find ./$PATTERN | jq -R -s -c 'split("\n")[:-1] | map({test: .})')
     if [ -z "${TESTS_ARRAY:-}" ]; then
         TESTS_ARRAY="${TESTS_ARRAY_PART}"
@@ -40,6 +46,11 @@ for PATTERN in "${TEST_FILE_PATTERNS[@]}"; do
         TESTS_ARRAY=$(jq -n --argjson a "$TESTS_ARRAY" --argjson b "$TESTS_ARRAY_PART" '$a + $b')
     fi
 done
+
+if [ "$PATTERNS_WITH_MATCH" -eq 0 ]; then
+    echo "::error file=$0::No test files found for any of the provided patterns: $TEST_FILE_PATTERN"
+    exit 1
+fi
 
 jq -n --argjson tests "$TESTS_ARRAY" '{
     "options": {},
