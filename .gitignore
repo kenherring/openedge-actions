@@ -1,8 +1,10 @@
 *.bk
 *.cfg
+*.log
 *.tar.gz
 /ablunit.json
 ADE-*/
 DEV_NOTES.md
 results.json
 results.xml
+github.output

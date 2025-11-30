@@ -19,7 +19,7 @@ if [ -f "${ABLUNIT_JSON}" ]; then
 fi
 
 if [ -z "${TEST_FILE_PATTERN:-}" ]; then
-    TEST_FILE_PATTERN='**/*.cls,**/*.p,*.cls,*.p'
+    TEST_FILE_PATTERN='*.cls,**/*.cls,*.p,**/*.p'
 fi
 
 echo "::notice file=$0::Creating $ABLUNIT_JSON configuration..."

@@ -26,7 +26,7 @@ inputs:
   test-file-pattern:
     description: Pattern to match ABLUnit test files
     required: false
-    default: '**/*.cls,**/*.p'
+    default: '*.cls,**/*.cls,*.p,**/*.p'
   startup-procedure:
     description: Startup parameter -p
     required: false

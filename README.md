@@ -131,7 +131,7 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 | `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
 | `working-directory` | false | | The working directory to run the tests in |
-| `test-file-pattern` | false | `**/*.{cls,p}` | Pattern to match ABLUnit test files |
+| `test-file-pattern` | false | `*.cls,**/*.cls,*.p,**/*.p` | Pattern to match ABLUnit test files |
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
 | `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
