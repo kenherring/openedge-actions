@@ -78,7 +78,7 @@ runs:
             "download-ade-source": true,
             "cache-key": ${{ inputs.cache-key }},
             "cache-token": ${{ inputs.cache-token }},
-            "propath": ${{ inputs.propath }},$DLC/src/ablunit,
+            "propath": "${{ inputs.propath }},$DLC/src/ablunit",
             "startup-procedure": ${{ inputs.startup-procedure }},
             "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }}
           }

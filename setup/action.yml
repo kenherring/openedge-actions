@@ -72,11 +72,7 @@ runs:
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
       run: setup-abl.sh
 
-    # - name: download-ade
-    #   id: download-ade
-    - name: download-ade-name
-      id: download-ade-id
-      shell: bash
+    - shell: bash
       if: ${{ inputs.download-ade-source == 'true' }}
       run: download-ade.sh
 
