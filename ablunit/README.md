@@ -17,7 +17,7 @@ jobs:
         uses: kenherring/openedge-actions/ablunit@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          test-file-pattern: test/*.{cls,p}
+          test-file-pattern: test/*.cls,test/*.p
 ```
 
 ## Inputs
