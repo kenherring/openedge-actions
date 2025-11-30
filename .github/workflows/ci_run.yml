@@ -56,11 +56,12 @@ jobs:
       - name: test-4A
         shell: bash
         run: |
+          cat client_log.log
           [ -f client_log.log ] || (echo "::error::expected client_log.log file to exist" && exit 1)
           grep "LONG LIVE LOG MANAGER!" client_log.log || (echo "::error::expected client_log.log to contain 'LONG LIVE LOG MANAGER', and it does not" && exit 1)
 
       ## additional parameters multiline
-      - name: run-4A
+      - name: run-4B
         uses: ./run
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
@@ -68,7 +69,7 @@ jobs:
           additional-parameters: |
             -clientlog client_log4B.log
             -logginglevel 4
-      - name: test-4A
+      - name: test-4B
         shell: bash
         run: |
           cat client_log4B.log
