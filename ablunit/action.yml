@@ -68,7 +68,7 @@ runs:
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
       run: ablunit_init.sh
 
-    - uses: jenseng/dynamic-uses@v1
+    - uses: jenseng/dynamic-uses@v1.0.2
       with:
         uses: kenherring/openedge-actions/run@${{ steps.set-github-path.outputs.action-ref }}
         with: |
