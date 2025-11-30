@@ -88,7 +88,6 @@ runs:
           { "license": "${{ inputs.license }}",
             "version": ${{ inputs.version }},
             "dlc": ${{ inputs.dlc }},
-            "download-ade-source": true,
             "cache-key": ${{ inputs.cache-key }},
             "cache-token": ${{ inputs.cache-token }},
             "working-directory": ${{ inputs.working-directory }},
@@ -105,7 +104,6 @@ runs:
     #     license: ${{ inputs.license }}
     #     version: ${{ inputs.version }}
     #     dlc: ${{ inputs.dlc }}
-    #     download-ade-source: true
     #     cache-key: ${{ inputs.cache-key }}
     #     propath: '${{ inputs.propath }},$DLC/src/ablunit'
     #     startup-procedure: ${{ inputs.startup-procedure }}

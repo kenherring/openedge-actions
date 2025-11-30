@@ -42,7 +42,6 @@ jobs:
         uses: ./run
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          download-ade-source: true
           startup-procedure: run/test/search_ablunitcore.p
           propath: '$DLC/src/ablunit'
 
