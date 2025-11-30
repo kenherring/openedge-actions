@@ -1,6 +1,9 @@
 name: openedge-actions
-description: openedge-actions root action - setup OpenEdge with default values
+description: Setup OpenEdge and optionally run openedge source or ABLUnit tests
 author: kenherring
+branding:
+  icon: loader
+  color: blue
 
 runs:
   using: composite
