@@ -51,6 +51,7 @@ jobs:
           [ "${{ steps.ablunit-2.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-2.outputs.failure-count }}" && exit 1)
           [ "${{ steps.ablunit-2.outputs.skipped-count }}" -eq 1 ] || (echo "expected skipped-count=1, got ${{ steps.ablunit-2.outputs.skipped-count }}" && exit 1)
 
+      ## working-directory input
       - name: ablunit-3
         id: ablunit-3
         uses: ./ablunit
