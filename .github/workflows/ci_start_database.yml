@@ -29,6 +29,15 @@ jobs:
         shell: bash
         working-directory: start-database/test
         run: ant createDatabase
+      - name: test-0
+        shell: bash
+        working-directory: start-database/test
+        run: |
+          echo '-----'
+          ls -al target/db
+          echo '-----'
+          ls -al target/db/sp2k
+          echo '-----'
       - name: start-database-1C
         uses: ./start-database
         with:
