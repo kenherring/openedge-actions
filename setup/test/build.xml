@@ -1,8 +1,10 @@
 <project name="setup.test">
 
 	<property environment="env" />
-	<taskdef resource="PCT.properties" classpath="${user.home}/.ant/lib/PCT.jar" />
-	<typedef resource="types.properties" classpath="${user.home}/.ant/lib/PCT.jar" />
+	<!-- <taskdef resource="PCT.properties" classpath="${user.home}/.ant/lib/PCT.jar" />
+	<typedef resource="types.properties" classpath="${user.home}/.ant/lib/PCT.jar" /> -->
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
 	<DlcHome value="${env.DLC}" />
 
     <target name="run">
