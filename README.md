@@ -25,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - uses: actions/checkout@v5
+
       - uses: kenherring/openedge-actions/setup@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
@@ -32,20 +34,18 @@ jobs:
           dlc: /psc/dlc
 
       - name: Run ABL Procedure
-        id: run-procedure
         uses: kenherring/openedge-actions/setup@v0
         with:
           version: 12.8.9
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           startup-procedure: "src/my-procedure.p"
 
-      - name: run ablunit
-        id: run-ablunit
+      - name: Run ABLUnit Tests
         uses: kenherring/openedge-actions/ablunit@v0
         with:
           version: 12.8.9 ## default=latest
-          license: ${{ secrets.PROGRESS_CFG_LICENSE }} ## base64 encoded progress.cfg
-          test-file-pattern: test/*.{cls,p} ## default=**/*.{cls,p}
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          test-file-pattern: test/*.cls,test/*.p
 ```
 
 ## Action: `setup`
@@ -116,8 +116,6 @@ Execute an OpenEdge source program. Automatically calls `setup` if DLC is not ye
 
 Compile OpenEdge code
 
-## Sample
-
 ```yml
 jobs:
   my-job:
@@ -131,7 +129,7 @@ jobs:
           stop-on-error: true
 ```
 
-## Inputs
+### Inputs: `compile`
 
 | Input          | Required | Default | Description                     |
 | -------------- | -------- | ------- | ------------------------------- |
@@ -146,11 +144,11 @@ jobs:
 | `stop-on-error` | false | | If set to true, stop compilation as soon as an error occurs. |
 | `force-compile` | false | `false` | Always compile everything. |
 
-<!--
-## Outputs
+### Outputs: `compile`
 
-TBD
--->
+| Output | Description |
+| ------ | ----------- |
+| `files-compiled` | Number of files compiled |
 
 ## Action: `ablunit`
 
@@ -196,8 +194,6 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 
 Start a database server
 
-## Sample
-
 ```yml
 jobs:
   my-job:
@@ -213,7 +209,7 @@ jobs:
           maxport: 3100
 ```
 
-## Inputs
+### Inputs: `database-start`
 
 | Input | Required | Default | Description |
 | ----- | -------- | ------- | ----------- |
@@ -229,7 +225,6 @@ jobs:
 | `maxport` | false | `0` | Maximum port number for the database server |
 | `parameter-file` | false | | Startup parameter -pf |
 | `additional-parameters` | false | | Additional database startup parameters |
-
 
 ## License File
 
