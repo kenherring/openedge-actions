@@ -35,6 +35,7 @@ inputs:
   stop-on-error:
     description: If set to true, stop compilation as soon as an error occurs.
     required: false
+    default: 'false'
   force-compile:
     description: Always compile everything.
     required: false
@@ -77,4 +78,4 @@ runs:
         DEST_DIR: ${{ inputs.dest-dir }}
         STOP_ON_ERROR: ${{ inputs.stop-on-error }}
         FORCE_COMPILE: ${{ inputs.force-compile }}
-      run: ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir='${{ inputs.working-directory }}'
+      run: ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir='$(pwd)'
