@@ -20,9 +20,6 @@ inputs:
     description: Value added to cache key, used to forcefully expire the cache if needed
     required: false
 
-  test-file-dir:
-    description: Root directory for ABLUnit test files
-    required: false
   test-file-pattern:
     description: Pattern to match ABLUnit test files
     required: false
@@ -68,7 +65,6 @@ runs:
       shell: bash
       env:
         ABLUNIT_JSON: ${{ inputs.ablunit-json }}
-        TEST_FILE_DIR: ${{ inputs.test-file-dir }}
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
       run: ablunit_init.sh
 

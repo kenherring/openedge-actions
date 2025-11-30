@@ -42,7 +42,6 @@ jobs:
         id: ablunit-2
         uses: ./ablunit
         with:
-          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           test-file-pattern: 'ablunit/*/test2/*.cls,ablunit/*/test2/*.p'
       - name: test-2
         shell: bash
@@ -51,21 +50,6 @@ jobs:
           [ "${{ steps.ablunit-2.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-2.outputs.error-count }}" && exit 1)
           [ "${{ steps.ablunit-2.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-2.outputs.failure-count }}" && exit 1)
           [ "${{ steps.ablunit-2.outputs.skipped-count }}" -eq 1 ] || (echo "expected skipped-count=1, got ${{ steps.ablunit-2.outputs.skipped-count }}" && exit 1)
-
-      ## test-file-dir
-      - name: ablunit-3
-        id: ablunit-3
-        uses: ./ablunit
-        with:
-          test-file-dir: 'ablunit'
-          test-file-pattern: '*/test2/*.cls,*/test2/*.p'
-      - name: test-3
-        shell: bash
-        run: |
-          [ "${{ steps.ablunit-3.outputs.test-count }}" -eq 3 ] || (echo "expected test-count=3, got ${{ steps.ablunit-3.outputs.test-count }}" && exit 1)
-          [ "${{ steps.ablunit-3.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-3.outputs.error-count }}" && exit 1)
-          [ "${{ steps.ablunit-3.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-3.outputs.failure-count }}" && exit 1)
-          [ "${{ steps.ablunit-3.outputs.skipped-count }}" -eq 1 ] || (echo "expected skipped-count=1, got ${{ steps.ablunit-3.outputs.skipped-count }}" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
