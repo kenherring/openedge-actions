@@ -72,11 +72,4 @@ runs:
     - name: start-database
       id: start-database
       shell: bash
-      run: |
-        echo 'starting database...'
-        proserve ${{ inputs.path }} \
-          -S ${{ inputs.port }} \
-          -minport ${{ inputs.minport }} \
-          -maxport ${{ inputs.maxport }}
-          # ${{ inputs.additional-parameters }}
-        echo "database started on port ${{ inputs.port }}"
+      run: start-database.sh

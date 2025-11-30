@@ -55,8 +55,9 @@ jobs:
           working-directory: start-database/test
           parameter-file: db.pf
           startup-procedure: customer_count.p
+          additional-parameters: "-clientlog client.log"
       - name: test-1
         shell: bash
         working-directory: start-database/test
         run: |
-          ls -al
+          grep 'customerCount=1117' client.log || (echo "::error::expected 1117 customers!" && exit 1)
