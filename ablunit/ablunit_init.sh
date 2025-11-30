@@ -1,30 +1,37 @@
 #!/bin/bash
 set -euo pipefail
+${ACTIONS_STEP_DEBUG:-false} && set -x
 set -x
 
 echo "PWD=$(pwd)" ## REMOVE ME
-
-${ACTIONS_STEP_DEBUG:-false} && set -x
 
 rm -f results.xml
 ## if ABLUNIT_JSON is not absolute, prepend pwd
 if [[ "$ABLUNIT_JSON" != /* ]]; then
     ABLUNIT_JSON="$(pwd)/$ABLUNIT_JSON"
 fi
+
 echo "ablunit-json=$ABLUNIT_JSON" >> "$GITHUB_OUTPUT"
 
 if [ -f "${ABLUNIT_JSON}" ]; then
     echo "::notice file=$0::Using existing ABLUnit JSON configuration file: ${ABLUNIT_JSON}"
+    echo "::group::$ABLUNIT_JSON"
+    cat "$ABLUNIT_JSON"
+    echo "::endgroup::"
     exit 0
 fi
+
 echo "TEST_FILE_PATTERN=$TEST_FILE_PATTERN" ## REMOVE ME
 if [ -z "${TEST_FILE_PATTERN:-}" ]; then
     TEST_FILE_PATTERN='**/*.cls,**/*.p'
 fi
-echo "TEST_FILE_PATTERN=$TEST_FILE_PATTERN"
+echo "TEST_FILE_PATTERN=$TEST_FILE_PATTERN" ## REMOVE ME
+
+if [ -n "$TEST_FILE_DIR" ]; then
+    cd "$TEST_FILE_DIR"
+fi
 
 echo "::notice file=$0::Creating $ABLUNIT_JSON configuration..."
-
 IFS=" " read -r -a TEST_FILE_PATTERNS <<< "$(echo "$TEST_FILE_PATTERN" | tr ',' ' ')"
 echo "processing ${#TEST_FILE_PATTERNS[@]} test file patterns..."
 
@@ -44,9 +51,9 @@ jq -n --argjson tests "$TESTS_ARRAY" '{
     "tests": $tests
 }' > "$ABLUNIT_JSON"
 
-echo "----- ABLUNIT_JSON=$ABLUNIT_JSON -----"
+echo "::group::$ABLUNIT_JSON"
 cat "$ABLUNIT_JSON"
-echo "--------------------------------------"
+echo "::group::"
 
 echo "::notice file=$0::Wrote configuration to $ABLUNIT_JSON"
 echo "created-ablunit-json=true" >> "$GITHUB_OUTPUT"
