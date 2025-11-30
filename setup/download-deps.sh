@@ -2,6 +2,7 @@
 set -euo pipefail
 
 download-ade-source () {
+    ${DOWNLOAD_ADE_SOURCE:-false} || return 0
     [ -f "$DLC/src/ablunit/ABLUnitCore.p" ] && return 0
     local ADE_VERSION TEMP TAR_BASENAME TAR_PATH
     echo "::notice file=$0::Downloading progress/ADE source to $DLC/src"
@@ -22,5 +23,14 @@ download-ade-source () {
     echo "::notice file=$0,title=DOWNLOAD ADE SUCCESSFUL::Downloaded progress/ADE source to $DLC/src successfully"
 }
 
+download-pct () {
+    echo '::group::Downloading PCT...'
+    cd ~/.ant/lib
+    curl -O https://github.com/Riverside-Software/pct/releases/download/v230/PCT.jar
+    cd -
+    echo '::endgroup::'
+}
+
 ########## MAIN BLOCK ##########
 download-ade-source
+download-pct

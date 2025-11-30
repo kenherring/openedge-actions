@@ -34,6 +34,7 @@ jobs:
           PROGRESS_OUTPUT=$(_progres -b -p setup/test/test_message.p)
           [ "$PROGRESS_OUTPUT" = 'LONG LIVE OPENEDGE' ] || (echo "::error::did not get expected output calling _progres" && exit 1)
           [ "$(awk '{print $3}' "$DLC/version")" != '' ] || (echo "::error::could not determine abl version" && exit 1)
+          ant -f setup/test/build.xml run || (echo "::error::could not run test build.xml" && exit 1)
 
       ## skip setup because the same version was setup already
       - name: setup-abl-2

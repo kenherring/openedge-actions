@@ -73,8 +73,9 @@ runs:
       run: setup-abl.sh
 
     - shell: bash
-      if: ${{ inputs.download-ade-source == 'true' }}
-      run: download-ade.sh
+      env:
+        DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
+      run: download-deps.sh
 
     - name: check-abl-license-before-cache-save
       id: check-abl-license-before-cache-save
