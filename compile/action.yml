@@ -41,6 +41,11 @@ inputs:
     required: false
     default: 'false'
 
+outputs:
+  files-compiled:
+    description: Number of files compiled
+    value: ${{ steps.compile-abl.outputs.files-compiled }}
+
 runs:
   using: composite
   steps:
@@ -78,4 +83,14 @@ runs:
         DEST_DIR: ${{ inputs.dest-dir }}
         STOP_ON_ERROR: ${{ inputs.stop-on-error }}
         FORCE_COMPILE: ${{ inputs.force-compile }}
-      run: ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)"
+      run: |
+        ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"
+        echo "-----"
+        cat "$RUNNER_TEMP/compile.log"
+        echo "-----"
+        grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1
+        echo "-----"
+        FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f2)
+        echo "-----"
+        echo "FILES_COMPILED=$FILES_COMPILED"
+        echo "-----"

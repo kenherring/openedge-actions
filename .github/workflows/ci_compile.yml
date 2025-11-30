@@ -47,8 +47,10 @@ jobs:
         shell: bash
         working-directory: compile/test/test1
         run: |
+          echo "steps.compile-1B.outputs.files-compiled=${{ steps.compile-1B.outputs.files-compiled }}"
           RCODE_COUNT=$(find rcode -name "*.r" | wc -l)
           [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+          [ "$RCODE_COUNT" = "${{ steps.compile-1B.outputs.files-compiled }}" ] || (echo "::error::Expected rcode count=${{ steps.compile-1B.outputs.files-compiled }} but got $RCODE_COUNT" && exit 1)
           [ -f "rcode/source_program1.r" ] || (echo "::error::Expected compiled file rcode/source_program1.r but it was not found" && exit 1)
           [ -f "rcode/src/source_program2.r" ] || (echo "::error::Expected compiled file rcode/src/source_program2.r but it was not found" && exit 1)
 
