@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v5
 
       ## setup latest version
-      - name: setup-abl-1
+      - name: setup-1
         uses: ./setup
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
@@ -37,23 +37,23 @@ jobs:
           ant -f setup/test/build.xml run || (echo "::error::could not run test build.xml" && exit 1)
 
       ## skip setup because the same version was setup already
-      - name: setup-abl-2
-        id: setup-abl-2
+      - name: setup-2
+        id: setup-2
         uses: ./setup
         with:
             cache-key: 'null'
       - name: test-2
         shell: bash
         run: |
-          if [ "${{ steps.setup-abl-2.outputs.skipped }}" = "true" ]; then
+          if [ "${{ steps.setup-2.outputs.skipped }}" = "true" ]; then
             echo "Setup successfully skipped when DLC already exists and contains files"
             exit 0
           fi
-          echo "::error::setup-abl-2 step was expected to fail but did not (steps.setup-abl-2.output.skipped='${{ steps.setup-abl-2.outputs.skipped }}')"
+          echo "::error::setup-2 step was expected to fail but did not (steps.setup-2.output.skipped='${{ steps.setup-2.outputs.skipped }}')"
           exit 1
 
       ## setup a second version with a different DLC, no license provided so setup succeeds but _progres fails to execute
-      - name: setup-abl-3
+      - name: setup-3
         uses: ./setup
         with:
           version: 12.8.1
@@ -67,8 +67,8 @@ jobs:
           [ "$(cat tmp.log)" = 'Unable to read progress.cfg, reason=-6. (1732)' ] || (echo "::error::expected execution failure due to missing license" && exit 1)
 
       ## setup should use inputted DLC
-      - name: setup-abl-4
-        id: setup-abl-4
+      - name: setup-4
+        id: setup-4
         uses: ./setup
         with:
           dlc: /progress/openedge/dlc
@@ -76,14 +76,14 @@ jobs:
       - name: test-4
         shell: bash
         run: |
-          [ "${{ steps.setup-abl-4.outputs.cache-hit }}" != 'true' ] || (echo "::error::expected cache miss but hit" && exit 1)
+          [ "${{ steps.setup-4.outputs.cache-hit }}" != 'true' ] || (echo "::error::expected cache miss but hit" && exit 1)
           [ "$DLC" = "/progress/openedge/dlc" ] || (echo "::error::expected DLC to be /progress/openedge/dlc but got '$DLC'" && exit 1)
           [ -f "/progress/openedge/dlc/version" ] || (echo "::error::expected version file at /progress/openedge/dlc/version but not found" && exit 1)
           [ -d "/progress/openedge/wrk" ] || (echo "::error::expected WRKDIR at /progress/openedge/wrk but directory not found" && exit 1)
 
       ## fail to setup second version at the same DLC
-      - name: setup-abl-5
-        id: setup-abl-5
+      - name: setup-5
+        id: setup-5
         uses: ./setup
         continue-on-error: true
         with:
@@ -93,15 +93,15 @@ jobs:
       - name: test-5
         shell: bash
         run: |
-          if [ "${{ steps.setup-abl-5.outcome }}" = "failure" ]; then
+          if [ "${{ steps.setup-5.outcome }}" = "failure" ]; then
             echo "Expected failure when DLC already exists and contains files"
             exit 0
           fi
-          echo "::error:: setup-abl-5 step was expected to fail but did not"
+          echo "::error:: setup-5 step was expected to fail but did not"
           exit 1
 
       ## setup w/ ADE source
-      - name: setup-abl-6
+      - name: setup-6
         uses: ./setup
         with:
           version: 12.8.8
@@ -113,8 +113,8 @@ jobs:
           [ -f "$DLC/src/ablunit/ABLUnitCore.p" ] || (echo "::error::expected file $DLC/src/ablunit/ABLUnitCore.p to exist" && exit 1)
 
       ## setup using cache with implicit key
-      - name: setup-abl-7A
-        id: setup-abl-7A
+      - name: setup-7A
+        id: setup-7A
         uses: ./setup
         with:
           version: 12.8.7
@@ -122,11 +122,11 @@ jobs:
         shell: bash
         run: |
           [ "$(awk '{print $3}' "$DLC/version")" = "12.8.7" ] || (echo "::error::could not set abl version to 12.8.7" && exit 1)
-          [ '${{ steps.setup-abl-7A.outputs.cache-hit }}' = 'true' ] || [ '${{ steps.setup-abl-7A.outputs.cache-saved}}' = 'true' ] || (echo "::error::expected cache hit or save, but not indicated" && exit 1)
+          [ '${{ steps.setup-7A.outputs.cache-hit }}' = 'true' ] || [ '${{ steps.setup-7A.outputs.cache-saved}}' = 'true' ] || (echo "::error::expected cache hit or save, but not indicated" && exit 1)
 
       ## setup using cache with explicit key
-      - name: setup-abl-8A
-        id: setup-abl-8A
+      - name: setup-8A
+        id: setup-8A
         uses: ./setup
         with:
           version: 12.8.6
@@ -145,9 +145,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      ## was not cached in setup-abl-3A so we shouldn't get a cache hit here
-      - name: setup-abl-3B
-        id: setup-abl-3B
+      ## was not cached in setup-3A so we shouldn't get a cache hit here
+      - name: setup-3B
+        id: setup-3B
         uses: ./setup
         with:
           version: 12.8.1
@@ -156,11 +156,11 @@ jobs:
         shell: bash
         run: |
           [ "$(awk '{print $3}' "$DLC/version")" = "12.8.1" ] || (echo "::error::could not set abl version to 12.8.1" && exit 1)
-           [ "${{ steps.setup-abl-3B.outputs.cache-hit }}" != 'true' ] || (echo "::error::expected cache miss but got git" && exit 1)
+           [ "${{ steps.setup-3B.outputs.cache-hit }}" != 'true' ] || (echo "::error::expected cache miss but got git" && exit 1)
 
       ## setup using cache with implicit key
-      - name: setup-abl-7B
-        id: setup-abl-7B
+      - name: setup-7B
+        id: setup-7B
         uses: ./setup
         with:
           version: 12.8.7
@@ -169,12 +169,12 @@ jobs:
         run: |
           [ "$(awk '{print $3}' "$DLC/version")" = "12.8.7" ] || (echo "::error::could not set abl version to 12.8.7" && exit 1)
           ls -al "$DLC"
-          [ "${{ steps.setup-abl-7B.outputs.cache-hit }}" = 'true' ] || (echo "::error::expected cache hit but missed" && exit 1)
+          [ "${{ steps.setup-7B.outputs.cache-hit }}" = 'true' ] || (echo "::error::expected cache hit but missed" && exit 1)
           [ ! -f "$DLC/progress.cfg" ] || [ ! -s "$DLC/progress.cfg" ] || (echo "::error::expected progress.cfg to be empty on cache hit" && exit 1)
 
       ## setup using cache with explicit key, created when license was provided
-      - name: setup-abl-8B
-        id: setup-abl-8B
+      - name: setup-8B
+        id: setup-8B
         uses: ./setup
         with:
           version: 12.8.6
@@ -183,7 +183,7 @@ jobs:
         shell: bash
         run: |
           [ "$(awk '{print $3}' "$DLC/version")" = "12.8.6" ] || (echo "::error::could not set abl version to 12.8.6" && exit 1)
-          [ "${{ steps.setup-abl-8B.outputs.cache-hit }}" = 'true' ] || (echo "::error::expected cache hit but missed" && exit 1)
+          [ "${{ steps.setup-8B.outputs.cache-hit }}" = 'true' ] || (echo "::error::expected cache hit but missed" && exit 1)
           ls -al "$DLC"
           [ ! -f "$DLC/progress.cfg" ] || [ ! -s "$DLC/progress.cfg" ] || (echo "::error::expected progress.cfg to be empty on cache hit" && exit 1)
 

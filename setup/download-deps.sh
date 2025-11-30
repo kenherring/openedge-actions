@@ -20,8 +20,8 @@ download-ade-source () {
     fi
     tar --strip-components=1 -xzf "$TAR_PATH" -C "$DLC/src"
     rm "$TAR_PATH"
-    echo "::groupend::Downloaded progress/ADE source to $DLC/src successfully"
-    # echo '::groupend::"
+    echo "Downloaded progress/ADE source to $DLC/src successfully"
+    echo '::groupend::'
 }
 
 download-pct () {
@@ -34,7 +34,6 @@ download-pct () {
     curl -LO https://github.com/Riverside-Software/pct/releases/download/v230/PCT.jar
     cd "$ORIG_DIR"
 
-    ls -al ~/.ant/lib ## REMOVE ME
     echo '::endgroup::'
     [ -s ~/.ant/lib/PCT.jar ] || (echo "::error file=$0::Failed to download PCT.jar" && exit 1)
 }
