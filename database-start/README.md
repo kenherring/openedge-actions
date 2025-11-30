@@ -36,4 +36,4 @@ jobs:
 | `minport` | false | `0` | Minimum port number for the database server |
 | `maxport` | false | `0` | Maximum port number for the database server |
 | `parameter-file` | false | | Startup parameter -pf |
-| `additional-parameters` | false | | Additional startup parameters |
+| `additional-parameters` | false | | Additional database startup parameters |
