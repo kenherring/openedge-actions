@@ -27,21 +27,24 @@ jobs:
         uses: ./setup
       - name: start-database-1B
         shell: bash
+        working-directory: start-database/test
         run: ant createDatabase
       - name: start-database-1C
         uses: ./start-database
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          path: target/db/sp2k
+          path: start-database/target/db/sp2k
           port: 2000
           minport: 3000
           maxport: 3100
       - name: start-database-1D
         uses: ./run
         with:
+          working-directory: start-database
           parameter-file: test/db.pf
           startup-procedure: test/customer_count.p
       - name: test-1
         shell: bash
+        working-directory: start-database
         run: |
           ls -al
