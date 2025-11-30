@@ -25,6 +25,14 @@ while IFS='' read -r LINE; do SKIPPED_COUNT=$((SKIPPED_COUNT + LINE)); done < <(
 [ "$FAILURE_COUNT" = "null" ] && FAILURE_COUNT=0
 [ "$ERROR_COUNT" = "null" ] && ERROR_COUNT=0
 [ "$SKIPPED_COUNT" = "null" ] && SKIPPED_COUNT=0
+
+
+echo "::group::results.xml"
+# shellcheck disable=SC2005
+echo "$(cat results.xml)"
+# echo "" ## REMOVE ME
+echo "::endgroup::"
+
 echo "   TEST_COUNT=$TEST_COUNT"
 echo "FAILURE_COUNT=$FAILURE_COUNT"
 echo "  ERROR_COUNT=$ERROR_COUNT"
@@ -36,9 +44,6 @@ echo "SKIPPED_COUNT=$SKIPPED_COUNT"
     echo "skipped-count=$SKIPPED_COUNT"
 } >> "$GITHUB_OUTPUT"
 
-echo "::group::results.xml"
-cat results.xml
-echo "::endgroup::"
 
 if [ "$TEST_COUNT" -eq 0 ]; then
     echo "::error file=$0::No tests executed, check your configuration..."

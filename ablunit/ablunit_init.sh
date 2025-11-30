@@ -27,10 +27,6 @@ if [ -z "${TEST_FILE_PATTERN:-}" ]; then
 fi
 echo "TEST_FILE_PATTERN=$TEST_FILE_PATTERN" ## REMOVE ME
 
-if [ -n "$TEST_FILE_DIR" ]; then
-    cd "$TEST_FILE_DIR"
-fi
-
 echo "::notice file=$0::Creating $ABLUNIT_JSON configuration..."
 IFS=" " read -r -a TEST_FILE_PATTERNS <<< "$(echo "$TEST_FILE_PATTERN" | tr ',' ' ')"
 echo "processing ${#TEST_FILE_PATTERNS[@]} test file patterns..."
