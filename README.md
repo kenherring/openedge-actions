@@ -103,6 +103,7 @@ Execute an OpenEdge source program. Automatically calls `setup` if DLC is not ye
 | `propath` | false | `.` | Initial propath, set via PROPATH environment variable |
 | `batch-mode` | false | `true` | Startup parameter -b |
 | `startup-procedure` | true | | Startup parameter -p |
+| `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
 | `parameter` | false | | Startup parameter -param |
 
@@ -133,6 +134,7 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 | `test-file-pattern` | false | `**/*.{cls,p}` | Pattern to match ABLUnit test files |
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
 | `parameter-file` | false | | Startup parameter -pf |
+| `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |
 
 ### Outputs: `ablunit`

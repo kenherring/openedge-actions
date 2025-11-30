@@ -31,6 +31,12 @@ inputs:
     description: Startup parameter -p
     required: false
     default: ABLUnitCore.p
+  parameter-file:
+    description: Startup parameter -pf
+    required: false
+  temp-directory:
+    description: Startup parameter -T
+    required: false
   ablunit-json:
     description: The ABLUnit configuration file, will be generated when not provided
     required: false
@@ -85,6 +91,8 @@ runs:
             "working-directory": ${{ inputs.working-directory }},
             "propath": "${{ inputs.propath }},$DLC/src/ablunit",
             "startup-procedure": ${{ inputs.startup-procedure }},
+            "parameter-file": ${{ inputs.parameter-file }},
+            "temp-directory": ${{ inputs.temp-directory }},
             "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }}
           }
 

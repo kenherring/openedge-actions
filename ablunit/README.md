@@ -32,6 +32,8 @@ jobs:
 | `working-directory` | false | | The working directory to run the tests in |
 | `test-file-pattern` | false | `**/*.{cls,p}` | Pattern to match ABLUnit test files |
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
+| `parameter-file` | false | | Startup parameter -pf |
+| `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |
 
 ## Outputs

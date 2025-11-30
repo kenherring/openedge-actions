@@ -64,6 +64,21 @@ jobs:
           [ "${{ steps.ablunit-3.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-3.outputs.failure-count }}" && exit 1)
           [ "${{ steps.ablunit-3.outputs.skipped-count }}" -eq 0 ] || (echo "expected skipped-count=0, got ${{ steps.ablunit-3.outputs.skipped-count }}" && exit 1)
 
+      ## parameter file defines clientlog
+      - name: ablunit-4
+        id: ablunit-4
+        uses: ./ablunit
+        with:
+          working-directory: ablunit/test/test4
+          parameter-file: test_with_log.pf
+      - name: test-4
+        shell: bash
+        working-directory: ablunit/test/test4
+        run: |
+          cat test_with_log.log
+          [ -s test_with_log.log ] || (echo "::error::expected client log to have content" && exit 1)
+          grep -q "LONG LIVE ABLUNIT" test_with_log.log || (echo "::error::expected client log to contain 'LONG LIVE ABLUNIT'" && exit 1)
+
       - name: pre-merge-validation
         shell: bash
         run: ./.github/workflows/pre_merge_validation.sh ablunit
