@@ -3,7 +3,6 @@ set -euo pipefail
 set -x
 
 echo "PWD=$(pwd)" ## REMOVE ME
-echo "PROPATH=$PROPATH" ## REMOVE ME
 
 ${ACTIONS_STEP_DEBUG:-false} && set -x
 

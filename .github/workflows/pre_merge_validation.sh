@@ -3,10 +3,14 @@ set -euo pipefail
 
 ERROR_FLAG=false
 
-ACTION_DIR=$1
+ACTION_DIR=${1:-}
 if [ -z "$ACTION_DIR" ]; then
-    echo "::error file=$0::No action directory provided"
-    exit 1
+    if ${CI:-false}; then
+        echo "::error file=$0::No action directory provided"
+        exit 1
+    fi
+    echo "::warning file=$0::Setting ACTION_DIR=setup"
+    ACTION_DIR=setup
 fi
 
 if git grep --color=always -ni 'TODO' | grep -v '.github/workflows/pre_merge_validation.sh'; then
