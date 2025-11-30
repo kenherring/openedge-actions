@@ -132,6 +132,7 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 | `working-directory` | false | | The working directory to run the tests in |
 | `test-file-pattern` | false | `**/*.{cls,p}` | Pattern to match ABLUnit test files |
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
+| `parameter-file` | false | | Startup parameter -pf |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |
 
 ### Outputs: `ablunit`

@@ -34,5 +34,6 @@ jobs:
 | `propath` | false | `.` | Initial propath, set via PROPATH environment variable |
 | `batch-mode` | false | `true` | Startup parameter -b |
 | `startup-procedure` | true | | Startup parameter -p |
+| `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
 | `parameter` | false | | Startup parameter -param |
