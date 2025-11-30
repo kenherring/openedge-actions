@@ -25,7 +25,7 @@ download-ade-source () {
 
 download-pct () {
     echo '::group::Downloading PCT...'
-    mkdir ~/.ant/lib
+    mkdir -p ~/.ant/lib
     cd ~/.ant/lib
     curl -O https://github.com/Riverside-Software/pct/releases/download/v230/PCT.jar
     cd -
