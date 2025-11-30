@@ -78,4 +78,4 @@ runs:
         DEST_DIR: ${{ inputs.dest-dir }}
         STOP_ON_ERROR: ${{ inputs.stop-on-error }}
         FORCE_COMPILE: ${{ inputs.force-compile }}
-      run: ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir='$(pwd)'
+      run: ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)"
