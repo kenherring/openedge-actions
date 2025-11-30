@@ -94,3 +94,4 @@ runs:
         echo "-----"
         echo "FILES_COMPILED=$FILES_COMPILED"
         echo "-----"
+        echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
