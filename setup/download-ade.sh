@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+set -x
 
 download-ade-source () {
     [ -f "$DLC/src/ablunit/ABLUnitCore.p" ] && return 0
@@ -19,8 +20,8 @@ download-ade-source () {
     fi
     tar --strip-components=1 -xzf "$TAR_PATH" -C "$DLC/src"
     rm "$TAR_PATH"
+    echo "::notice file=$0,title=DOWNLOAD ADE SUCCESSFUL::Downloaded progress/ADE source to $DLC/src successfully"
 }
 
 ########## MAIN BLOCK ##########
 download-ade-source
-echo "::notice file=$0,title=DOWNLOAD ADE SUCCESSFUL::Downloaded progress/ADE source to $DLC/src successfully"
