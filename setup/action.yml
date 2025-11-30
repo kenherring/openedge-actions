@@ -14,9 +14,9 @@ inputs:
     description: Target path for ABL installation, defaults to /psc/dlc-${version}
     required: false
   download-ade-source:
-    description: Download progress/ADE and add it to the propath when 'true' (all other values evaluates to false)
+    description: Download progress/ADE and add it to the propath when 'true'
     required: false
-    default: 'false'
+    default: 'true'
   cache-key:
     description: An explicit key for a cache entry, or 'null' to disable caching
     required: false
