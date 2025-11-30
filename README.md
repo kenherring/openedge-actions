@@ -1,6 +1,6 @@
 # openedge-actions
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_root.yml/badge.svg)
 
 A collection of GitHub Actions simplifying CI/CD workflows for OpenEdge ABL projects
 
