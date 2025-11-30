@@ -6,13 +6,14 @@
 	<DlcHome value="${env.DLC}" />
 
     <target name="compile">
+        <echo>basedir=${basedir}</echo>
         <PCTCompile
             destDir="${env.DEST_DIR}"
-            stopOnError="${env.STOP_ON_ERROR}">
+            stopOnError="${env.STOP_ON_ERROR}"
+            forceCompile="${env.FORCE_COMPILE}"
+            >
 
-            <fileset dir="${env.WORKING_DIRECTORY}">
-                <include name="**/*.cls,**/*.p"/>
-            </fileset>
+            <fileset dir="." includes="**/*.cls,**/*.p" />
 
         </PCTCompile>
     </target>
