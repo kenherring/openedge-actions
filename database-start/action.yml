@@ -1,5 +1,5 @@
-name: openedge-actions/setup
-description: Install and configure openedge
+name: openedge-actions/database-start
+description: Start an OpenEdge database server
 author: kenherring
 
 inputs:
@@ -37,6 +37,9 @@ inputs:
   maxport:
     description: maxport
     required: true
+  parameter-file:
+    description: Startup parameter -pf
+    required: false
   additional-parameters:
     description: Additional database startup parameters
     required: false
@@ -69,13 +72,14 @@ runs:
             "cache-token": ${{ inputs.cache-token }}
           }
 
-    - name: start-database
-      id: start-database
+    - name: database-start
+      id: database-start
       shell: bash
       env:
         OPT_PATH: ${{ inputs.path }}
         OPT_PORT: ${{ inputs.port }}
         OPT_MINPORT: ${{ inputs.minport }}
         OPT_MAXPORT: ${{ inputs.maxport }}
+        OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
         OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
-      run: start-database.sh
+      run: database-start.sh
