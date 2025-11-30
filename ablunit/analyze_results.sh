@@ -13,8 +13,6 @@ if ! command -v xq &>/dev/null; then
     echo "::endgroup::"
 fi
 
-xq -x /testsuites/testsuite/@name results.xml ## REMOVE ME
-
 TEST_COUNT=$(xq -x /testsuites/@tests results.xml)
 FAILURE_COUNT=$(xq -x /testsuites/@failures < results.xml)
 ERROR_COUNT=$(xq -x /testsuites/@errors < results.xml)
@@ -30,7 +28,6 @@ while IFS='' read -r LINE; do SKIPPED_COUNT=$((SKIPPED_COUNT + LINE)); done < <(
 echo "::group::results.xml"
 # shellcheck disable=SC2005
 echo "$(cat results.xml)"
-# echo "" ## REMOVE ME
 echo "::endgroup::"
 
 echo "   TEST_COUNT=$TEST_COUNT"

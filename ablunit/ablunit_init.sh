@@ -1,9 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 ${ACTIONS_STEP_DEBUG:-false} && set -x
-set -x
-
-echo "PWD=$(pwd)" ## REMOVE ME
 
 rm -f results.xml
 ## if ABLUNIT_JSON is not absolute, prepend pwd
@@ -21,11 +18,9 @@ if [ -f "${ABLUNIT_JSON}" ]; then
     exit 0
 fi
 
-echo "TEST_FILE_PATTERN=$TEST_FILE_PATTERN" ## REMOVE ME
 if [ -z "${TEST_FILE_PATTERN:-}" ]; then
     TEST_FILE_PATTERN='**/*.cls,**/*.p'
 fi
-echo "TEST_FILE_PATTERN=$TEST_FILE_PATTERN" ## REMOVE ME
 
 echo "::notice file=$0::Creating $ABLUNIT_JSON configuration..."
 IFS=" " read -r -a TEST_FILE_PATTERNS <<< "$(echo "$TEST_FILE_PATTERN" | tr ',' ' ')"
