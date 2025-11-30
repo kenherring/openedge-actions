@@ -78,7 +78,7 @@ runs:
     - name: download-ade-name
       id: download-ade-id
       shell: bash
-      if: ${{ inputs.download-ade-source  = 'true' }}
+      if: ${{ inputs.download-ade-source == 'true' }}
       run: download-ade.sh
 
     - name: check-abl-license-before-cache-save
