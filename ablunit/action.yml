@@ -75,7 +75,7 @@ runs:
           {  "license": "${{ inputs.license }}",
               "version": ${{ inputs.version }},
               "dlc": ${{ inputs.dlc }},
-              "download-ade-source": ${{ inputs.download-ade-source }},
+              "download-ade-source": true,
               "cache-key": ${{ inputs.cache-key }},
               "cache-token": ${{ inputs.cache-token }},
               "propath": ${{ inputs.propath }},
