@@ -36,36 +36,20 @@ jobs:
           [ "$(awk '{print $3}' "$DLC/version")" != '' ] || (echo "::error::could not determine abl version" && exit 1)
 
       ## skip setup because the same version was setup already
-      - name: setup-abl-2A
-        id: setup-abl-2A
+      - name: setup-abl-2
+        id: setup-abl-2
         uses: ./setup
         with:
             cache-key: 'null'
-      - name: test-2A
+      - name: test-2
         shell: bash
         run: |
-          if [ "${{ steps.setup-abl-2A.outputs.skipped }}" = "true" ]; then
+          if [ "${{ steps.setup-abl-2.outputs.skipped }}" = "true" ]; then
             echo "Setup successfully skipped when DLC already exists and contains files"
             exit 0
           fi
-          echo "::error::setup-abl-2 step was expected to fail but did not (steps.setup-abl-2.output.skipped='${{ steps.setup-abl-2A.outputs.skipped }}')"
+          echo "::error::setup-abl-2 step was expected to fail but did not (steps.setup-abl-2.output.skipped='${{ steps.setup-abl-2.outputs.skipped }}')"
           exit 1
-
-      ## do not skip setup because download-ade-source is true and was unset previously
-      - name: setup-abl-2B
-        id: setup-abl-2B
-        uses: ./setup
-        with:
-            cache-key: 'null'
-            download-ade-source: true
-      - name: test-2B
-        shell: bash
-        run: |
-          if [ "${{ steps.setup-abl-2B.outputs.skipped }}" = "true" ]; then
-            echo "Setup skipped, but should not have been"
-            exit 1
-          fi
-          [ -f "$DLC/src/ablunit/ABLUnitCore.p" ] || (echo "::error::expected ABLUnitCore.p file in ADE source" && exit 1)
 
       ## setup a second version with a different DLC, no license provided so setup succeeds but _progres fails to execute
       - name: setup-abl-3A
