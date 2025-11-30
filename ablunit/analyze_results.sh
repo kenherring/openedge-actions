@@ -8,9 +8,12 @@ if [ ! -f results.xml ]; then
 fi
 
 if ! command -v xq &>/dev/null; then
-    echo "::notice file=$0::xq command not found, installing..."
+    echp "::group::xq command not found, installing..."
     sudo apt install xq
+    echo "::endgroup::"
 fi
+
+xq -x /testsuites/testsuite/@name results.xml ## REMOVE ME
 
 TEST_COUNT=$(xq -x /testsuites/@tests results.xml)
 FAILURE_COUNT=$(xq -x /testsuites/@failures < results.xml)
@@ -32,6 +35,10 @@ echo "SKIPPED_COUNT=$SKIPPED_COUNT"
     echo "error-count=$ERROR_COUNT"
     echo "skipped-count=$SKIPPED_COUNT"
 } >> "$GITHUB_OUTPUT"
+
+echo "::group::results.xml"
+cat results.xml
+echo "::endgroup::"
 
 if [ "$TEST_COUNT" -eq 0 ]; then
     echo "::error file=$0::No tests executed, check your configuration..."
