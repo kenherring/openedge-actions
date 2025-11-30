@@ -19,10 +19,10 @@ inputs:
   cache-token:
     description: Value added to cache key, used to forcefully expire the cache if needed
     required: false
-
   working-directory:
     description: The working directory to run ABLUnit in
     required: false
+
   test-file-pattern:
     description: Pattern to match ABLUnit test files
     required: false
@@ -82,6 +82,7 @@ runs:
             "download-ade-source": true,
             "cache-key": ${{ inputs.cache-key }},
             "cache-token": ${{ inputs.cache-token }},
+            "working-directory": ${{ inputes.working-directory }}
             "propath": "${{ inputs.propath }},$DLC/src/ablunit",
             "startup-procedure": ${{ inputs.startup-procedure }},
             "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }}
