@@ -1,0 +1,79 @@
+name: openedge-actions/database-start
+description: Start an OpenEdge database server
+author: kenherring
+
+inputs:
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+    default: '0.0'
+
+  path:
+    description: Database path
+    required: true
+  port:
+    description: Database port
+    required: true
+  minport:
+    description: Minimum port number for the database server
+    required: true
+  maxport:
+    description: Maximum port number for the database server
+    required: true
+  parameter-file:
+    description: Startup parameter -pf
+    required: false
+  additional-parameters:
+    description: Additional database startup parameters
+    required: false
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.0.2
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          { "license": "${{ inputs.license }}",
+            "version": ${{ inputs.version }},
+            "dlc": ${{ inputs.dlc }},
+            "cache-key": ${{ inputs.cache-key }},
+            "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - name: database-start
+      id: database-start
+      shell: bash
+      env:
+        OPT_PATH: ${{ inputs.path }}
+        OPT_PORT: ${{ inputs.port }}
+        OPT_MINPORT: ${{ inputs.minport }}
+        OPT_MAXPORT: ${{ inputs.maxport }}
+        OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
+        OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
+      run: database-start.sh

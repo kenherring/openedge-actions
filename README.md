@@ -10,6 +10,10 @@ A collection of GitHub Actions simplifying CI/CD workflows for OpenEdge ABL proj
   * similar to [actions/setup-node](https://github.com/actions/setup-node)
 * `kenherring/openedge-actions/run` - execute OpenEdge code
 * `kenherring/openedge-actions/ablunit` - execute ABLUnit tests
+* `kenherring/openedge-actions/database-start` - start an OpenEdge database server
+<!--
+* `kenherring/openedge-actions/database-stop` - stop an OpenEdge database server
+-->
 
 See [kenherring/openedge-actions-samples](https://github.com/kenherring/openedge-actions-samples) for advanced usage examples.
 
@@ -60,7 +64,7 @@ Install and configure openedge for use with later steps. By default the installa
 
 | Input          | Required | Default | Description                     |
 | -------------- | -------- | ------- | ------------------------------- |
-| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](#license-file1)</sup> |
+| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
 | `download-ade-source` | false | `true` | Download progress/ADE and add it to the propath when 'true' |
@@ -126,7 +130,7 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 
 | Input | Required | Default | Description |
 | ----- | -------- | ------- | ----------- |
-| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](#license-file1)</sup> |
+| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
 | `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
@@ -147,6 +151,45 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 | `failure-count` | tests failed |
 | `error-count` | test with errors |
 | `skipped-count` | tests skipped |
+
+## Action: `database-start`
+
+Start a database server
+
+## Sample
+
+```yml
+jobs:
+  my-job:
+    name: my-database-job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kenherring/openedge-actions/database-start@v0
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          path: target/db/sp2k
+          port: 2000
+          minport: 3000
+          maxport: 3100
+```
+
+## Inputs
+
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
+| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](#license-file)</sup> |
+| `version` | false | `latest` | The ABL version to use |
+| `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
+| `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
+| `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
+| `working-directory` | false | | The working directory to run with |
+| `path` | true | | Database path |
+| `port` | false | `20931` | Database port |
+| `minport` | false | `0` | Minimum port number for the database server |
+| `maxport` | false | `0` | Maximum port number for the database server |
+| `parameter-file` | false | | Startup parameter -pf |
+| `additional-parameters` | false | | Additional database startup parameters |
+
 
 ## License File
 
