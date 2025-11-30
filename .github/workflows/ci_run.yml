@@ -52,7 +52,7 @@ jobs:
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           startup-procedure: run/test/log-message.p
-          additional-parameters: '-clientlog client_log.log'
+          additional-parameters: "-clientlog client_log.log"
       - name: test-3
         shell: bash
         run: |
