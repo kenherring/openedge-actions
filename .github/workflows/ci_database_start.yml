@@ -50,6 +50,7 @@ jobs:
         shell: bash
         working-directory: database-start/test
         run: |
+          cat client.log
           grep 'customerCount=1117' client.log || (echo "::error::expected 1117 customers!" && exit 1)
       - name: database-stop-1
         uses: ./database-stop

@@ -13,10 +13,6 @@ inputs:
   dlc:
     description: Target path for ABL installation, defaults to /psc/dlc-${version}
     required: false
-  download-ade-source:
-    description: Download progress/ADE and add it to the propath when 'true' (all other values evaluates to false)
-    required: false
-    default: 'false'
   cache-key:
     description: An explicit key for a cache entry, or 'null' to disable caching
     required: false
@@ -32,10 +28,10 @@ inputs:
     description: Database port
     required: true
   minport:
-    description: minport
+    description: Minimum port number for the database server
     required: true
   maxport:
-    description: maxport
+    description: Maximum port number for the database server
     required: true
   parameter-file:
     description: Startup parameter -pf
@@ -43,7 +39,6 @@ inputs:
   additional-parameters:
     description: Additional database startup parameters
     required: false
-
 
 runs:
   using: composite
@@ -67,7 +62,6 @@ runs:
           { "license": "${{ inputs.license }}",
             "version": ${{ inputs.version }},
             "dlc": ${{ inputs.dlc }},
-            "download-ade-source": ${{ inputs.download-ade-source }},
             "cache-key": ${{ inputs.cache-key }},
             "cache-token": ${{ inputs.cache-token }}
           }
