@@ -60,6 +60,7 @@ runs:
         echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
     - uses: jenseng/dynamic-uses@v1.0.2
+      if: ${{ inputs.license }}
       with:
         uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
         with: |
