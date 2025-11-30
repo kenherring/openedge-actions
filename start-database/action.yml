@@ -72,4 +72,10 @@ runs:
     - name: start-database
       id: start-database
       shell: bash
+      env:
+        OPT_PATH: ${{ inputs.path }}
+        OPT_PORT: ${{ inputs.port }}
+        OPT_MINPORT: ${{ inputs.minport }}
+        OPT_MAXPORT: ${{ inputs.maxport }}
+        OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
       run: start-database.sh
