@@ -1,6 +1,6 @@
 # kenherring/openedge-actions/run
 
-![CI](https://github.com/kenherring/opendge-actions/actions/workflows/ci_run.yml/badge.svg)
+![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_run.yml/badge.svg)
 
 GitHub Action that executes an OpenEdge procedure
 

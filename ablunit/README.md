@@ -1,6 +1,6 @@
 # kherring/openedge-action/ablunit
 
-![CI](https://github.com/kenherring/opendge-actions/actions/workflows/ci_ablunit.yml/badge.svg)
+![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_ablunit.yml/badge.svg)
 
 GitHub Action that executes ABLUnit tests
 
