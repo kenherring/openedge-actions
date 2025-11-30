@@ -46,6 +46,34 @@ jobs:
           startup-procedure: run/test/search_ablunitcore.p
           propath: '$DLC/src/ablunit'
 
+      ## additional parameters string
+      - name: run-4A
+        uses: ./run
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          startup-procedure: run/test/log_message.p
+          additional-parameters: "-clientlog client_log.log"
+      - name: test-4A
+        shell: bash
+        run: |
+          [ -f client_log.log ] || (echo "::error::expected client_log.log file to exist" && exit 1)
+          grep "LONG LIVE LOG MANAGER!" client_log.log || (echo "::error::expected client_log.log to contain 'LONG LIVE LOG MANAGER', and it does not" && exit 1)
+
+      ## additional parameters multiline
+      - name: run-4B
+        uses: ./run
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          startup-procedure: run/test/log_message.p
+          additional-parameters: |
+            -clientlog client_log4B.log
+            -logginglevel 4
+      - name: test-4B
+        shell: bash
+        run: |
+          [ -f client_log4B.log ] || (echo "::error::expected client_log4B.log file to exist" && exit 1)
+          grep "LONG LIVE LOG MANAGER!" client_log4B.log || (echo "::error::expected client_log4B.log to contain 'LONG LIVE LOG MANAGER', and it does not" && exit 1)
+
       - name: pre-merge-validation
         shell: bash
         run: ./.github/workflows/pre_merge_validation.sh run

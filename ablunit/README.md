@@ -34,6 +34,7 @@ jobs:
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
 | `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
+| `additional-parameters` | false | | Additional startup parameters |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |
 
 ## Outputs

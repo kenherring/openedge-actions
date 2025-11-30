@@ -37,6 +37,9 @@ inputs:
   temp-directory:
     description: Startup parameter -T
     required: false
+  additional-parameters:
+    description: Additional startup parameters
+    required: false
   ablunit-json:
     description: The ABLUnit configuration file, will be generated when not provided
     required: false

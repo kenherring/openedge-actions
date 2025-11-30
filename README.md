@@ -105,6 +105,7 @@ Execute an OpenEdge source program. Automatically calls `setup` if DLC is not ye
 | `startup-procedure` | true | | Startup parameter -p |
 | `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
+| `additional-parameters` | false | | Additional startup parameters |
 | `parameter` | false | | Startup parameter -param |
 
 ## Action: `ablunit`
@@ -135,6 +136,7 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
 | `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
+| `additional-parameters` | false | | Additional startup parameters |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |
 
 ### Outputs: `ablunit`

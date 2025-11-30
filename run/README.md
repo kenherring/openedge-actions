@@ -36,4 +36,5 @@ jobs:
 | `startup-procedure` | true | | Startup parameter -p |
 | `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
+| `additional-parameters` | false | | Additional startup parameters |
 | `parameter` | false | | Startup parameter -param |

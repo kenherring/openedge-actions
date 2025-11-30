@@ -50,6 +50,9 @@ inputs:
   parameter:
     description: Startup parameter -param
     required: false
+  additional-parameters:
+    description: Additional startup parameters
+    required: false
 
 runs:
   using: composite
@@ -100,4 +103,5 @@ runs:
         OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
         OPT_STARTUP_PROCEDURE: ${{ inputs.startup-procedure }}
         OPT_TEMP_DIRECTORY: ${{ inputs.temp-directory }}
+        OPT_ADDTIIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
       run: abl_run.sh
