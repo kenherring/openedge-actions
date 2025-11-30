@@ -32,8 +32,12 @@ IFS=" " read -r -a TEST_FILE_PATTERNS <<< "$(echo "$TEST_FILE_PATTERN" | tr ',' 
 echo "processing ${#TEST_FILE_PATTERNS[@]} test file patterns..."
 
 TESTS_ARRAY='[]'
-for PATTERN in "${TEST_FILE_PATTERNS[@]}"; do
     # shellcheck disable=SC2086
+for PATTERN in "${TEST_FILE_PATTERNS[@]}"; do
+    if ! find ./$PATTERN &>/dev/null; then
+        echo "::warning file=$0::No test files found for pattern '$PATTERN', skipping..."
+        continue
+    fi
     TESTS_ARRAY_PART=$(find ./$PATTERN | jq -R -s -c 'split("\n")[:-1] | map({test: .})')
     if [ -z "${TESTS_ARRAY:-}" ]; then
         TESTS_ARRAY="${TESTS_ARRAY_PART}"
