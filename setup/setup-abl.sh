@@ -14,8 +14,6 @@ initialize () {
         echo "::error file=$0::Docker is not installed and is required for abl setup"
         exit 1
     fi
-
-    check-existing-dlc
 }
 
 check-existing-dlc () {
@@ -29,14 +27,15 @@ check-existing-dlc () {
                 TARGET_VERSION=$ABL_VERSION
             fi
             if [ "$EXISTING_VERSION" = "$TARGET_VERSION" ]; then
-                echo "::notice file=$0::DLC directory $DLC already contains the required OpenEdge version $EXISTING_VERSION. Skipping setup."
+                echo "::notice file=$0::DLC directory $DLC already contains requested OpenEdge version $EXISTING_VERSION."
                 echo "skipped=true" >> "$GITHUB_OUTPUT"
-                exit 0
+                return 0
             fi
         fi
         echo "::error file=$0::DLC directory $DLC already exists and is not empty. Please remove it or set DLC to a different location."
         exit 1
     fi
+    return 1
 }
 
 copy-dlc-from-container () {
@@ -48,6 +47,7 @@ copy-dlc-from-container () {
 }
 
 create-configuration () {
+    check-existing-dlc && return 0
     [ -n "$JAVA_HOME" ] || JAVA_HOME="$(which java)"
     echo "JAVA_HOME=$JAVA_HOME" > "$DLC/properties/java.properties"
 

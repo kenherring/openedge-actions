@@ -67,7 +67,6 @@ runs:
     - name: setup-abl
       id: setup-abl
       shell: bash
-      if: ${{ steps.cache-abl-restore.outputs.cache-hit != 'true' }}
       env:
         ABL_VERSION: ${{ inputs.version }}
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
@@ -97,9 +96,9 @@ runs:
         key: ${{ steps.cache-abl-restore.outputs.cache-primary-key }}
 
     ## runs after saving the cache so that the license file does not get saved in the cache
-    - name: setup-abl-env
+    - name: setup-license
       shell: bash
       env:
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
         LICENSE_FILE: ${{ inputs.license }}
-      run: setup-abl-env.sh
+      run: setup-license.sh

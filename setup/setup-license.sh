@@ -1,10 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-set-env-vars () {
-    cat "$DLC/.env" >> "$GITHUB_ENV"
-}
-
 create-license-file () {
     [ -z "$LICENSE_FILE" ] && return 0
     ## Copy or create a license file from the LICENSE_FILE environment variable
@@ -18,5 +14,4 @@ create-license-file () {
 }
 
 ########## MAIN BLOCK ##########
-set-env-vars
 create-license-file
