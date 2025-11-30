@@ -25,6 +25,8 @@ jobs:
       ## simple test
       - name: start-database-1A
         uses: ./setup
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
       - name: start-database-1B
         shell: bash
         working-directory: start-database/test
@@ -41,7 +43,6 @@ jobs:
       - name: start-database-1C
         uses: ./start-database
         with:
-          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           path: start-database/test/target/db/sp2k
           port: 2000
           minport: 3000

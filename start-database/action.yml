@@ -61,12 +61,12 @@ runs:
       with:
         uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
         with: |
-          {  "license": "${{ inputs.license }}",
-              "version": ${{ inputs.version }},
-              "dlc": ${{ inputs.dlc }},
-              "download-ade-source": ${{ inputs.download-ade-source }},
-              "cache-key": ${{ inputs.cache-key }},
-              "cache-token": ${{ inputs.cache-token }}
+          { "license": "${{ inputs.license }}",
+            "version": ${{ inputs.version }},
+            "dlc": ${{ inputs.dlc }},
+            "download-ade-source": ${{ inputs.download-ade-source }},
+            "cache-key": ${{ inputs.cache-key }},
+            "cache-token": ${{ inputs.cache-token }}
           }
 
     - name: start-database
