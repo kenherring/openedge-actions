@@ -14,10 +14,10 @@ jobs:
     steps:
       - name: run ablunit
         id: run-ablunit
-        uses: kenherring/openedge-actions/ablunit@v1
+        uses: kenherring/openedge-actions/ablunit@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          test-file-pattern: test/*.{cls,p}
+          test-file-pattern: test/*.cls,test/*.p
 ```
 
 ## Inputs
