@@ -29,6 +29,7 @@ jobs:
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
 | `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
+| `working-directory` | false | | The working directory to run the tests in |
 | `test-file-pattern` | false | `**/*.{cls,p}` | Pattern to match ABLUnit test files |
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |

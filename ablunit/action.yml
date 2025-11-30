@@ -20,7 +20,7 @@ inputs:
     description: Value added to cache key, used to forcefully expire the cache if needed
     required: false
   working-directory:
-    description: The working directory to run ABLUnit in
+    description: The working directory to run the tests in
     required: false
 
   test-file-pattern:
