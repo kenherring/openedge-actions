@@ -26,6 +26,7 @@ jobs:
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           cache-key: 'null'
+          download-ade-source: false
       - name: test-1-name
         id: test-1-id
         shell: bash
@@ -42,6 +43,7 @@ jobs:
         uses: ./setup
         with:
             cache-key: 'null'
+            download-ade-source: false
       - name: test-2
         shell: bash
         run: |
@@ -53,12 +55,13 @@ jobs:
           exit 1
 
       ## setup a second version with a different DLC, no license provided so setup succeeds but _progres fails to execute
-      - name: setup-3
+      - name: setup-3A
         uses: ./setup
         with:
           version: 12.8.1
           cache-key: 'null'
-      - name: test-3
+          download-ade-source: false
+      - name: test-3A
         shell: bash
         run: |
           [ "$(awk '{print $3}' "$DLC/version")" = "12.8.1" ] || (echo "::error::could not set abl version to 12.8.1" && exit 1)
@@ -73,6 +76,7 @@ jobs:
         with:
           dlc: /progress/openedge/dlc
           cache-key: 'null'
+          download-ade-source: false
       - name: test-4
         shell: bash
         run: |
@@ -90,6 +94,7 @@ jobs:
           dlc: /progress/openedge/dlc
           version: 12.8.1
           cache-key: 'null'
+          download-ade-source: false
       - name: test-5
         shell: bash
         run: |
@@ -118,6 +123,7 @@ jobs:
         uses: ./setup
         with:
           version: 12.8.7
+          download-ade-source: false
       - name: test-7A
         shell: bash
         run: |
@@ -132,6 +138,7 @@ jobs:
           version: 12.8.6
           cache-key: 'custom-cache-key-2'
           license: 'dGVzdHZhbHVlCg==' ## 'testvalue'
+          download-ade-source: false
       - name: test-8A
         shell: bash
         run: |
@@ -152,6 +159,7 @@ jobs:
         with:
           version: 12.8.1
           cache-key: 'null'
+          download-ade-source: false
       - name: test-3B
         shell: bash
         run: |
@@ -164,6 +172,7 @@ jobs:
         uses: ./setup
         with:
           version: 12.8.7
+          download-ade-source: false
       - name: test-7B
         shell: bash
         run: |
