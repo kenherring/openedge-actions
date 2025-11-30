@@ -18,7 +18,10 @@ download-ade-source () {
     if [ ! -f "$TAR_PATH" ]; then
         curl -L -o "$TAR_PATH" "https://github.com/progress/ADE/archive/refs/tags/$TAR_BASENAME"
     fi
+    ls -al "$DLC/src"
     tar --strip-components=1 -xzf "$TAR_PATH" -C "$DLC/src"
+    ls -al "$DLC/src"
+    ls -al "$DLC/src/ablunit"
     rm "$TAR_PATH"
     echo "::notice file=$0,title=DOWNLOAD ADE SUCCESSFUL::Downloaded progress/ADE source to $DLC/src successfully"
 }
