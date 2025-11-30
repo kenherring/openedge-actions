@@ -38,11 +38,17 @@ jobs:
           ls -al target/db
       - name: start-database-1C
         uses: ./start-database
+        continue-on-error: true
         with:
           path: start-database/test/target/db/sp2k
           port: 2000
           minport: 3000
           maxport: 3100
+      - name: test-OB
+        shell: bash
+        working-directory: start-database/test
+        run: |
+          ps -ef
       - name: start-database-1D
         uses: ./run
         with:
