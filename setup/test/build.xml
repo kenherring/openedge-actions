@@ -2,8 +2,6 @@
 
 	<taskdef resource="PCT.properties" />
 	<typedef resource="types.properties" />
-	<!-- <property environment="env" />
-	<DlcHome value="${env.DLC}" /> -->
 
     <target name="run">
         <PCTRun procedure="test_message.p" />
