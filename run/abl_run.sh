@@ -28,7 +28,6 @@ fi
 
 ## Run the startup procedure
 
-echo "PROPATH=$PROPATH" ## REMOVE ME
 echo "::notice file=$0::RUNNING STARTUP_PROCEDURE=$OPT_STARTUP_PROCEDURE (pwd=$(pwd))"
 echo "::notice file=$0,title=run command::_progres ${OPTIONS[*]}"
 _progres "${OPTIONS[@]}"
