@@ -1,0 +1,75 @@
+name: openedge-actions/compile
+description: Compile OpenEdge code
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  propath:
+    description: Initial propath, set via PROPATH environment variable
+    required: false
+    default: .
+  ##### PCTCompile Options #####
+  dest-dir:
+    description: Directory where to put compiled code
+    required: false
+  stop-on-error:
+    description: If set to true, stop compilation as soon as an error occurs.
+    required: false
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.0.2
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - id: compile-abl
+      name: compile-abl
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        OPT_PROPATH: ${{ inputs.propath }}
+        WORKING_DIRECTORY: ${{ inputs.working-directory }}
+        DEST_DIR: ${{ inputs.dest-dir }}
+        STOP_ON_ERROR: ${{ inputs.stop-on-error }}
+      run: ant compile -f '${{ github.action_path }}/build.xml'

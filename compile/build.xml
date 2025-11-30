@@ -1,0 +1,20 @@
+<project name="setup.test">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+    <property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+    <target name="compile">
+        <PCTCompile
+            destDir="${env.DEST_DIR}"
+            stopOnError="${env.STOP_ON_ERROR}">
+
+            <fileset dir="${env.WORKING_DIRECTORY}">
+                <include name="**/*.cls,**/*.p"/>
+            </fileset>
+
+        </PCTCompile>
+    </target>
+
+</project>

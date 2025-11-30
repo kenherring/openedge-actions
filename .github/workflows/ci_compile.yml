@@ -1,0 +1,39 @@
+name: CI - Compile
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-action:
+    name: test-action/root
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      ## a simple compile test
+      - name: compile-1
+        uses: ./compile
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: compile/test/test1
+            dest-dir: rcode
+      - name: test-1
+        shell: bash
+        # working-directory: compile/test/test1
+        run: |
+          find . -name "*.r"
+          [ -f "rcode/source_program1.r" ] || (echo "::error::Expected compiled file rcode/source_program.r but it was not found" && exit 1)
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh compile
