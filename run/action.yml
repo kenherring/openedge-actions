@@ -58,35 +58,12 @@ runs:
         GITHUB_SHA: ${{ github.sha }}
         REPOSITORY: ${{ github.repository }}
       run: |
-        env | sort
-
         echo '${{ github.action_path }}' >> $GITHUB_PATH
-
-        echo "ACTION_REPOSITORY=$ACTION_REPOSITORY"
-        echo "ACTION_REF=$ACTION_REF"
-        echo "REPOSITORY=$REPOSITORY"
-        if [ "$REPOSITORY" = "kenherring/openedge-actions" ]; then
-          echo "MATCH!"
-          echo 100
-          echo "action-ref=$GITHUB_SHA"
-          echo 101
-          echo "action-ref=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
-          echo 102
-        else
-          echo 110
-          echo "action-ref=$ACTION_REF"
-          echo 111
-          echo "action-ref=$ACTION_REF" >> "$GITHUB_OUTPUT"
-          echo 112
-        fi
-        echo 120
-        echo "set-github-path successful"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
     - uses: jenseng/dynamic-uses@v1
       with:
-        # now you can use expressions 🥳
         uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
-        # the `with` needs to be converted to a valid json string
         with: |
           {  "license": "${{ inputs.license }}",
               "version": ${{ inputs.version }},
@@ -96,6 +73,7 @@ runs:
               "cache-token": ${{ inputs.cache-token }}
           }
 
+    ## need to use dynamic uses above because actions local to the first action called don't work
     # - uses: ./setup
     #   # uses: kenherring/openedge-actions/setup@${{ github.ref }}
     #   with:
