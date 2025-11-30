@@ -47,13 +47,13 @@ jobs:
           propath: '$DLC/src/ablunit'
 
       ## set propath
-      - name: run-3
+      - name: run-4
         uses: ./run
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          startup-procedure: run/test/log-message.p
+          startup-procedure: run/test/log_message.p
           additional-parameters: "-clientlog client_log.log"
-      - name: test-3
+      - name: test-4
         shell: bash
         run: |
           [ -f client_log.log ] || (echo "::error::expected client_log.log file to exist" && exit 1)
