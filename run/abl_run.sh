@@ -19,21 +19,16 @@ OPTIONS=()
 if [[ "$OPT_PARAMETER" =~ ^CFG= ]]; then
     ABLUNIT_JSON="${OPT_PARAMETER#CFG=}"
 
-    echo "ABLUNIT_JSON=$ABLUNIT_JSON"
-    echo "ABLUNIT_JSON.path=$(pwd)/$ABLUNIT_JSON"
     if [ ! -f "$ABLUNIT_JSON" ]; then
-        echo "DIR=$(dirname "$ABLUNIT_JSON")"
-        ls -al "$(dirname "$ABLUNIT_JSON")"
-
-        if [ ! -f "$ABLUNIT_JSON" ]; then
-            echo "::error file=$0::Configuration file specified in parameter does not exist: $ABLUNIT_JSON"
-            find . -name "ablunit.json"
-            exit 1
-        fi
+        echo "::error file=$0::Configuration file specified in parameter does not exist: $ABLUNIT_JSON"
+        find . -name "ablunit.json"
+        exit 1
     fi
 fi
 
 ## Run the startup procedure
+
+echo "PROPATH=$PROPATH" ## REMOVE ME
 echo "::notice file=$0::RUNNING STARTUP_PROCEDURE=$OPT_STARTUP_PROCEDURE (pwd=$(pwd))"
 echo "::notice file=$0,title=run command::_progres ${OPTIONS[*]}"
 _progres "${OPTIONS[@]}"
