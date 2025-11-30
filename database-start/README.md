@@ -9,9 +9,9 @@ GitHub Action that executes ABLUnit tests
 ```yml
 jobs:
   my-job:
-    name: my-database-job
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
       - uses: kenherring/openedge-actions/database-start@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}

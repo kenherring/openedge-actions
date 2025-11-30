@@ -25,11 +25,11 @@ jobs:
         uses: ./compile
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-            working-directory: compile/test/test1
+            working-directory: test/test1
             dest-dir: rcode
       - name: test-1
         shell: bash
-        # working-directory: compile/test/test1
+        # working-directory: test/test1
         run: |
           find . -name "*.r"
           [ -f "rcode/source_program1.r" ] || (echo "::error::Expected compiled file rcode/source_program.r but it was not found" && exit 1)

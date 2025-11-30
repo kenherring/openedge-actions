@@ -11,7 +11,7 @@ jobs:
   my-job:
     runs-on: ubuntu-latest
     steps:
-      - actions/checkout@v5
+      - uses: actions/checkout@v5
       - uses: kenherring/openedge-actions/compile@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
