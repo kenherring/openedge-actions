@@ -172,6 +172,7 @@ jobs:
         uses: ./setup
         with:
           version: 12.8.7
+          download-ade-source: false
       - name: test-7B
         shell: bash
         run: |
