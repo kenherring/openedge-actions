@@ -30,12 +30,12 @@ download-pct () {
 
     ORIG_DIR=$(pwd)
     cd ~/.ant/lib
-    curl -O https://github.com/Riverside-Software/pct/releases/download/v230/PCT.jar
-    [ -s PCT.jar ] || (echo "::error file=$0::Failed to download PCT.jar" && exit 1)
+    curl -LO https://github.com/Riverside-Software/pct/releases/download/v230/PCT.jar
     cd "$ORIG_DIR"
 
     ls -al ~/.ant/lib ## REMOVE ME
     echo '::endgroup::'
+    [ -s !/.ant/lib/PCT.jar ] || (echo "::error file=$0::Failed to download PCT.jar" && exit 1)
 }
 
 ########## MAIN BLOCK ##########
