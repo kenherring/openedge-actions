@@ -56,7 +56,7 @@ runs:
         ACTION_REF: ${{ github.action_ref }}
         GITHUB_SHA: ${{ github.sha }}
       run: |
-        echo '${{ github.action_path }}' >> $GITHUB_PATH
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
         echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
     - uses: jenseng/dynamic-uses@v1.0.2
