@@ -14,4 +14,4 @@ else
 fi
 echo "EXIT_CODE=$EXIT_CODE"
 
-echo "database started on port $OPT_PORT"
+echo "::notice file=$0::database $OPT_PATH started on port $OPT_PORT"
