@@ -1,6 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 
+PROPATH_ENTRIES=($(tr ',' '\n' <<< "$PROPATH"))
+ENTRY_COUNT=0
+for ENTRY in "${PROPATH_ENTRIES[@]}"; do
+    if [ ! -d "$ENTRY" ]; then
+        echo "::error file=$0::PROPATH entry '$ENTRY' does not exist or is not a directory"
+        exit 1
+    fi
+    echo "ENTRY[$ENTRY_COUNT]=$ENTRY"
+    ENTRY_COUNT=$((ENTRY_COUNT + 1))
+done
+
 EXIT_CODE=0
 if ! ant compile -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"; then
     EXIT_CODE=$?
