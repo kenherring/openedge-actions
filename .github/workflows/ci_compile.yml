@@ -86,7 +86,9 @@ jobs:
           artifact-name: compiled_code_artifact
           pct-destDir: compiled.code
       - shell: bash
-        run: find . -name "*.r" -delete
+        run: |
+          find . -name "*.r"
+          find . -name "*.r" -delete
       - uses: actions/download-artifact@v4
         with:
           name: compiled_code_artifact
