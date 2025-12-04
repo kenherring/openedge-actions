@@ -252,19 +252,20 @@ runs:
         PCT_outputType: ${{ inputs.pct-outputType }}
         PCT_callbackClass: ${{ inputs.pct-callbackClass }}
       run: |
+        set -x
         ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"
-        echo "-----"
         cat "$RUNNER_TEMP/compile.log"
-        echo "-----"
-        grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1
-        echo "-----"
-        FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f2)
-        echo "-----"
-        echo "FILES_COMPILED=$FILES_COMPILED"
-        echo "-----"
-        echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
 
-        COMPILE_ERRORS=0 ## TBD
+        grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log"
+        grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log"
+
+        FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f2)
+        echo "FILES_COMPILED=$FILES_COMPILED"
+
+        COMPILE_ERRORS=$(grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f5)
+        echo "COMPILE_ERRORS=$COMPILE_ERRORS"
+
+        echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
         echo "compile-errors=$COMPILE_ERRORS" >> "$GITHUB_OUTPUT"
 
     - id: debug-0
