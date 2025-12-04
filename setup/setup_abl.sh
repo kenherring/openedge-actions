@@ -40,10 +40,9 @@ check-existing-dlc () {
 
 copy-dlc-from-container () {
     check-existing-dlc && return 0
-
     echo "::group::Copying DLC contents from container"
     ## copy DLC from docker container
-    docker run --name setup_abl "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" bash -c 'exit 0'
+    docker run --name setup_abl "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" bash -c 'exit 0' 2>&1
     docker cp setup_abl:/psc/dlc/. "$DLC"
     docker rm setup_abl >/dev/null
     echo "::groupend::"
