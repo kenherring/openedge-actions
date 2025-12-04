@@ -1,0 +1,44 @@
+name: CI - ABLUnit
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci-ablunit:
+    runs-on: ubuntu-latest
+    steps:
+      - id: ci_ablunit
+        uses: ./.github/workflows/ci_ablunit.yml
+  ci-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/ci_compile.yml
+  ci-create-library:
+    runs-on: ubunut-latest
+    steps:
+      - uses: ./.github/workflows/ci_create_library.yml
+  ci-database-start:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/ci_database_start.yml
+  ci-root:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/ci_root.yml
+  ci-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/ci_run.yml
+  ci-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/ci_setup.yml
