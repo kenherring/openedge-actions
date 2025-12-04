@@ -1,7 +1,7 @@
 block-level on error undo, throw.
 using OpenEdge.Core.Assert.
 
-class com.org.source_class :
+class com.org.source_classTest :
 
     @Test.
     method public void methodName () :
