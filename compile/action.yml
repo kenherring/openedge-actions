@@ -89,7 +89,6 @@ inputs:
   pct-preprocessDir:
     description: "Target directory where preprocessed files are written."
     required: false
-    default: "<destDir>/.pct"
   pct-debugListing:
     description: "Boolean value of DEBUG-LIST option. Generated file name appends .dbg to file name, and is stored in debugListingDir."
     required: false
@@ -97,7 +96,6 @@ inputs:
   pct-debugListingDir:
     description: "Target directory where debug listing files are written."
     required: false
-    default: "destDir/.pct"
   pct-flattenDebugListing:
     description: "Flattens directory structure for debug listing files"
     required: false
@@ -121,7 +119,6 @@ inputs:
   pct-xrefDir:
     description: "Target directory where PCT files (CRC, includes, preprocess, listing) will be created."
     required: false
-    default: "<destDir>/.pct"
   pct-xmlXref:
     description: "Generates XREF in XML format."
     required: false
