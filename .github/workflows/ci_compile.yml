@@ -85,6 +85,18 @@ jobs:
           working-directory: compile/test/test3
           artifact-name: compiled_code_artifact
           pct-destDir: compiled.code
+      - shell: bash
+        run: find . -name "*.r" -delete
+      - uses: actions/download-artifact@v4
+        with:
+          name: compiled_code_artifact
+      - name: test-3
+        shell: bash
+        run: |
+          [ -d compiled.code ] || (echo "::error::Expected compiled.code directory but it was not found" && exit 1)
+          RCODE_COUNT=$(find . -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+
 
       - name: compile-4
         id: compile-4
@@ -100,24 +112,6 @@ jobs:
           [ "${{ steps.compile-4.outputs.files-compiled }}" -eq 2 ] || (echo "::error::Expected files-compiled=2 but got ${{ steps.compile-4.outputs.files-compiled }}" && exit 1)
           [ "${{ steps.compile-4.outputs.compile-errors }}" -eq 1 ] || (echo "::error::Expected compile-errors=1 but got ${{ steps.compile-4.outputs.compile-errors }}" && exit 1)
           find . -name "*.r" -delete
-
-  test-action-2:
-    name: test-action/compile-B
-    runs-on: ubuntu-latest
-    needs: test-action-1
-    steps:
-      ## actions/checkout excluded here on purpose!
-
-      ## compile and upload artifact
-      - uses: actions/download-artifact@v4
-        with:
-          name: compiled_code_artifact
-      - name: test-3
-        shell: bash
-        run: |
-          [ -d compiled.code ] || (echo "::error::Expected compiled.code directory but it was not found" && exit 1)
-          RCODE_COUNT=$(find . -name "*.r" | wc -l)
-          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
