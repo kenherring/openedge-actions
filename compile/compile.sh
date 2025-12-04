@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+PROPATH=${PROPATH:-.}
+
 PROPATH_ENTRIES=($(tr ',' '\n' <<< "$PROPATH"))
 ENTRY_COUNT=0
 for ENTRY in "${PROPATH_ENTRIES[@]}"; do
@@ -20,6 +22,15 @@ for ENTRY in "${PROPATH_ENTRIES[@]}"; do
     [ "$ENTRY_COUNT" == 8 ] && export PROPATH_ENTRY_8="$ENTRY"
     [ "$ENTRY_COUNT" == 9 ] && export PROPATH_ENTRY_9="$ENTRY"
 done
+
+[ -z "$PROPATH_ENTRY_2" ] && PROPATH_ENTRY_2=$PROPATH_ENTRY_1
+[ -z "$PROPATH_ENTRY_3" ] && PROPATH_ENTRY_3=$PROPATH_ENTRY_1
+[ -z "$PROPATH_ENTRY_4" ] && PROPATH_ENTRY_4=$PROPATH_ENTRY_1
+[ -z "$PROPATH_ENTRY_5" ] && PROPATH_ENTRY_5=$PROPATH_ENTRY_1
+[ -z "$PROPATH_ENTRY_6" ] && PROPATH_ENTRY_6=$PROPATH_ENTRY_1
+[ -z "$PROPATH_ENTRY_7" ] && PROPATH_ENTRY_7=$PROPATH_ENTRY_1
+[ -z "$PROPATH_ENTRY_8" ] && PROPATH_ENTRY_8=$PROPATH_ENTRY_1
+[ -z "$PROPATH_ENTRY_9" ] && PROPATH_ENTRY_9=$PROPATH_ENTRY_1
 
 EXIT_CODE=0
 if ! ant compile -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"; then
