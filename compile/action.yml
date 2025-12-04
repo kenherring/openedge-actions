@@ -271,8 +271,13 @@ runs:
         COMPILE_ERRORS=0 ## TBD
         echo "compile-errors=$COMPILE_ERRORS" >> "$GITHUB_OUTPUT"
 
+    - id: debug-0
+      shell: bash
+      run: echo "inputs.artifact-name='${{ inputs.artifact-name }}'"
+
+
     - uses: actions/upload-artifact@v4
-      if: ${{ inputs.artifact-name != '' }}
+      if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
       with:
         name: ${{ inputs.artifact-name }}
         path: ${{ inputs.pct-destDir }}
