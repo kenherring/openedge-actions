@@ -135,9 +135,6 @@ inputs:
     description: "Compiles using XCODE option. Disables XREF and LISTING options."
     required: false
     default: "false"
-  pct-xcodeKey:
-    description: "Sets specific key for encrypted procedures. Deprecated: use XCodeSessionKey attribute in PCTRun"
-    required: false
   pct-languages:
     description: "Comma-separated list of language segments to include in the compiled r-code. LANGUAGES option of the COMPILE statement"
     required: false
@@ -247,7 +244,6 @@ runs:
         PCT_xmlXref: ${{ inputs.pct-xmlXref }}
         PCT_forceCompile: ${{ inputs.pct-forceCompile }}
         PCT_xcode: ${{ inputs.pct-xcode }}
-        PCT_xcodeKey: ${{ inputs.pct-xcodeKey }}
         PCT_languages: ${{ inputs.pct-languages }}
         PCT_textGrowth: ${{ inputs.pct-textGrowth }}
         PCT_relativePaths: ${{ inputs.pct-relativePaths }}

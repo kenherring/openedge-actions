@@ -34,7 +34,6 @@
             xmlXref="${env.PCT_xmlXref}"
             forceCompile="${env.PCT_forceCompile}"
             xcode="${env.PCT_xcode}"
-            xcodeKey="${env.PCT_xcodeKey}"
             languages="${env.PCT_languages}"
             textGrowth="${env.PCT_textGrowth}"
             relativePaths="${env.PCT_relativePaths}"

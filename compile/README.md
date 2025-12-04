@@ -57,7 +57,6 @@ jobs:
 | `pct-xmlXref` | false | `false` | Generates XREF in XML format. |
 | `pct-forceCompile` | false | `false` | Always compile everything. |
 | `pct-xcode` | false | `false` | Compiles using XCODE option. Disables XREF and LISTING options. |
-| `pct-xcodeKey` | false | `None` | Sets specific key for encrypted procedures. Deprecated: use XCodeSessionKey attribute in PCTRun |
 | `pct-languages` | false | `None` | Comma-separated list of language segments to include in the compiled r-code. LANGUAGES option of the COMPILE statement |
 | `pct-textGrowth` | false | `None` | TEXT-SEG-GROWTH option of the COMPILE statement. |
 | `pct-relativePaths` | false | `false` | Use relative paths instead of absolute paths for propath and filesets. Every fileset dir has to be in propath. |
