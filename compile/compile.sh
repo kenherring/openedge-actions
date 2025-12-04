@@ -2,7 +2,7 @@
 set -euo pipefail
 
 EXIT_CODE=0
-if ! ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"; then
+if ! ant compile -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"; then
     EXIT_CODE=$?
 fi
 echo "EXIT_CODE=$EXIT_CODE"
