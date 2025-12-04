@@ -76,4 +76,4 @@ runs:
         OPT_MAXPORT: ${{ inputs.maxport }}
         OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
         OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
-      run: database-start.sh
+      run: database_start.sh
