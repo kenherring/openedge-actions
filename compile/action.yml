@@ -28,23 +28,171 @@ inputs:
     description: Initial propath, set via PROPATH environment variable
     required: false
     default: .
+  artifact-name:
+    description: Artifact name for uploading rcode
+    required: false
+    default: rcode-artifact
   ##### PCTCompile Options #####
-  dest-dir:
-    description: Directory where to put compiled code
+  pct-destDir:
+    description: "Directory where to put compiled code"
     required: false
-  stop-on-error:
-    description: If set to true, stop compilation as soon as an error occurs.
+    default: "None"
+  pct-stopOnError:
+    description: "If set to true, stop compilation as soon as an error occurs."
     required: false
-    default: 'false'
-  force-compile:
-    description: Always compile everything.
+    default: "false"
+  pct-numThreads:
+    description: "Starts n parallel compilation threads. Don't use multiple threads when compiling classes."
     required: false
-    default: 'false'
+    default: "1"
+  pct-multiCompile:
+    description: "Change COMPILER:MULTI-COMPILE attribute."
+    required: false
+    default: "false"
+  pct-minSize:
+    description: "Boolean value of MIN-SIZE option."
+    required: false
+    default: "false"
+  pct-MD5:
+    description: "Boolean value of GENERATE-MD5 option."
+    required: false
+    default: "false"
+  pct-streamIO:
+    description: "Boolean value of STREAM-IO option."
+    required: false
+    default: "false"
+  pct-v6Frame:
+    description: "Boolean value of V6FRAME option."
+    required: false
+    default: "false"
+  pct-useUnderline:
+    description: "USE-UNDERLINE option of V6FRAME"
+    required: false
+    default: "false"
+  pct-useRevVideo:
+    description: "USE-REVVIDEO option of V6FRAME"
+    required: false
+    default: "false"
+  pct-runList:
+    description: "true to generate a .run file for each compiled file, which summarizes RUN statements"
+    required: false
+    default: "false"
+  pct-listing:
+    description: "Boolean value of LISTING option. Generated file name is identical to source file name, and is stored in xrefDir"
+    required: false
+    default: "false"
+  pct-listingSource:
+    description: "Generates listing file from preprocessed source code (value preprocessor) or from standard source code (empty value or not defined)."
+    required: false
+    default: "false"
+  pct-preprocess:
+    description: "Boolean value of PREPROCESSattribute. Generated file name appends .preprocess to source file name, and is stored in preprocessDir."
+    required: false
+    default: "false"
+  pct-preprocessDir:
+    description: "Target directory where preprocessed files are written."
+    required: false
+    default: "<destDir>/.pct"
+  pct-debugListing:
+    description: "Boolean value of DEBUG-LIST option. Generated file name appends .dbg to file name, and is stored in debugListingDir."
+    required: false
+    default: "false"
+  pct-debugListingDir:
+    description: "Target directory where debug listing files are written."
+    required: false
+    default: "destDir/.pct"
+  pct-flattenDebugListing:
+    description: "Flattens directory structure for debug listing files"
+    required: false
+    default: "true"
+  pct-stringXref:
+    description: "Boolean value of STRING-XREFoption. Generated file name appends .strxref to source file name."
+    required: false
+    default: "false"
+  pct-appendStringXref:
+    description: "Appends STRING-XREF to a single file."
+    required: false
+    default: "false"
+  pct-keepXref:
+    description: "Keeps the generated XREF file for each file. Generated file name replaces extension of source file name with .xref."
+    required: false
+    default: "false"
+  pct-noParse:
+    description: "Always recompile, and skip XREF generation as well as .crc and .inc files."
+    required: false
+    default: "false"
+  pct-xrefDir:
+    description: "Target directory where PCT files (CRC, includes, preprocess, listing) will be created."
+    required: false
+    default: "<destDir>/.pct"
+  pct-xmlXref:
+    description: "Generates XREF in XML format."
+    required: false
+    default: "false"
+  pct-forceCompile:
+    description: "Always compile everything."
+    required: false
+    default: "false"
+  pct-xcode:
+    description: "Compiles using XCODE option. Disables XREF and LISTING options."
+    required: false
+    default: "false"
+  pct-xcodeKey:
+    description: "Sets specific key for encrypted procedures. Deprecated: use XCodeSessionKey attribute in PCTRun"
+    required: false
+    default: "None"
+  pct-languages:
+    description: "Comma-separated list of language segments to include in the compiled r-code. LANGUAGES option of the COMPILE statement"
+    required: false
+    default: "None"
+  pct-textGrowth:
+    description: "TEXT-SEG-GROWTH option of the COMPILE statement."
+    required: false
+    default: "None"
+  pct-relativePaths:
+    description: "Use relative paths instead of absolute paths for propath and filesets. Every fileset dir has to be in propath."
+    required: false
+    default: "false"
+  pct-progPerc:
+    description: "Show progression percentage every x percent."
+    required: false
+    default: "0"
+  pct-displayFiles:
+    description: "1 will display files to be recompiled (and reason). 2 will display all files. 0 doesn't display anything"
+    required: false
+    default: "0"
+  pct-requireFullKeywords:
+    description: "Strict-mode compiler option (11.7+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-requireFullNames:
+    description: "Strict-mode compiler option (11.7+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-requireFieldQualifiers:
+    description: "Strict-mode compiler option (11.7+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-requireReturnValues:
+    description: "Strict-mode compiler option (12.2+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-outputType:
+    description: "comma separated list of outputs"
+    required: false
+    default: "console"
+  pct-callbackClass:
+    description: "Callback class (implementation of rssw.pct.AbstractCompileCallback)"
+    required: false
+    default: "None"
 
 outputs:
   files-compiled:
     description: Number of files compiled
     value: ${{ steps.compile-abl.outputs.files-compiled }}
+  compile-errors:
+    description: Number of files that failed to compile
+    value: ${{ steps.compile-abl.outputs.compile-errors }}
 
 runs:
   using: composite
@@ -78,11 +226,45 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       env:
-        OPT_PROPATH: ${{ inputs.propath }}
-        WORKING_DIRECTORY: ${{ inputs.working-directory }}
-        DEST_DIR: ${{ inputs.dest-dir }}
-        STOP_ON_ERROR: ${{ inputs.stop-on-error }}
-        FORCE_COMPILE: ${{ inputs.force-compile }}
+        PROPATH: ${{ inputs.propath }}
+        PCT_destDir: ${{ inputs.pct-destDir }}
+        PCT_stopOnError: ${{ inputs.pct-stopOnError }}
+        PCT_numThreads: ${{ inputs.pct-numThreads }}
+        PCT_multiCompile: ${{ inputs.pct-multiCompile }}
+        PCT_minSize: ${{ inputs.pct-minSize }}
+        PCT_MD5: ${{ inputs.pct-MD5 }}
+        PCT_streamIO: ${{ inputs.pct-streamIO }}
+        PCT_v6Frame: ${{ inputs.pct-v6Frame }}
+        PCT_useUnderline: ${{ inputs.pct-useUnderline }}
+        PCT_useRevVideo: ${{ inputs.pct-useRevVideo }}
+        PCT_runList: ${{ inputs.pct-runList }}
+        PCT_listing: ${{ inputs.pct-listing }}
+        PCT_listingSource: ${{ inputs.pct-listingSource }}
+        PCT_preprocess: ${{ inputs.pct-preprocess }}
+        PCT_preprocessDir: ${{ inputs.pct-preprocessDir }}
+        PCT_debugListing: ${{ inputs.pct-debugListing }}
+        PCT_debugListingDir: ${{ inputs.pct-debugListingDir }}
+        PCT_flattenDebugListing: ${{ inputs.pct-flattenDebugListing }}
+        PCT_stringXref: ${{ inputs.pct-stringXref }}
+        PCT_appendStringXref: ${{ inputs.pct-appendStringXref }}
+        PCT_keepXref: ${{ inputs.pct-keepXref }}
+        PCT_noParse: ${{ inputs.pct-noParse }}
+        PCT_xrefDir: ${{ inputs.pct-xrefDir }}
+        PCT_xmlXref: ${{ inputs.pct-xmlXref }}
+        PCT_forceCompile: ${{ inputs.pct-forceCompile }}
+        PCT_xcode: ${{ inputs.pct-xcode }}
+        PCT_xcodeKey: ${{ inputs.pct-xcodeKey }}
+        PCT_languages: ${{ inputs.pct-languages }}
+        PCT_textGrowth: ${{ inputs.pct-textGrowth }}
+        PCT_relativePaths: ${{ inputs.pct-relativePaths }}
+        PCT_progPerc: ${{ inputs.pct-progPerc }}
+        PCT_displayFiles: ${{ inputs.pct-displayFiles }}
+        PCT_requireFullKeywords: ${{ inputs.pct-requireFullKeywords }}
+        PCT_requireFullNames: ${{ inputs.pct-requireFullNames }}
+        PCT_requireFieldQualifiers: ${{ inputs.pct-requireFieldQualifiers }}
+        PCT_requireReturnValues: ${{ inputs.pct-requireReturnValues }}
+        PCT_outputType: ${{ inputs.pct-outputType }}
+        PCT_callbackClass: ${{ inputs.pct-callbackClass }}
       run: |
         ant compile -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"
         echo "-----"
@@ -95,3 +277,12 @@ runs:
         echo "FILES_COMPILED=$FILES_COMPILED"
         echo "-----"
         echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
+
+        COMPILE_ERRORS=0 ## TBD
+        echo "compile-errors=$COMPILE_ERRORS" >> "$GITHUB_OUTPUT"
+
+    - uses: actions/upload-artifact@v3
+      if: ${{ inputs.artifact-name }}
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.pct-destDir }}

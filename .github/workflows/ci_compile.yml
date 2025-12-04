@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test-action:
-    name: test-action/root
+    name: test-action/compile
     runs-on: ubuntu-latest
 
     steps:
@@ -41,7 +41,6 @@ jobs:
         id: compile-1B
         uses: ./compile
         with:
-            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
             working-directory: compile/test/test1
             dest-dir: rcode
       - name: test-1B
@@ -54,6 +53,64 @@ jobs:
           [ "$RCODE_COUNT" = "${{ steps.compile-1B.outputs.files-compiled }}" ] || (echo "::error::Expected rcode count=${{ steps.compile-1B.outputs.files-compiled }} but got $RCODE_COUNT" && exit 1)
           [ -f "rcode/source_program1.r" ] || (echo "::error::Expected compiled file rcode/source_program1.r but it was not found" && exit 1)
           [ -f "rcode/src/source_program2.r" ] || (echo "::error::Expected compiled file rcode/src/source_program2.r but it was not found" && exit 1)
+
+      ## compile using propath
+      - name: compile-2
+        id: compile-2
+        uses: ./compile
+        with:
+            working-directory: compile/test/test2
+            dest-dir: rcode
+            propath: src,test
+      - name: test-2
+        shell: bash
+        working-directory: compile/test/test2
+        run: |
+          echo "steps.compile-2.outputs.files-compiled=${{ steps.compile-2.outputs.files-compiled }}"
+          RCODE_COUNT=$(find rcode -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=1 but got $RCODE_COUNT" && exit 1)
+          find . -name "*.r"
+          [ -f "rcode/src/com/org/source_class.r" ] || (echo "::error::Expected compiled file rcode/src/com/org/source_class.r but it was not found" && exit 1)
+          [ -f "rcode/test/com/org/source_classTest.r" ] || (echo "::error::Expected compiled file rcode/test/com/org/source_class.r but it was not found" && exit 1)
+
+      ## compile and upload artifact
+      - name: compile-3
+        id: compile-3
+        uses: ./compile
+        with:
+          working-directory: compile/test/test3
+          dest-dir: compiled.code
+          artifact-name: compiled_code_artifact
+
+      - name: compile-4
+        id: compile-4
+        uses: ./compile
+        with:
+          working-directory: compile/test/test4
+      - name: test-4
+        id: test-4
+        shell: bash
+        run: |
+          echo "steps.compile-4.outputs.file-compiled=${{ steps.compile-4.outputs.file-compiled }}"
+          echo "steps.compile-4.outputs.compile-errors=${{ steps.compile-4.outputs.compile-errors }}"
+          [ "${{ steps.compile-4.outputs.files-compiled }}" -eq 2 ] || (echo "::error::Expected files-compiled=2 but got ${{ steps.compile-4.outputs.files-compiled }}" && exit 1)
+          [ "${{ steps.compile-4.outputs.compile-errors }}" -eq 1 ] || (echo "::error::Expected compile-errors=1 but got ${{ steps.compile-4.outputs.compile-errors }}" && exit 1)
+
+  test-action-2:
+    name: test-action/compile-2
+    runs-on: ubuntu-latest
+    steps:
+
+      ## compile and upload artifact
+      - uses: actions/download-artifact@v3
+        with:
+          name: compiled_code_artifact
+      - name: test-3
+        shell: bash
+        run: |
+          [ -d compiled.code ] || (echo "::error::Expected compiled.code directory but it was not found" && exit 1)
+          RCODE_COUNT=$(find . -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
 
       - name: pre-merge-validation
         shell: bash

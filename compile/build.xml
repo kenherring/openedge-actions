@@ -8,13 +8,46 @@
     <target name="compile">
         <echo>basedir=${basedir}</echo>
         <PCTCompile
-            destDir="${env.DEST_DIR}"
-            stopOnError="${env.STOP_ON_ERROR}"
-            forceCompile="${env.FORCE_COMPILE}"
+            destDir="${env.PCT_destDir}"
+            stopOnError="${env.PCT_stopOnError}"
+            numThreads="${env.PCT_numThreads}"
+            multiCompile="${env.PCT_multiCompile}"
+            minSize="${env.PCT_minSize}"
+            MD5="${env.PCT_MD5}"
+            streamIO="${env.PCT_streamIO}"
+            v6Frame="${env.PCT_v6Frame}"
+            useUnderline="${env.PCT_useUnderline}"
+            useRevVideo="${env.PCT_useRevVideo}"
+            runList="${env.PCT_runList}"
+            listing="${env.PCT_listing}"
+            listingSource="${env.PCT_listingSource}"
+            preprocess="${env.PCT_preprocess}"
+            preprocessDir="${env.PCT_preprocessDir}"
+            debugListing="${env.PCT_debugListing}"
+            debugListingDir="${env.PCT_debugListingDir}"
+            flattenDebugListing="${env.PCT_flattenDebugListing}"
+            stringXref="${env.PCT_stringXref}"
+            appendStringXref="${env.PCT_appendStringXref}"
+            keepXref="${env.PCT_keepXref}"
+            noParse="${env.PCT_noParse}"
+            xrefDir="${env.PCT_xrefDir}"
+            xmlXref="${env.PCT_xmlXref}"
+            forceCompile="${env.PCT_forceCompile}"
+            xcode="${env.PCT_xcode}"
+            xcodeKey="${env.PCT_xcodeKey}"
+            languages="${env.PCT_languages}"
+            textGrowth="${env.PCT_textGrowth}"
+            relativePaths="${env.PCT_relativePaths}"
+            progPerc="${env.PCT_progPerc}"
+            displayFiles="${env.PCT_displayFiles}"
+            requireFullKeywords="${env.PCT_requireFullKeywords}"
+            requireFullNames="${env.PCT_requireFullNames}"
+            requireFieldQualifiers="${env.PCT_requireFieldQualifiers}"
+            requireReturnValues="${env.PCT_requireReturnValues}"
+            outputType="${env.PCT_outputType}"
+            callbackClass="${env.PCT_callbackClass}"
             >
-
             <fileset dir="." includes="**/*.cls,**/*.p" />
-
         </PCTCompile>
     </target>
 
