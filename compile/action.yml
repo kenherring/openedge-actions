@@ -264,4 +264,4 @@ runs:
       if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
       with:
         name: ${{ inputs.artifact-name }}
-        path: ./${{ inputs.pct-destDir }}
+        path: "**/*.r"
