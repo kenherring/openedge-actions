@@ -84,7 +84,6 @@ inputs:
   pct-listingSource:
     description: "Generates listing file from preprocessed source code (value preprocessor) or from standard source code (empty value or not defined)."
     required: false
-    default: "false"
   pct-preprocess:
     description: "Boolean value of PREPROCESSattribute. Generated file name appends .preprocess to source file name, and is stored in preprocessDir."
     required: false
