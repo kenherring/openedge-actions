@@ -36,7 +36,6 @@ inputs:
   pct-destDir:
     description: "Directory where to put compiled code"
     required: false
-    default: "None"
   pct-stopOnError:
     description: "If set to true, stop compilation as soon as an error occurs."
     required: false
@@ -139,15 +138,12 @@ inputs:
   pct-xcodeKey:
     description: "Sets specific key for encrypted procedures. Deprecated: use XCodeSessionKey attribute in PCTRun"
     required: false
-    default: "None"
   pct-languages:
     description: "Comma-separated list of language segments to include in the compiled r-code. LANGUAGES option of the COMPILE statement"
     required: false
-    default: "None"
   pct-textGrowth:
     description: "TEXT-SEG-GROWTH option of the COMPILE statement."
     required: false
-    default: "None"
   pct-relativePaths:
     description: "Use relative paths instead of absolute paths for propath and filesets. Every fileset dir has to be in propath."
     required: false
@@ -183,7 +179,6 @@ inputs:
   pct-callbackClass:
     description: "Callback class (implementation of rssw.pct.AbstractCompileCallback)"
     required: false
-    default: "None"
 
 outputs:
   files-compiled:

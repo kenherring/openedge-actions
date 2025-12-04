@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test-action-1:
-    name: test-action/compile
+    name: test-action/compile-A
     runs-on: ubuntu-latest
 
     steps:
@@ -97,7 +97,7 @@ jobs:
           [ "${{ steps.compile-4.outputs.compile-errors }}" -eq 1 ] || (echo "::error::Expected compile-errors=1 but got ${{ steps.compile-4.outputs.compile-errors }}" && exit 1)
 
   test-action-2:
-    name: test-action/compile-2
+    name: test-action/compile-B
     runs-on: ubuntu-latest
     needs: test-action-1
     steps:
