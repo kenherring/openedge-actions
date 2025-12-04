@@ -43,7 +43,7 @@ jobs:
         uses: ./compile
         with:
             working-directory: compile/test/test1
-            dest-dir: rcode
+            pct-destDir: rcode
       - name: test-1B
         shell: bash
         working-directory: compile/test/test1
@@ -63,8 +63,8 @@ jobs:
         uses: ./compile
         with:
             working-directory: compile/test/test2
-            dest-dir: rcode
             propath: src,test
+            pct-destDir: rcode
       - name: test-2
         shell: bash
         working-directory: compile/test/test2
@@ -83,8 +83,8 @@ jobs:
         uses: ./compile
         with:
           working-directory: compile/test/test3
-          dest-dir: compiled.code
           artifact-name: compiled_code_artifact
+          pct-destDir: compiled.code
 
       - name: compile-4
         id: compile-4
