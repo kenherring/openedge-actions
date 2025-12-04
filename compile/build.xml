@@ -50,14 +50,14 @@
             <fileset dir="." includes="**/*.cls,**/*.p" />
             <propath>
                 <pathelement location="${env.PROPATH_ENTRY_1}" />
-                <pathelement location="${env.PROPATH_ENTRY_2}" />
-                <pathelement location="${env.PROPATH_ENTRY_3}" />
-                <pathelement location="${env.PROPATH_ENTRY_4}" />
-                <pathelement location="${env.PROPATH_ENTRY_5}" />
-                <pathelement location="${env.PROPATH_ENTRY_6}" />
-                <pathelement location="${env.PROPATH_ENTRY_7}" />
-                <pathelement location="${env.PROPATH_ENTRY_8}" />
-                <pathelement location="${env.PROPATH_ENTRY_9}" />
+                <pathelement location="${env.PROPATH_ENTRY_2 | $env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_3 | $env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_4 | $env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_5 | $env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_6 | $env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_7 | $env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_8 | $env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_9 | $env.PROPATH_ENTRY_1}" />
             </propath>
         </PCTCompile>
     </target>
