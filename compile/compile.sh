@@ -46,7 +46,7 @@ grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.l
 FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f2)
 echo "FILES_COMPILED=$FILES_COMPILED"
 
-COMPILE_ERRORS=$(grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" || echo 0 | tail -1 | cut -d' ' -f5 )
+COMPILE_ERRORS=$(grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f6 || echo 0)
 echo "COMPILE_ERRORS=$COMPILE_ERRORS"
 
 echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
