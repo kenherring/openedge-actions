@@ -31,7 +31,6 @@ inputs:
   artifact-name:
     description: Artifact name for uploading rcode
     required: false
-    default: rcode-artifact
   ##### PCTCompile Options #####
   pct-destDir:
     description: "Directory where to put compiled code"
