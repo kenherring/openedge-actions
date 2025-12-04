@@ -48,6 +48,17 @@
             outputType="${env.PCT_outputType}"
             callbackClass="${env.PCT_callbackClass}" -->
             <fileset dir="." includes="**/*.cls,**/*.p" />
+            <propath>
+                <pathelement location="${env.PROPATH_ENTRY_1}" />
+                <pathelement location="${env.PROPATH_ENTRY_2}" />
+                <pathelement location="${env.PROPATH_ENTRY_3}" />
+                <pathelement location="${env.PROPATH_ENTRY_4}" />
+                <pathelement location="${env.PROPATH_ENTRY_5}" />
+                <pathelement location="${env.PROPATH_ENTRY_6}" />
+                <pathelement location="${env.PROPATH_ENTRY_7}" />
+                <pathelement location="${env.PROPATH_ENTRY_8}" />
+                <pathelement location="${env.PROPATH_ENTRY_9}" />
+            </propath>
         </PCTCompile>
     </target>
 

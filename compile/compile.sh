@@ -10,6 +10,15 @@ for ENTRY in "${PROPATH_ENTRIES[@]}"; do
     fi
     echo "ENTRY[$ENTRY_COUNT]=$ENTRY"
     ENTRY_COUNT=$((ENTRY_COUNT + 1))
+    [ "$ENTRY_COUNT" == 1 ] && expott PROPATH_ENTRY_1="$ENTRY"
+    [ "$ENTRY_COUNT" == 2 ] && export PROPATH_ENTRY_2="$ENTRY"
+    [ "$ENTRY_COUNT" == 3 ] && export PROPATH_ENTRY_3="$ENTRY"
+    [ "$ENTRY_COUNT" == 4 ] && export PROPATH_ENTRY_4="$ENTRY"
+    [ "$ENTRY_COUNT" == 5 ] && export PROPATH_ENTRY_5="$ENTRY"
+    [ "$ENTRY_COUNT" == 6 ] && export PROPATH_ENTRY_6="$ENTRY"
+    [ "$ENTRY_COUNT" == 7 ] && export PROPATH_ENTRY_7="$ENTRY"
+    [ "$ENTRY_COUNT" == 8 ] && export PROPATH_ENTRY_8="$ENTRY"
+    [ "$ENTRY_COUNT" == 9 ] && export PROPATH_ENTRY_9="$ENTRY"
 done
 
 EXIT_CODE=0
