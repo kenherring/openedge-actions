@@ -94,6 +94,7 @@ jobs:
           name: compiled_code_artifact
       - name: test-3
         shell: bash
+        working-directory: compile/test/test3
         run: |
           [ -d compiled.code ] || (echo "::error::Expected compiled.code directory but it was not found" && exit 1)
           RCODE_COUNT=$(find . -name "*.r" | wc -l)
