@@ -20,8 +20,7 @@
             useUnderline="${env.PCT_useUnderline}"
             useRevVideo="${env.PCT_useRevVideo}"
             runList="${env.PCT_runList}"
-            listing="${env.PCT_listing}"
-            listingSource="${env.PCT_listingSource}"
+
             preprocess="${env.PCT_preprocess}"
             debugListing="${env.PCT_debugListing}"
             debugListingDir="${env.PCT_debugListingDir}"
@@ -36,6 +35,8 @@
             xcode="${env.PCT_xcode}"
             >
             <!--
+            listing="${env.PCT_listing}"
+            listingSource="${env.PCT_listingSource}"
             preprocess="${env.PCT_preprocess}"
             preprocessDir="${env.PCT_preprocessDir}"
 
