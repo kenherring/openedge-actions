@@ -22,7 +22,7 @@
             runList="${env.PCT_runList}"
             listing="${env.PCT_listing}"
             listingSource="${env.PCT_listingSource}"
-            preprocess="${env.PCT_preprocess}"
+            preprocess="false"
             preprocessDir="${env.PCT_preprocessDir}"
             debugListing="${env.PCT_debugListing}"
             debugListingDir="${env.PCT_debugListingDir}"
@@ -36,6 +36,8 @@
             forceCompile="${env.PCT_forceCompile}"
             >
             <!--
+            preprocess="${env.PCT_preprocess}"
+
             xcode="${env.PCT_xcode}"
             languages="${env.PCT_languages}"
             textGrowth="${env.PCT_textGrowth}"
