@@ -30,7 +30,6 @@ jobs:
         shell: bash
         working-directory: compile/test/test1
         run: |
-          find . -name "*.r"
           RCODE_COUNT=$(find . -name "*.r" | wc -l)
           [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
           [ -f "source_program1.r" ] || (echo "::error::Expected compiled file source_program1.r but it was not found" && exit 1)
@@ -49,6 +48,7 @@ jobs:
         working-directory: compile/test/test1
         run: |
           echo "steps.compile-1B.outputs.files-compiled=${{ steps.compile-1B.outputs.files-compiled }}"
+          find . -name "*.r"
 
           RCODE_COUNT=$(find rcode -name "*.r" | wc -l)
           [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
@@ -69,10 +69,8 @@ jobs:
         shell: bash
         working-directory: compile/test/test2
         run: |
-          echo "steps.compile-2.outputs.files-compiled=${{ steps.compile-2.outputs.files-compiled }}"
           RCODE_COUNT=$(find rcode -name "*.r" | wc -l)
           [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
-          find . -name "*.r"
           [ -f "rcode/com/org/source_class.r" ] || (echo "::error::Expected compiled file rcode/src/com/org/source_class.r but it was not found" && exit 1)
           [ -f "rcode/com/org/source_classTest.r" ] || (echo "::error::Expected compiled file rcode/test/com/org/source_class.r but it was not found" && exit 1)
           find . -name "*.r" -delete
@@ -110,8 +108,6 @@ jobs:
         id: test-4
         shell: bash
         run: |
-          echo "steps.compile-4.outputs.files-compiled=${{ steps.compile-4.outputs.files-compiled }}"
-          echo "steps.compile-4.outputs.compile-errors=${{ steps.compile-4.outputs.compile-errors }}"
           [ "${{ steps.compile-4.outputs.files-compiled }}" -eq 2 ] || (echo "::error::Expected files-compiled=2 but got ${{ steps.compile-4.outputs.files-compiled }}" && exit 1)
           [ "${{ steps.compile-4.outputs.compile-errors }}" -eq 1 ] || (echo "::error::Expected compile-errors=1 but got ${{ steps.compile-4.outputs.compile-errors }}" && exit 1)
           find . -name "*.r" -delete

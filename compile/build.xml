@@ -33,15 +33,15 @@
             xrefDir="${env.PCT_xrefDir}"
             xmlXref="${env.PCT_xmlXref}"
             forceCompile="${env.PCT_forceCompile}"
+            xcode="${env.PCT_xcode}"
+            languages="${env.PCT_languages}"
+            textGrowth="${env.PCT_textGrowth}"
+            relativePaths="${env.PCT_relativePaths}"
             >
             <!--
             preprocess="${env.PCT_preprocess}"
             preprocessDir="${env.PCT_preprocessDir}"
 
-            xcode="${env.PCT_xcode}"
-            languages="${env.PCT_languages}"
-            textGrowth="${env.PCT_textGrowth}"
-            relativePaths="${env.PCT_relativePaths}"
             progPerc="${env.PCT_progPerc}"
             displayFiles="${env.PCT_displayFiles}"
             requireFullKeywords="${env.PCT_requireFullKeywords}"
