@@ -7,6 +7,7 @@
 
     <target name="compile">
         <echo>basedir=${basedir}</echo>
+        <echo>PCT_preprocess=${env.PCT_preprocess}</echo>
         <PCTCompile
             destDir="${env.PCT_destDir}"
             stopOnError="${env.PCT_stopOnError}"
