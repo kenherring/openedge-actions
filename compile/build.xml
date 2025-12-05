@@ -46,6 +46,18 @@
             outputType="${env.PCT_outputType}"
             callbackClass="${env.PCT_callbackClass}"
             >
+            <!-- xcode="${env.PCT_xcode}"
+            languages="${env.PCT_languages}"
+            textGrowth="${env.PCT_textGrowth}"
+            relativePaths="${env.PCT_relativePaths}"
+            progPerc="${env.PCT_progPerc}"
+            displayFiles="${env.PCT_displayFiles}"
+            requireFullKeywords="${env.PCT_requireFullKeywords}"
+            requireFullNames="${env.PCT_requireFullNames}"
+            requireFieldQualifiers="${env.PCT_requireFieldQualifiers}"
+            requireReturnValues="${env.PCT_requireReturnValues}"
+            outputType="${env.PCT_outputType}"
+            callbackClass="${env.PCT_callbackClass}" -->
             <fileset dir="." includes="**/*.cls,**/*.p" />
             <propath>
                 <pathelement location="${env.PROPATH_ENTRY_1}" />
