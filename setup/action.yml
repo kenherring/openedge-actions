@@ -54,7 +54,7 @@ runs:
         INPUTS_DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
         INPUTS_VERSION: ${{ inputs.version }}
         RUNNER_OS: ${{ runner.os }}
-      run: setup-abl-init.sh
+      run: setup_abl_init.sh
 
     - name: cache-abl-restore
       id: cache-abl-restore
@@ -70,12 +70,12 @@ runs:
       env:
         ABL_VERSION: ${{ inputs.version }}
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
-      run: setup-abl.sh
+      run: setup_abl.sh
 
     - shell: bash
       env:
         DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
-      run: download-deps.sh
+      run: download_deps.sh
 
     - name: check-abl-license-before-cache-save
       id: check-abl-license-before-cache-save
@@ -98,4 +98,4 @@ runs:
       env:
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
         LICENSE_FILE: ${{ inputs.license }}
-      run: setup-license.sh
+      run: setup_license.sh

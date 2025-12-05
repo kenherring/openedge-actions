@@ -9,9 +9,9 @@ GitHub Action that executes an OpenEdge procedure
 ```yml
 jobs:
   my-job:
-    name: run openedge procedure
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
       - name: Run ABL Procedure
         id: run-procedure
         uses: kenherring/openedge-actions/run@v0

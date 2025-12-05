@@ -9,9 +9,9 @@ GitHub Action that executes ABLUnit tests
 ```yml
 jobs:
   my-job:
-    name: run ablunit tests
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
       - name: run ablunit
         id: run-ablunit
         uses: kenherring/openedge-actions/ablunit@v0
