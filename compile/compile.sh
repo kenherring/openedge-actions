@@ -3,6 +3,7 @@ set -euo pipefail
 
 PROPATH=${PROPATH:-.}
 
+# shellcheck disable=SC2207
 PROPATH_ENTRIES=($(tr ',' '\n' <<< "$PROPATH"))
 ENTRY_COUNT=0
 for ENTRY in "${PROPATH_ENTRIES[@]}"; do
@@ -44,13 +45,12 @@ grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" || true
 grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" || true
 
 FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f2)
-echo "FILES_COMPILED=$FILES_COMPILED"
-
-COMPILE_ERRORS=$(grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f6 || echo 0)
-echo "COMPILE_ERRORS=$COMPILE_ERRORS"
-
+echo "files-compiled=$FILES_COMPILED"
 echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
+COMPILE_ERRORS=$(grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f6 || echo 0)
+echo "compile-errors=$COMPILE_ERRORS"
 echo "compile-errors=$COMPILE_ERRORS" >> "$GITHUB_OUTPUT"
+
 
 if [ "$EXIT_CODE" != "0" ]; then
     echo "::error file=$0::ant compile failed (EXIT_CODE=$EXIT_CODE)"

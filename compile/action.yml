@@ -254,11 +254,6 @@ runs:
         PCT_callbackClass: ${{ inputs.pct-callbackClass }}
       run: compile.sh
 
-
-    - id: debug-0
-      shell: bash
-      run: echo "inputs.artifact-name='${{ inputs.artifact-name }}'"
-
     - shell: bash
       if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
       run: touch .gitignore
@@ -270,6 +265,5 @@ runs:
         path: |
           .gitignore
           ${{ inputs.working-directory }}/${{ inputs.pct-destDir }}
-          ${{ inputs.pct-destDir }}
         include-hidden-files: true
         if-no-files-found: error

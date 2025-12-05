@@ -26,7 +26,7 @@ download-ade-source () {
 
 download-pct () {
     local ORIG_DIR
-    echo "::group::Downloading PCT..."
+    echo '::group::Downloading PCT...'
     mkdir -p ~/.ant/lib
 
     ORIG_DIR=$(pwd)

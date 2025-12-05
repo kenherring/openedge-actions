@@ -22,8 +22,6 @@
             listing="${env.PCT_listing}"
             listingSource="${env.PCT_listingSource}"
             preprocess="${env.PCT_preprocess}"
-            >
-            <!--
             preprocessDir="${env.PCT_preprocessDir}"
             debugListing="${env.PCT_debugListing}"
             debugListingDir="${env.PCT_debugListingDir}"
@@ -46,7 +44,8 @@
             requireFieldQualifiers="${env.PCT_requireFieldQualifiers}"
             requireReturnValues="${env.PCT_requireReturnValues}"
             outputType="${env.PCT_outputType}"
-            callbackClass="${env.PCT_callbackClass}" -->
+            callbackClass="${env.PCT_callbackClass}"
+            >
             <fileset dir="." includes="**/*.cls,**/*.p" />
             <propath>
                 <pathelement location="${env.PROPATH_ENTRY_1}" />

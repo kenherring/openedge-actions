@@ -75,33 +75,3 @@ jobs:
 | ------ | ----------- |
 | `files-compiled` | Number of files compiled |
 | `compile-errors` | Number of files that failed to compile |
-
-<!--
-
-## find replace notes for PCT functions
-
-### Find
-
-```text
-(.*) \t(.*) \t(.*)
-```
-
-### Inputs
-
-```text
-pct-$1:\n  description: "$2"\n  required: false\n  default: "$3"
-```
-
-### Environment Variables
-
-```text
-PCT_$1: ${{ inputs.pct-$1 }}
-```
-
-### build.xml
-
-```text
-$1="${env.PCT_$1}"
-```
-
--->
