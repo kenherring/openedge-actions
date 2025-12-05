@@ -11,7 +11,6 @@ for ENTRY in "${PROPATH_ENTRIES[@]}"; do
         echo "::error file=$0::PROPATH entry '$ENTRY' does not exist or is not a directory"
         exit 1
     fi
-    echo "ENTRY[$ENTRY_COUNT]=$ENTRY"
     ENTRY_COUNT=$((ENTRY_COUNT + 1))
     [ "$ENTRY_COUNT" == 1 ] && PROPATH_ENTRY_1="$ENTRY"
     [ "$ENTRY_COUNT" == 2 ] && PROPATH_ENTRY_2="$ENTRY"
