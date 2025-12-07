@@ -12,13 +12,13 @@
         <echo>PCT_debugListingDir=${env.PCT_debugListingDir}</echo>
         <echo>PCT_xrefDir=${env.PCT_xrefDir}</echo>
 
-        <condition property="preprocessDir" value="${env.PCT_preprocessDir" else="${env.PCT_destDir}/.pct">
+        <condition property="preprocessDir" value="${env.PCT_preprocessDir}" else="${env.PCT_destDir}/.pct">
             <not><equals arg1="${env.PCT_preprocessDir}" arg2=""/></not>
         </condition>
-        <condition property="debugListingDir" value="${env.PCT_debugListingDir" else="${env.PCT_destDir}/.pct">
+        <condition property="debugListingDir" value="${env.PCT_debugListingDir}" else="${env.PCT_destDir}/.pct">
             <not><equals arg1="${env.PCT_debugListingDir}" arg2=""/></not>
         </condition>
-        <condition property="xrefDir" value="${env.PCT_xrefDir" else="${env.PCT_destDir}/.pct">
+        <condition property="xrefDir" value="${env.PCT_xrefDir}" else="${env.PCT_destDir}/.pct">
             <not><equals arg1="${env.PCT_xrefDir}" arg2=""/></not>
         </condition>
 
