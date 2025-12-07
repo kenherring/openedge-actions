@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  test-action:
-    name: test-action/create-library
+  test-action-A:
+    name: test-action/create-library-A
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -59,6 +59,30 @@ jobs:
           find . -name "shared.pl"
           PL_COUNT=$(find . -name "shared.pl" | wc -l)
           [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+
+      ## create a library and confirm artifact is uploaded
+      - name: create-library-4
+        uses: ./create-library
+        with:
+          working-directory: create-library/test/test3
+          artifact-name: test-4-artifact
+          pct-destFile: my-library-4.pl
+
+  test-action:
+    name: test-action/create-library-B
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: test-4-artifact
+      - name: test-4
+        shell: bash
+        run: |
+          find .
+          PL_COUNT=$(find . -name "my-library-4.pl" | wc -l)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+          FILE_COUNT=$(find . -type f | wc -l)
+          [ "$FILE_COUNT" -eq 1 ] || (echo "::error::Expected file count=1 but got $FILE_COUNT" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
