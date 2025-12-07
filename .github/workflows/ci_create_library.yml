@@ -1,7 +1,12 @@
 name: CI - Create Library
 
 on:
-  workflow_call:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 jobs:
   test-action:

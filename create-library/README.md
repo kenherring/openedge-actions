@@ -16,7 +16,7 @@ jobs:
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
           dest-dir: 'rcode'
-          pct-library-destFile: my-library.pl
+          pct-destFile: my-library.pl
 ```
 
 ## Inputs
@@ -30,20 +30,20 @@ jobs:
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
 | `working-directory` | false | | The working directory to run the OpenEdge program in |
 | `artifact-name` | false | | Artifact name for uploading procedure library |
-| `pct-library-destFile` | false | `None` | R-code library to create |
-| `pct-library-sharedFile` | false | `None` | Memory mapped library to create |
-| `pct-library-encoding` | false | `None` | Character encoding used to store filenames. |
-| `pct-library-noCompress` | false | `false` | Disable library compression. |
-| `pct-library-cpInternal` | false | `None` | Internal code page (-cpinternal parameter) |
-| `pct-library-cpStream` | false | `None` | Stream code page (-cpstream parameter) |
-| `pct-library-cpColl` | false | `None` | Collation table (-cpcoll parameter) |
-| `pct-library-cpCase` | false | `None` | Case table (-cpcase parameter) |
-| `pct-library-basedir` | false | `None` | The directory from which to store the files. |
-| `pct-library-includes` | false | `None` | Comma- or space-separated list of patterns of files that must be included. All files are included when omitted. |
-| `pct-library-includesFile` | false | `None` | The name of a file. Each line of this file is taken to be an include pattern. |
-| `pct-library-excludes` | false | `None` | Comma- or space-separated list of patterns of files that must be excluded. No files (except default excludes) are excluded when omitted. |
-| `pct-library-excludesFile` | false | `None` | The name of a file. Each line of this file is taken to be an exclude pattern. |
-| `pct-library-defaultExcludes` | false | `true` | Indicates whether default excludes should be used or not ("yes"/"no"). Default excludes are used when omitted. |
+| `pct-destFile` | false | `None` | R-code library to create |
+| `pct-sharedFile` | false | `None` | Memory mapped library to create |
+| `pct-encoding` | false | `None` | Character encoding used to store filenames. |
+| `pct-noCompress` | false | `false` | Disable library compression. |
+| `pct-cpInternal` | false | `None` | Internal code page (-cpinternal parameter) |
+| `pct-cpStream` | false | `None` | Stream code page (-cpstream parameter) |
+| `pct-cpColl` | false | `None` | Collation table (-cpcoll parameter) |
+| `pct-cpCase` | false | `None` | Case table (-cpcase parameter) |
+| `pct-basedir` | false | `None` | The directory from which to store the files. |
+| `pct-includes` | false | `None` | Comma- or space-separated list of patterns of files that must be included. All files are included when omitted. |
+| `pct-includesFile` | false | `None` | The name of a file. Each line of this file is taken to be an include pattern. |
+| `pct-excludes` | false | `None` | Comma- or space-separated list of patterns of files that must be excluded. No files (except default excludes) are excluded when omitted. |
+| `pct-excludesFile` | false | `None` | The name of a file. Each line of this file is taken to be an exclude pattern. |
+| `pct-defaultExcludes` | false | `true` | Indicates whether default excludes should be used or not ("yes"/"no"). Default excludes are used when omitted. |
 
 <!--
 
