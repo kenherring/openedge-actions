@@ -27,7 +27,7 @@ inputs:
   artifact-name:
     description: Artifact name for uploading procedure library
     required: false
-    default: rcode-artifact
+    default: library-artifact
   ##### PCTLibrary Options #####
   pct-destFile:
     description: "R-code library to create"
@@ -46,7 +46,6 @@ inputs:
   pct-cpInternal:
     description: "Internal code page (-cpinternal parameter)"
     required: false
-    default: "iso8859-1"
   pct-cpStream:
     description: "Stream code page (-cpstream parameter)"
     required: false
@@ -59,7 +58,6 @@ inputs:
   pct-basedir:
     description: "The directory from which to store the files."
     required: false
-    default: "."
   pct-includes:
     description: "Comma- or space-separated list of patterns of files that must be included. All files are included when omitted."
     required: false
@@ -146,16 +144,13 @@ runs:
         PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
       run: |
         ant createLibrary -f "$RUNNER_TEMP/create-library.xml" -Dbasedir="$(pwd)"
-
-    - shell: bash
-      if: ${{ inputs.artifact-name != '' }}
-      run: touch .gitignore
+        [ -z "${{ inputs.artifact-name }}" ] || touch .gitignore
 
     - uses: actions/upload-artifact@v4
       if: ${{ inputs.artifact-name != '' }}
       with:
         name: ${{ inputs.artifact-name }}
         path: |
-          .gitignore
-          ${{ inputs.pct-destFile}}
+          ${{ inputs.working-directory }}/.gitignore
+          ${{ inputs.working-directory }}/${{ inputs.pct-destFile}}
         if-no-files-found: error
