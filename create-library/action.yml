@@ -109,6 +109,7 @@ runs:
 
     - id: create-build-script
       shell: bash
+      working-directory: ${{ github.action_path }}
       env:
         PCT_destFile: ${{ inputs.pct-destFile }}
         PCT_sharedFile: ${{ inputs.pct-sharedFile }}
@@ -146,7 +147,7 @@ runs:
         PCT_excludesFile: ${{ inputs.pct-excludesFile }}
         PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
       run: |
-        ant createLibrary -f "$RUNNER_TEMP/build_temp.xml" -Dbasedir="$(pwd)"
+        ant createLibrary -f "$RUNNER_TEMP/create-library.xml" -Dbasedir="$(pwd)"
 
     - shell: bash
       if: ${{ inputs.artifact-name != '' }}
