@@ -22,4 +22,4 @@ runs:
       shell: bash
       env:
         OPT_PATH: ${{ inputs.path }}
-      run: database-stop.sh
+      run: database_stop.sh
