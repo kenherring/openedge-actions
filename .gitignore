@@ -4,6 +4,7 @@
 *.tar.gz
 /ablunit.json
 ADE-*/
+build_temp.xml
 DEV_NOTES.md
 results.json
 results.xml

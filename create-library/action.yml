@@ -31,14 +31,14 @@ inputs:
   ##### PCTLibrary Options #####
   pct-destFile:
     description: "R-code library to create"
-    required: false
+    required: true
   pct-sharedFile:
     description: "Memory mapped library to create"
     required: false
   pct-encoding:
     description: "Character encoding used to store filenames."
     required: false
-    default: "None"
+    default: ""
   pct-noCompress:
     description: "Disable library compression."
     required: false
@@ -46,23 +46,23 @@ inputs:
   pct-cpInternal:
     description: "Internal code page (-cpinternal parameter)"
     required: false
-    default: "None"
+    default: "iso8859-1"
   pct-cpStream:
     description: "Stream code page (-cpstream parameter)"
     required: false
-    default: "None"
+    default: "iso8859-1"
   pct-cpColl:
     description: "Collation table (-cpcoll parameter)"
     required: false
-    default: "None"
+    default: "iso8859-1"
   pct-cpCase:
     description: "Case table (-cpcase parameter)"
     required: false
-    default: "None"
+    default: "iso8859-1"
   pct-basedir:
     description: "The directory from which to store the files."
     required: false
-    default: "None"
+    default: "."
   pct-includes:
     description: "Comma- or space-separated list of patterns of files that must be included. All files are included when omitted."
     required: false
@@ -107,6 +107,25 @@ runs:
               "cache-token": ${{ inputs.cache-token }}
           }
 
+    - id: create-build-script
+      shell: bash
+      env:
+        PCT_destFile: ${{ inputs.pct-destFile }}
+        PCT_sharedFile: ${{ inputs.pct-sharedFile }}
+        PCT_encoding: ${{ inputs.pct-encoding }}
+        PCT_noCompress: ${{ inputs.pct-noCompress }}
+        PCT_cpInternal: ${{ inputs.pct-cpInternal }}
+        PCT_cpStream: ${{ inputs.pct-cpStream }}
+        PCT_cpColl: ${{ inputs.pct-cpColl }}
+        PCT_cpCase: ${{ inputs.pct-cpCase }}
+        PCT_basedir: ${{ inputs.pct-basedir }}
+        PCT_includes: ${{ inputs.pct-includes }}
+        PCT_includesFile: ${{ inputs.pct-includesFile }}
+        PCT_excludes: ${{ inputs.pct-excludes }}
+        PCT_excludesFile: ${{ inputs.pct-excludesFile }}
+        PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
+      run: ./create_build_script.sh
+
     - id: create-library
       name: create-library
       shell: bash
@@ -127,14 +146,14 @@ runs:
         PCT_excludesFile: ${{ inputs.pct-excludesFile }}
         PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
       run: |
-        ant createLibrary -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)"
+        ant createLibrary -f '${{ github.action_path }}/build_temp.xml' -Dbasedir="$(pwd)"
 
     - shell: bash
-      if: ${{ inputs.artifact-name != '' && inputs.pct-destFile != 'None' }}
+      if: ${{ inputs.artifact-name != '' }}
       run: touch .gitignore
 
     - uses: actions/upload-artifact@v4
-      if: ${{ inputs.artifact-name != '' && inputs.pct-destFile != 'None' }}
+      if: ${{ inputs.artifact-name != '' }}
       with:
         name: ${{ inputs.artifact-name }}
         path: |

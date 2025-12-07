@@ -1,27 +1,99 @@
-<project name="openedge-actions/create-library">
+<project
+    name="openedge-actions/create-library"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
 
 	<taskdef resource="PCT.properties" />
 	<typedef resource="types.properties" />
     <property environment="env" />
 	<DlcHome value="${env.DLC}" />
 
+    <!--
+    cd create-library/test/test1
+    /c/Progress/OpenEdge-12.8/ant/bin/ant createLibrary -f ../../build.xml -Dbasedir="$(pwd)"
+    -->
     <target name="createLibrary">
+        <property name="destFile" value="${env.PCT_destFile}" if:set="${env.PCT_destFile}" />
+        <property name="destFile" value="lib.pl" />
+        <property name="sharedFile" value="${env.PCT_sharedFile}" if:set="${env.PCT_sharedFile}" />
+        <property name="sharedFile" value="" />
+        <property name="encoding" value="${env.PCT_encoding}" if:set="${env.PCT_encoding}" />
+        <property name="encoding" value="iso8859-1" />
+        <property name="noCompress" value="${env.PCT_noCompress}" if:set="${env.PCT_noCompress}" />
+        <property name="noCompress" value="false" />
+        <property name="PCT_basedir" value="${env.PCT_basedir}" if:set="${env.PCT_basedir}" />
+        <property name="PCT_basedir" value="." />
+        <property name="cpInternal" value="${env.PCT_cpInternal}" if:set="${env.PCT_cpInternal}" />
+        <property name="cpInternal" value="iso8859-1" />
+        <property name="cpStream" value="${env.PCT_cpStream}" if:set="${env.PCT_cpStream}" />
+        <property name="cpStream" value="${cpInternal}" />
+        <property name="cpColl" value="${env.PCT_cpColl}" if:set="${env.PCT_cpColl}" />
+        <property name="cpColl" value="${cpInternal}" />
+        <property name="cpCase" value="${env.PCT_cpCase}" if:set="${env.PCT_cpCase}" />
+        <property name="cpCase" value="" />
+        <prpoerty name="includes" value="${env.PCT_includes}" if:set="${env.PCT_includes}" />
+        <!-- <property name="includes" value="**/*.cls,**/*.p,**/*.r" /> -->
+        <property name="includes" value="" />
+        <property name="includesFile" value="${env.PCT_includesFile}" if:set="${env.PCT_includesFile}" />
+        <property name="includesFile" value="" />
+        <property name="excludes" value="${env.PCT_excludes}" if:set="${env.PCT_excludes}" />
+        <property name="excludes" value="**/*.pl" />
+        <property name="excludesFile" value="${env.PCT_excludesFile}" if:set="${env.PCT_excludesFile}" />
+        <property name="excludesFile" value="" />
+        <property name="defaultExcludes" value="${env.PCT_defaultExcludes}" if:set="${env.PCT_defaultExcludes}" />
+        <property name="defaultExcludes" value="true" />
+
+        <echo>destFile=${destFile}</echo>
+        <echo>sharedFile=${sharedFile}</echo>
+        <echo>encoding=${encoding}</echo>
+        <echo>noCompress=${noCompress}</echo>
+        <echo>cpInternal=${cpInternal}</echo>
+        <echo>cpStream=${cpStream}</echo>
+        <echo>cpColl=${cpColl}</echo>
+        <echo>cpCase=${cpCase}</echo>
+        <echo>PCT_baseDir=${PCT_baseDir}</echo>
+        <echo>includes=${includes}</echo>
+        <echo>includesFile=${includesFile}</echo>
+        <echo>excludes=${excludes}</echo>
+        <echo>excludesFile=${excludesFile}</echo>
+        <echo>defaultExcludes=${defaultExcludes}</echo>
+
         <PCTLibrary
-            destFile="${env.PCT_destFile}"
-            sharedFile="${env.PCT_sharedFile}"
-            encoding="${env.PCT_encoding}"
-            noCompress="${env.PCT_noCompress}"
-            cpInternal="${env.PCT_cpInternal}"
-            cpStream="${env.PCT_cpStream}"
-            cpColl="${env.PCT_cpColl}"
-            cpCase="${env.PCT_cpCase}"
-            basedir="${env.PCT_basedir}"
-            includes="${env.PCT_includes}"
-            includesFile="${env.PCT_includesFile}"
-            excludes="${env.PCT_excludes}"
-            excludesFile="${env.PCT_excludesFile}"
-            defaultExcludes="${env.PCT_defaultExcludes}"
+            destFile="${destFile}"
+            encoding="${encoding}"
+            cpInternal="${cpInternal}"
+            cpStream="${cpStream}"
+            basedir="${PCT_basedir}"
+            includes="${includes}"
+            excludes="${excludes}"
+            defaultExcludes="${defaultExcludes}"
             >
+            <!-- if:set="${destFile}" -->
+            <!-- includesFile="${includesFile}" -->
+            <!-- excludesFile="${excludesFile}" -->
+            <!-- noCompress="${env.PCT_noCompress}" -->
+            <!-- cpCase="${cpCase}" -->
+            <!-- cpColl="${cpColl}" -->
+            <!-- includesFile="${env.PCT_includesFile}" -->
+            <!-- excludesFile="${env.PCT_excludesFile}" -->
+            <fileset dir="." includes="**/*.cls,**/*.p,**/*.r" excludes="**/.pct/**" />
+        </PCTLibrary>
+        <PCTLibrary
+            sharedFile="${sharedFile}"
+            encoding="${encoding}"
+            cpInternal="${cpInternal}"
+            cpStream="${cpStream}"
+            basedir="${PCT_basedir}"
+            includes="${includes}"
+            excludes="${excludes}"
+            defaultExcludes="${defaultExcludes}"
+            if:set="${sharedFile}"
+            >
+            <!-- noCompress="${env.PCT_noCompress}" -->
+            <!-- cpCase="${cpCase}" -->
+            <!-- cpColl="${cpColl}" -->
+            <!-- includesFile="${env.PCT_includesFile}" -->
+            <!-- excludesFile="${env.PCT_excludesFile}" -->
             <fileset dir="." includes="**/*.cls,**/*.p,**/*.r" excludes="**/.pct/**" />
         </PCTLibrary>
     </target>
