@@ -68,6 +68,10 @@ jobs:
           artifact-name: test-4-artifact
           pct-destFile: my-library-4.pl
 
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh create-library
+
   test-action-B:
     name: test-action/create-library-B
     runs-on: ubuntu-latest
@@ -84,7 +88,3 @@ jobs:
           [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
           FILE_COUNT=$(find . -type f | wc -l)
           [ "$FILE_COUNT" -eq 1 ] || (echo "::error::Expected file count=1 but got $FILE_COUNT" && exit 1)
-
-      - name: pre-merge-validation
-        shell: bash
-        run: ./.github/workflows/pre_merge_validation.sh create-library
