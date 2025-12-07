@@ -3,9 +3,9 @@
     xmlns:if="ant:if"
     xmlns:unless="ant:unless">
 
-	<!-- <taskdef resource="PCT.properties" />
-	<typedef resource="types.properties" /> -->
-    <!-- <property environment="env" /> -->
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+    <property environment="env" />
 	<DlcHome value="${env.DLC}" />
 
     <target name="createLibrary">

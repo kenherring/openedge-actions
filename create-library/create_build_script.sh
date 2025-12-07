@@ -2,9 +2,11 @@
 set -euo pipefail
 set -x
 
+[ -z "${RUNNER_TEMP:-}" ] && RUNNER_TEMP=$TEMP
+
 [ -n "${PCT_destFile:-}" ] || PCT_destFile="lib.pl"
 
-[ -n "${PCT_destFile:-}" ] && LIBRARY_PARAMS=("destDir=\"${PCT_destFile}\"")
+[ -n "${PCT_destFile:-}" ] && LIBRARY_PARAMS=("destFile=\"${PCT_destFile}\"")
 [ -n "${PCT_sharedFile:-}" ] && LIBRARY_PARAMS+=("sharedFile=\"${PCT_sharedFile}\"")
 [ -n "${PCT_encoding:-}" ] && LIBRARY_PARAMS+=("encoding=\"${PCT_encoding}\"")
 [ -n "${PCT_noCompress:-}" ] && LIBRARY_PARAMS+=("noCompress=\"${PCT_noCompress}\"")
