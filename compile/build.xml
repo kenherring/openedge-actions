@@ -27,7 +27,7 @@
             appendStringXref="${env.PCT_appendStringXref}"
             keepXref="${env.PCT_keepXref}"
             noParse="${env.PCT_noParse}"
-
+            xrefDir="${env.PCT_xrefDir}"
             xmlXref="${env.PCT_xmlXref}"
             forceCompile="${env.PCT_forceCompile}"
             xcode="${env.PCT_xcode}"
@@ -42,15 +42,13 @@
             outputType="${env.PCT_outputType}"
             callbackClass="${env.PCT_callbackClass}"
             >
+
             <!--
             listing="${env.PCT_listing}"
             listingSource="${env.PCT_listingSource}"
             preprocess="${env.PCT_preprocess}"
             preprocessDir="${env.PCT_preprocessDir}"
             debugListingDir="${env.PCT_debugListingDir}"
-
-            xrefDir="${env.PCT_xrefDir}"
-
             textGrowth="${env.PCT_textGrowth}"
             -->
             <fileset dir="." includes="**/*.cls,**/*.p" />
