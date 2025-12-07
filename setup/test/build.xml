@@ -1,4 +1,4 @@
-<project name="setup.test">
+<project name="openedge-actions/setup/test">
 
 	<taskdef resource="PCT.properties" />
 	<typedef resource="types.properties" />

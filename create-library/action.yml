@@ -133,12 +133,12 @@ runs:
         PCT_excludesFile: ${{ inputs.pct-excludesFile }}
         PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
       run: |
-        ant create-library -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)"
+        ant createLibrary -f '${{ github.action_path }}/build.xml' -Dbasedir="$(pwd)"
 
     - shell: bash
       if: ${{ inputs.artifact-name != '' && inputs.pct-destFile != 'None' }}
       run: touch .gitignore
-      
+
     - uses: actions/upload-artifact@v4
       if: ${{ inputs.artifact-name != '' && inputs.pct-destFile != 'None' }}
       with:
