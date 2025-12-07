@@ -1,6 +1,5 @@
 #!/bin/bash
 set -euo pipefail
-set -x
 
 [ -z "${RUNNER_TEMP:-}" ] && RUNNER_TEMP=$TEMP
 
@@ -21,5 +20,6 @@ set -x
 [ -n "${PCT_excludesFile:-}" ] && LIBRARY_PARAMS+=("excludesFile=\"${PCT_excludesFile}\"")
 [ -n "${PCT_defaultExcludes:-}" ] && LIBRARY_PARAMS+=("defaultExcludes=\"${PCT_defaultExcludes}\"")
 
-sed "s/params=\"PARAMS\"/${LIBRARY_PARAMS[*]}/" build_template.xml > "$RUNNER_TEMP/create-library.xml"
+sed "s|params=\"PARAMS\"|${LIBRARY_PARAMS[*]}|" build_template.xml > "$RUNNER_TEMP/create-library.xml"
+
 cat "$RUNNER_TEMP/create-library.xml"
