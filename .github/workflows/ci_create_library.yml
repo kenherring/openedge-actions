@@ -21,6 +21,7 @@ jobs:
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
             working-directory: create-library/test/test1
+            artifact-name: ''
       - name: test-1
         shell: bash
         working-directory: create-library/test/test1
@@ -35,6 +36,7 @@ jobs:
         with:
             pct-destFile: my-library.pl
             working-directory: create-library/test/test1
+            artifact-name: ''
       - name: test-2
         shell: bash
         working-directory: create-library/test/test1
@@ -49,6 +51,7 @@ jobs:
         with:
             pct-sharedFile: shared.pl
             working-directory: create-library/test/test3
+            artifact-name: ''
       - name: test-3
         shell: bash
         working-directory: create-library/test/test3
