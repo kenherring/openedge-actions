@@ -31,7 +31,7 @@ inputs:
   ##### PCTLibrary Options #####
   pct-destFile:
     description: "R-code library to create"
-    required: true
+    required: false
   pct-sharedFile:
     description: "Memory mapped library to create"
     required: false
@@ -124,7 +124,7 @@ runs:
         PCT_excludes: ${{ inputs.pct-excludes }}
         PCT_excludesFile: ${{ inputs.pct-excludesFile }}
         PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
-      run: ./create_build_script.sh
+      run: create_build_script.sh
 
     - id: create-library
       name: create-library
@@ -146,7 +146,7 @@ runs:
         PCT_excludesFile: ${{ inputs.pct-excludesFile }}
         PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
       run: |
-        ant createLibrary -f '${{ github.action_path }}/build_temp.xml' -Dbasedir="$(pwd)"
+        ant createLibrary -f "$RUNNER_TEMP/build_temp.xml" -Dbasedir="$(pwd)"
 
     - shell: bash
       if: ${{ inputs.artifact-name != '' }}

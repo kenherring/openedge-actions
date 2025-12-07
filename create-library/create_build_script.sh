@@ -19,4 +19,4 @@ set -euo pipefail
 [ -n "${PCT_excludesFile:-}" ] && LIBRARY_PARAMS+=("excludesFile=\"${PCT_excludesFile}\"")
 [ -n "${PCT_defaultExcludes:-}" ] && LIBRARY_PARAMS+=("defaultExcludes=\"${PCT_defaultExcludes}\"")
 
-sed "s/params=\"PARAMS\"/${LIBRARY_PARAMS[*]}/" build_template.xml > build_temp.xml
+sed "s/params=\"PARAMS\"/${LIBRARY_PARAMS[*]}/" build_template.xml > "$RUNNER_TEMP/build_temp.xml"

@@ -27,7 +27,35 @@ jobs:
         run: |
           find . -name "*.pl"
           PL_COUNT=$(find . -name "*.pl" | wc -l)
-          [ "$PL_COUNT" -eq 2 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+
+      ## create a named library
+      - name: create-library-2
+        uses: ./create-library
+        with:
+            pct-destFile: my-library.pl
+            working-directory: create-library/test/test1
+      - name: test-2
+        shell: bash
+        working-directory: create-library/test/test1
+        run: |
+          find . -name "my-library.pl"
+          PL_COUNT=$(find . -name "my-library.pl" | wc -l)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+
+      ## create a shared library
+      - name: create-library-3
+        uses: ./create-library
+        with:
+            pct-sharedFile: shared.pl
+            working-directory: create-library/test/test3
+      - name: test-3
+        shell: bash
+        working-directory: create-library/test/test3
+        run: |
+          find . -name "shared.pl"
+          PL_COUNT=$(find . -name "shared.pl" | wc -l)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
