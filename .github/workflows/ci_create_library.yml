@@ -68,9 +68,10 @@ jobs:
           artifact-name: test-4-artifact
           pct-destFile: my-library-4.pl
 
-  test-action:
+  test-action-B:
     name: test-action/create-library-B
     runs-on: ubuntu-latest
+    needs: [ test-action-A ]
     steps:
       - uses: actions/download-artifact@v4
         with:
