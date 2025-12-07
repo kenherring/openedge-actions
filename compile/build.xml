@@ -72,7 +72,7 @@
             <!--
             textGrowth="${env.PCT_textGrowth}"
             -->
-            <fileset dir="." includes="**/*.cls,**/*.p" excludes="${destDir}/.pct"/>
+            <fileset dir="." includes="**/*.cls,**/*.p" excludes="${destDir}/.pct/**"/>
             <propath>
                 <pathelement location="${env.PROPATH_ENTRY_1}" />
                 <pathelement location="${env.PROPATH_ENTRY_2}" />
