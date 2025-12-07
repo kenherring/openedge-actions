@@ -229,15 +229,15 @@ runs:
         PCT_listing: ${{ inputs.pct-listing }}
         PCT_listingSource: ${{ inputs.pct-listingSource }}
         PCT_preprocess: ${{ inputs.pct-preprocess }}
-        PCT_preprocessDir: ${{ inputs.pct-preprocessDir || inputs.pct-destDir + '/.pct' }}
+        PCT_preprocessDir: ${{ inputs.pct-preprocessDir }}
         PCT_debugListing: ${{ inputs.pct-debugListing }}
-        PCT_debugListingDir: ${{ inputs.pct-debugListingDir || inputs.pct-destDir + '/.pct' }}
+        PCT_debugListingDir: ${{ inputs.pct-debugListingDir }}
         PCT_flattenDebugListing: ${{ inputs.pct-flattenDebugListing }}
         PCT_stringXref: ${{ inputs.pct-stringXref }}
         PCT_appendStringXref: ${{ inputs.pct-appendStringXref }}
         PCT_keepXref: ${{ inputs.pct-keepXref }}
         PCT_noParse: ${{ inputs.pct-noParse }}
-        PCT_xrefDir: ${{ inputs.pct-xrefDir || inputs.pct-destDir + '/.pct' }}
+        PCT_xrefDir: ${{ inputs.pct-xrefDir }}
         PCT_xmlXref: ${{ inputs.pct-xmlXref }}
         PCT_forceCompile: ${{ inputs.pct-forceCompile }}
         PCT_xcode: ${{ inputs.pct-xcode }}
