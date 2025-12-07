@@ -12,7 +12,6 @@ jobs:
   test-action:
     name: test-action/create-library
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v5
 
@@ -21,16 +20,14 @@ jobs:
         uses: ./create-library
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-            working-directory: create/test/test1
+            working-directory: create-library/test/test1
       - name: test-1
         shell: bash
-        working-directory: compile/test/test1
+        working-directory: create-library/test/test1
         run: |
-          find . -name "*.r"
-          RCODE_COUNT=$(find . -name "*.r" | wc -l)
-          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
-          [ -f "source_program1.r" ] || (echo "::error::Expected compiled file source_program1.r but it was not found" && exit 1)
-          [ -f "src/source_program2.r" ] || (echo "::error::Expected compiled file src/source_program2.r but it was not found" && exit 1)
+          find . -name "*.pl"
+          PL_COUNT=$(find . -name "*.pl" | wc -l)
+          [ "$PL_COUNT" -eq 2 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
