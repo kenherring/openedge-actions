@@ -50,15 +50,12 @@ inputs:
   pct-cpStream:
     description: "Stream code page (-cpstream parameter)"
     required: false
-    default: "iso8859-1"
   pct-cpColl:
     description: "Collation table (-cpcoll parameter)"
     required: false
-    default: "iso8859-1"
   pct-cpCase:
     description: "Case table (-cpcase parameter)"
     required: false
-    default: "iso8859-1"
   pct-basedir:
     description: "The directory from which to store the files."
     required: false
@@ -72,6 +69,7 @@ inputs:
   pct-excludes:
     description: "Comma- or space-separated list of patterns of files that must be excluded. No files (except default excludes) are excluded when omitted."
     required: false
+    default: "**/*.pl"
   pct-excludesFile:
     description: "The name of a file. Each line of this file is taken to be an exclude pattern."
     required: false
