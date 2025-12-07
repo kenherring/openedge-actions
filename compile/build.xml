@@ -6,12 +6,7 @@
 	<DlcHome value="${env.DLC}" />
 
     <target name="compile">
-        <echo>basedir=${basedir}</echo>
-        <echo>PCT_destDir=${env.PCT_destDir}</echo>
-        <echo>PCT_preprocessDir=${env.PCT_preprocessDir}</echo>
-        <echo>PCT_debugListingDir=${env.PCT_debugListingDir}</echo>
-        <echo>PCT_xrefDir=${env.PCT_xrefDir}</echo>
-
+        <!-- <echo>basedir=${basedir}</echo> -->
 
         <condition property="destDir" value="${env.PCT_destDir}" else=".">
             <not><equals arg1="${env.PCT_destDir}" arg2=""/></not>
@@ -25,11 +20,6 @@
         <condition property="xrefDir" value="${env.PCT_xrefDir}" else="${destDir}/.pct">
             <not><equals arg1="${env.PCT_xrefDir}" arg2=""/></not>
         </condition>
-
-        <echo>destDir=${destDir}</echo>
-        <echo>preprocessDir=${preprocessDir}</echo>
-        <echo>debugListingDir=${debugListingDir}</echo>
-        <echo>xrefDir=${xrefDir}</echo>
 
         <PCTCompile
             destDir="${destDir}"
