@@ -134,9 +134,6 @@ inputs:
   pct-languages:
     description: "Comma-separated list of language segments to include in the compiled r-code. LANGUAGES option of the COMPILE statement"
     required: false
-  pct-textGrowth:
-    description: "TEXT-SEG-GROWTH option of the COMPILE statement."
-    required: false
   pct-relativePaths:
     description: "Use relative paths instead of absolute paths for propath and filesets. Every fileset dir has to be in propath."
     required: false
@@ -242,7 +239,6 @@ runs:
         PCT_forceCompile: ${{ inputs.pct-forceCompile }}
         PCT_xcode: ${{ inputs.pct-xcode }}
         PCT_languages: ${{ inputs.pct-languages }}
-        PCT_textGrowth: ${{ inputs.pct-textGrowth }}
         PCT_relativePaths: ${{ inputs.pct-relativePaths }}
         PCT_progPerc: ${{ inputs.pct-progPerc }}
         PCT_displayFiles: ${{ inputs.pct-displayFiles }}

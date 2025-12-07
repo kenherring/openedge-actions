@@ -58,7 +58,6 @@ jobs:
 | `pct-forceCompile` | false | `false` | Always compile everything. |
 | `pct-xcode` | false | `false` | Compiles using XCODE option. Disables XREF and LISTING options. |
 | `pct-languages` | false | `None` | Comma-separated list of language segments to include in the compiled r-code. LANGUAGES option of the COMPILE statement |
-| `pct-textGrowth` | false | `None` | TEXT-SEG-GROWTH option of the COMPILE statement. |
 | `pct-relativePaths` | false | `false` | Use relative paths instead of absolute paths for propath and filesets. Every fileset dir has to be in propath. |
 | `pct-progPerc` | false | `0` (not displayed) | Show progression percentage every x percent. |
 | `pct-displayFiles` | false | `0` (no display) | 1 will display files to be recompiled (and reason). 2 will display all files. 0 doesn't display anything |
