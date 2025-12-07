@@ -8,6 +8,9 @@
     <target name="compile">
         <echo>basedir=${basedir}</echo>
         <echo>PCT_preprocess=${env.PCT_preprocess}</echo>
+        <echo>PCT_preprocessDir=${env.PCT_preprocessDir}</echo>
+        <echo>PCT_debugListingDir=${env.PCT_debugListingDir}</echo>
+        <echo>PCT_xrefDir=${env.PCT_xrefDir}</echo>
         <PCTCompile
             destDir="${env.PCT_destDir}"
             stopOnError="${env.PCT_stopOnError}"
