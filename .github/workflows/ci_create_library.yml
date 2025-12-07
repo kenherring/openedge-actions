@@ -1,0 +1,32 @@
+name: CI - Create Library
+
+on:
+  workflow_call:
+
+jobs:
+  test-action:
+    name: test-action/create-library
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      ## create a library
+      - name: create-library-1
+        uses: ./create-library-1
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: create/test/test1
+      - name: test-1
+        shell: bash
+        working-directory: compile/test/test1
+        run: |
+          find . -name "*.r"
+          RCODE_COUNT=$(find . -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+          [ -f "source_program1.r" ] || (echo "::error::Expected compiled file source_program1.r but it was not found" && exit 1)
+          [ -f "src/source_program2.r" ] || (echo "::error::Expected compiled file src/source_program2.r but it was not found" && exit 1)
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh create-library

@@ -1,0 +1,29 @@
+<project name="setup.test">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+    <property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+    <target name="createLibary">
+        <PCTLibrary
+            destFile="${env.PCT_destFile}"
+            sharedFile="${env.PCT_sharedFile}"
+            encoding="${env.PCT_encoding}"
+            noCompress="${env.PCT_noCompress}"
+            cpInternal="${env.PCT_cpInternal}"
+            cpStream="${env.PCT_cpStream}"
+            cpColl="${env.PCT_cpColl}"
+            cpCase="${env.PCT_cpCase}"
+            basedir="${env.PCT_basedir}"
+            includes="${env.PCT_includes}"
+            includesFile="${env.PCT_includesFile}"
+            excludes="${env.PCT_excludes}"
+            excludesFile="${env.PCT_excludesFile}"
+            defaultExcludes="${env.PCT_defaultExcludes}"
+            >
+            <fileset dir="." includes="**/*.cls,**/*.p,**/*.r" excludes="**/.pct/**" />
+        </PCTLibrary>
+    </target>
+
+</project>
