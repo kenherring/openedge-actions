@@ -1,0 +1,19 @@
+<project
+    name="openedge-actions/create-library"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+    <property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+    <target name="createLibrary">
+        <PCTLibrary
+            params="PARAMS"
+            >
+            <fileset dir="." includes="**/*.cls,**/*.p,**/*.r" excludes="**/.pct/**" />
+        </PCTLibrary>
+    </target>
+
+</project>

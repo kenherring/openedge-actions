@@ -1,0 +1,90 @@
+name: CI - Create Library
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  test-action-A:
+    name: test-action/create-library-A
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      ## create a library
+      - name: create-library-1
+        uses: ./create-library
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: create-library/test/test1
+            artifact-name: ''
+      - name: test-1
+        shell: bash
+        working-directory: create-library/test/test1
+        run: |
+          find . -name "*.pl"
+          PL_COUNT=$(find . -name "*.pl" | wc -l)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+
+      ## create a named library
+      - name: create-library-2
+        uses: ./create-library
+        with:
+            pct-destFile: my-library.pl
+            working-directory: create-library/test/test1
+            artifact-name: ''
+      - name: test-2
+        shell: bash
+        working-directory: create-library/test/test1
+        run: |
+          find . -name "my-library.pl"
+          PL_COUNT=$(find . -name "my-library.pl" | wc -l)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+
+      ## create a shared library
+      - name: create-library-3
+        uses: ./create-library
+        with:
+            pct-sharedFile: shared.pl
+            working-directory: create-library/test/test3
+            artifact-name: ''
+      - name: test-3
+        shell: bash
+        working-directory: create-library/test/test3
+        run: |
+          find . -name "shared.pl"
+          PL_COUNT=$(find . -name "shared.pl" | wc -l)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+
+      ## create a library and confirm artifact is uploaded
+      - name: create-library-4
+        uses: ./create-library
+        with:
+          working-directory: create-library/test/test3
+          artifact-name: test-4-artifact
+          pct-destFile: my-library-4.pl
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh create-library
+
+  test-action-B:
+    name: test-action/create-library-B
+    runs-on: ubuntu-latest
+    needs: [ test-action-A ]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: test-4-artifact
+      - name: test-4
+        shell: bash
+        run: |
+          find .
+          PL_COUNT=$(find . -name "my-library-4.pl" | wc -l)
+          [ "$PL_COUNT" -eq 1 ] || (echo "::error::Expected pl count=1 but got $PL_COUNT" && exit 1)
+          FILE_COUNT=$(find . -type f | wc -l)
+          [ "$FILE_COUNT" -eq 1 ] || (echo "::error::Expected file count=1 but got $FILE_COUNT" && exit 1)

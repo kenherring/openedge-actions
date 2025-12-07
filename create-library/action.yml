@@ -1,0 +1,156 @@
+name: openedge-actions/compile
+description: Compile OpenEdge code
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  artifact-name:
+    description: Artifact name for uploading procedure library
+    required: false
+    default: library-artifact
+  ##### PCTLibrary Options #####
+  pct-destFile:
+    description: "R-code library to create"
+    required: false
+  pct-sharedFile:
+    description: "Memory mapped library to create"
+    required: false
+  pct-encoding:
+    description: "Character encoding used to store filenames."
+    required: false
+    default: ""
+  pct-noCompress:
+    description: "Disable library compression."
+    required: false
+    default: "false"
+  pct-cpInternal:
+    description: "Internal code page (-cpinternal parameter)"
+    required: false
+  pct-cpStream:
+    description: "Stream code page (-cpstream parameter)"
+    required: false
+  pct-cpColl:
+    description: "Collation table (-cpcoll parameter)"
+    required: false
+  pct-cpCase:
+    description: "Case table (-cpcase parameter)"
+    required: false
+  pct-basedir:
+    description: "The directory from which to store the files."
+    required: false
+  pct-includes:
+    description: "Comma- or space-separated list of patterns of files that must be included. All files are included when omitted."
+    required: false
+  pct-includesFile:
+    description: "The name of a file. Each line of this file is taken to be an include pattern."
+    required: false
+  pct-excludes:
+    description: "Comma- or space-separated list of patterns of files that must be excluded. No files (except default excludes) are excluded when omitted."
+    required: false
+    default: "**/*.pl"
+  pct-excludesFile:
+    description: "The name of a file. Each line of this file is taken to be an exclude pattern."
+    required: false
+  pct-defaultExcludes:
+    description: "Indicates whether default excludes should be used or not (\"yes\"/\"no\"). Default excludes are used when omitted."
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.0.2
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - id: create-build-script
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      env:
+        PCT_destFile: ${{ inputs.pct-destFile }}
+        PCT_sharedFile: ${{ inputs.pct-sharedFile }}
+        PCT_encoding: ${{ inputs.pct-encoding }}
+        PCT_noCompress: ${{ inputs.pct-noCompress }}
+        PCT_cpInternal: ${{ inputs.pct-cpInternal }}
+        PCT_cpStream: ${{ inputs.pct-cpStream }}
+        PCT_cpColl: ${{ inputs.pct-cpColl }}
+        PCT_cpCase: ${{ inputs.pct-cpCase }}
+        PCT_basedir: ${{ inputs.pct-basedir }}
+        PCT_includes: ${{ inputs.pct-includes }}
+        PCT_includesFile: ${{ inputs.pct-includesFile }}
+        PCT_excludes: ${{ inputs.pct-excludes }}
+        PCT_excludesFile: ${{ inputs.pct-excludesFile }}
+        PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
+      run: create_build_script.sh
+
+    - id: create-library
+      name: create-library
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        PCT_destFile: ${{ inputs.pct-destFile }}
+        PCT_sharedFile: ${{ inputs.pct-sharedFile }}
+        PCT_encoding: ${{ inputs.pct-encoding }}
+        PCT_noCompress: ${{ inputs.pct-noCompress }}
+        PCT_cpInternal: ${{ inputs.pct-cpInternal }}
+        PCT_cpStream: ${{ inputs.pct-cpStream }}
+        PCT_cpColl: ${{ inputs.pct-cpColl }}
+        PCT_cpCase: ${{ inputs.pct-cpCase }}
+        PCT_basedir: ${{ inputs.pct-basedir }}
+        PCT_includes: ${{ inputs.pct-includes }}
+        PCT_includesFile: ${{ inputs.pct-includesFile }}
+        PCT_excludes: ${{ inputs.pct-excludes }}
+        PCT_excludesFile: ${{ inputs.pct-excludesFile }}
+        PCT_defaultExcludes: ${{ inputs.pct-defaultExcludes }}
+      run: |
+        ant createLibrary -f "$RUNNER_TEMP/create-library.xml" -Dbasedir="$(pwd)"
+        [ -z "${{ inputs.artifact-name }}" ] || touch .gitignore
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ inputs.artifact-name != '' }}
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: |
+          ${{ inputs.working-directory }}/.gitignore
+          ${{ inputs.working-directory }}/${{ inputs.pct-destFile}}
+        if-no-files-found: error
