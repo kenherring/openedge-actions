@@ -7,11 +7,15 @@
 
     <target name="compile">
         <echo>basedir=${basedir}</echo>
-        <echo>PCT_preprocess=${env.PCT_preprocess}</echo>
+        <echo>PCT_destDir=${env.PCT_destDir}</echo>
         <echo>PCT_preprocessDir=${env.PCT_preprocessDir}</echo>
         <echo>PCT_debugListingDir=${env.PCT_debugListingDir}</echo>
         <echo>PCT_xrefDir=${env.PCT_xrefDir}</echo>
 
+
+        <condition property="destDir" value="${env.PCT_destDir}" else=".">
+            <not><equals arg1="${env.PCT_destDir}" arg2=""/></not>
+        </condition>
         <condition property="preprocessDir" value="${env.PCT_preprocessDir}" else="${env.PCT_destDir}/.pct">
             <not><equals arg1="${env.PCT_preprocessDir}" arg2=""/></not>
         </condition>
@@ -22,6 +26,7 @@
             <not><equals arg1="${env.PCT_xrefDir}" arg2=""/></not>
         </condition>
 
+        <echo>destDir=${destDir}</echo>
         <echo>preprocessDir=${preprocessDir}</echo>
         <echo>debugListingDir=${debugListingDir}</echo>
         <echo>xrefDir=${xrefDir}</echo>
