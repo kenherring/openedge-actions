@@ -32,11 +32,9 @@ inputs:
   pct-destFile:
     description: "R-code library to create"
     required: false
-    default: "None"
   pct-sharedFile:
     description: "Memory mapped library to create"
     required: false
-    default: "None"
   pct-encoding:
     description: "Character encoding used to store filenames."
     required: false
@@ -68,19 +66,15 @@ inputs:
   pct-includes:
     description: "Comma- or space-separated list of patterns of files that must be included. All files are included when omitted."
     required: false
-    default: "None"
   pct-includesFile:
     description: "The name of a file. Each line of this file is taken to be an include pattern."
     required: false
-    default: "None"
   pct-excludes:
     description: "Comma- or space-separated list of patterns of files that must be excluded. No files (except default excludes) are excluded when omitted."
     required: false
-    default: "None"
   pct-excludesFile:
     description: "The name of a file. Each line of this file is taken to be an exclude pattern."
     required: false
-    default: "None"
   pct-defaultExcludes:
     description: "Indicates whether default excludes should be used or not (\"yes\"/\"no\"). Default excludes are used when omitted."
     required: false
