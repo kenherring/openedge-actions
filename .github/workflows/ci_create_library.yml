@@ -18,7 +18,7 @@ jobs:
 
       ## create a library
       - name: create-library-1
-        uses: ./create-library-1
+        uses: ./create-library
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
             working-directory: create/test/test1
