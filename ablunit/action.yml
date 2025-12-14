@@ -3,6 +3,7 @@ description: Execute OpenEdge ABLUnit Tests
 author: kenherring
 
 inputs:
+  ## ----- setup ----- ##
   license:
     description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
     required: false
@@ -19,27 +20,39 @@ inputs:
   cache-token:
     description: Value added to cache key, used to forcefully expire the cache if needed
     required: false
+  ## ----- run ----- ##
   working-directory:
     description: The working directory to run the tests in
     required: false
-
-  test-file-pattern:
-    description: Pattern to match ABLUnit test files
+  propath:
+    description: Initial propath, set via PROPATH environment variable
     required: false
-    default: '*.cls,**/*.cls,*.p,**/*.p'
+    default: .
+  batch-mode:
+    description: Startup parameter -b
+    required: false
+    default: 'true'
   startup-procedure:
     description: Startup parameter -p
-    required: false
-    default: ABLUnitCore.p
+    required: true
   parameter-file:
     description: Startup parameter -pf
     required: false
   temp-directory:
     description: Startup parameter -T
     required: false
+    default: /tmp
+  parameter:
+    description: Startup parameter -param
+    required: false
   additional-parameters:
     description: Additional startup parameters
     required: false
+  ## ----- ablunit ----- ##
+  test-file-pattern:
+    description: Pattern to match ABLUnit test files
+    required: false
+    default: '*.cls,**/*.cls,*.p,**/*.p'
   ablunit-json:
     description: The ABLUnit configuration file, will be generated when not provided
     required: false
@@ -95,7 +108,8 @@ runs:
             "startup-procedure": ${{ inputs.startup-procedure }},
             "parameter-file": ${{ inputs.parameter-file }},
             "temp-directory": ${{ inputs.temp-directory }},
-            "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }}
+            "parameter": CFG=${{ steps.ablunit-init.outputs.ablunit-json }},
+            "additional-parameters": ${{ inputs.additional-parameters }}
           }
 
     ## need to use dynamic uses above because actions local to the first action called don't work
