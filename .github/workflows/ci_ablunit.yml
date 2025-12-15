@@ -97,13 +97,16 @@ jobs:
           propath: src
           pct-keepXref: true
           pct-xmlXref: true
+      - shell: bash
+        run: |
+          find .
       - name: ablunit-6B
         id: ablunit-6B
         uses: ./ablunit
         with:
           working-directory: ablunit/test/test6
           propath: src
-          test-file-pattern: "**/*.r"
+          test-file-pattern: "*.r"
       - name: test-6
         shell: bash
         working-directory: ablunit/test/test6
