@@ -94,10 +94,10 @@ jobs:
         uses: ./compile
         with:
           working-directory: ablunit/test/test6
-          propath: src
           pct-keepXref: true
           pct-xmlXref: true
       - shell: bash
+        working-directory: ablunit/test/test6
         run: |
           find .
       - name: ablunit-6B
@@ -105,7 +105,6 @@ jobs:
         uses: ./ablunit
         with:
           working-directory: ablunit/test/test6
-          propath: src
           test-file-pattern: "*.r"
       - name: test-6
         shell: bash
