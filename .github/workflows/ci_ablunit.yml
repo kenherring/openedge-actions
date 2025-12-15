@@ -80,6 +80,22 @@ jobs:
           [ -s test_with_log.log ] || (echo "::error::expected client log to have content" && exit 1)
           grep -q "LONG LIVE ABLUNIT" test_with_log.log || (echo "::error::expected client log to contain 'LONG LIVE ABLUNIT'" && exit 1)
 
+      ## propath
+      - name: ablunit-5
+        id: ablunit-5
+        uses: ./ablunit
+        with:
+          working-directory: ablunit/test/test5
+          propath: src
+      - name: test-5
+        shell: bash
+        working-directory: ablunit/test/test5
+        run: |
+          [ "${{ steps.ablunit-5.outputs.test-count }}" -eq 1 ] || (echo "expected test-count=1, got ${{ steps.ablunit-3.outputs.test-count }}" && exit 1)
+          [ "${{ steps.ablunit-5.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-3.outputs.error-count }}" && exit 1)
+          [ "${{ steps.ablunit-5.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-3.outputs.failure-count }}" && exit 1)
+          [ "${{ steps.ablunit-5.outputs.skipped-count }}" -eq 0 ] || (echo "expected skipped-count=0, got ${{ steps.ablunit-3.outputs.skipped-count }}" && exit 1)
+
       - name: pre-merge-validation
         shell: bash
         run: ./.github/workflows/pre_merge_validation.sh ablunit
