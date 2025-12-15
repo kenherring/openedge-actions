@@ -4,8 +4,8 @@ on:
   workflow_call
 
 jobs:
-  test-action-1:
-    name: test-action/compile-A
+  test-action:
+    name: test-action/compile
     runs-on: ubuntu-latest
 
     steps:
