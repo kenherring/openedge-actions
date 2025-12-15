@@ -248,7 +248,9 @@ runs:
         PCT_requireReturnValues: ${{ inputs.pct-requireReturnValues }}
         PCT_outputType: ${{ inputs.pct-outputType }}
         PCT_callbackClass: ${{ inputs.pct-callbackClass }}
-      run: compile.sh
+      run: |
+        compile.sh
+        echo "last command exit code: $?"
 
     - shell: bash
       if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
