@@ -102,7 +102,7 @@ jobs:
         uses: ./ablunit
         with:
           working-directory: ablunit/test/test6
-          propath: rcode
+          propath: src
           test-file-pattern: "**/*.r"
       - name: test-6
         shell: bash
