@@ -78,7 +78,6 @@ jobs:
         with:
           working-directory: ablunit/test/test5
           propath: src
-          test-file-pattern: "**/*.r"
       - name: test-5
         shell: bash
         working-directory: ablunit/test/test5
