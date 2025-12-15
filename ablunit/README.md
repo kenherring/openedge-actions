@@ -39,6 +39,7 @@ jobs:
 | `additional-parameters` | false | | Additional startup parameters |
 | `test-file-pattern` | false | `*.cls,**/*.cls,*.p,**/*.p` | Pattern to match ABLUnit test files |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |
+| `debug` | false | `true` | Additional debug logging |
 
 ## Outputs
 

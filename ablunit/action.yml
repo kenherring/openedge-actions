@@ -58,6 +58,10 @@ inputs:
     description: The ABLUnit configuration file, will be generated when not provided
     required: false
     default: ablunit.json
+  debug:
+    description: Additional debug logging
+    required: false
+    default: "true"
 
 outputs:
   test-count:
@@ -129,5 +133,6 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       env:
         ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.ablunit-json }}
+        ACTIONS_STEP_DEBUG: ${{ inputs.debug }}
         DELETE_ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.created-ablunit-json }}
       run: analyze_results.sh
