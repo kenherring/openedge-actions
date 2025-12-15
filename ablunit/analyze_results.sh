@@ -23,6 +23,10 @@ while IFS='' read -r LINE; do SKIPPED_COUNT=$((SKIPPED_COUNT + LINE)); done < <(
 [ "$FAILURE_COUNT" = "null" ] && FAILURE_COUNT=0
 [ "$ERROR_COUNT" = "null" ] && ERROR_COUNT=0
 [ "$SKIPPED_COUNT" = "null" ] && SKIPPED_COUNT=0
+[ -z "$TEST_COUNT" ] && TEST_COUNT=0
+[ -z "$FAILURE_COUNT" ] && FAILURE_COUNT=0
+[ -z "$ERROR_COUNT" ] && ERROR_COUNT=0
+[ -z "$SKIPPED_COUNT" ] && SKIPPED_COUNT=0
 
 
 echo "::group::results.xml"
