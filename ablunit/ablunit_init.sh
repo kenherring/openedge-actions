@@ -3,11 +3,13 @@ set -euo pipefail
 ${ACTIONS_STEP_DEBUG:-false} && set -x
 
 rm -f results.xml
+WORKING_DIRECTORY="$(pwd)"
 ## if ABLUNIT_JSON is not absolute, prepend pwd
-if [[ "$ABLUNIT_JSON" != /* ]]; then
-    ABLUNIT_JSON="$(pwd)/$ABLUNIT_JSON"
+if [[ "${ABLUNIT_JSON:-}" != /* ]]; then
+    ABLUNIT_JSON="$(pwd)/${ABLUNIT_JSON:-ablunit.json}"
 fi
 
+GITHUB_OUTPUT=${GITHUB_OUTPUT:-./github_output.txt}
 echo "ablunit-json=$ABLUNIT_JSON" >> "$GITHUB_OUTPUT"
 
 if [ -f "${ABLUNIT_JSON}" ]; then
@@ -25,25 +27,35 @@ fi
 echo "::notice file=$0::Creating $ABLUNIT_JSON configuration..."
 IFS=" " read -r -a TEST_FILE_PATTERNS <<< "$(echo "$TEST_FILE_PATTERN" | tr ',' ' ')"
 echo "processing ${#TEST_FILE_PATTERNS[@]} test file patterns..."
+IFS=" " read -r -a PROPATH_ENTRIES <<< "$(echo "$PROPATH" | tr ',' ' ')"
+echo "processing ${#PROPATH_ENTRIES[@]} propath entries..."
 
 TESTS_ARRAY='[]'
 PATTERNS_WITH_MATCH=0
-for PATTERN in "${TEST_FILE_PATTERNS[@]}"; do
 
-    # shellcheck disable=SC2086
-    if ! find ./$PATTERN &>/dev/null; then
-        echo "::warning file=$0::No test files found for pattern '$PATTERN', skipping..."
+for PROPATH_ENTRY in "${PROPATH_ENTRIES[@]}"; do
+    if [ ! -d "$PROPATH_ENTRY" ]; then
+        echo "::warning file=$0::Propath entry '$PROPATH_ENTRY' is not a directory, skipping..."
         continue
     fi
-    PATTERNS_WITH_MATCH=$((PATTERNS_WITH_MATCH + 1))
+    cd "$PROPATH_ENTRY"
+    for PATTERN in "${TEST_FILE_PATTERNS[@]}"; do
+        # shellcheck disable=SC2086
+        if ! find ./$PATTERN; then
+            echo "::warning file=$0::No test files found for pattern '$PATTERN' in '$PROPATH_ENTRY', skipping..."
+            continue
+        fi
+        PATTERNS_WITH_MATCH=$((PATTERNS_WITH_MATCH + 1))
 
-    # shellcheck disable=SC2086
-    TESTS_ARRAY_PART=$(find ./$PATTERN | jq -R -s -c 'split("\n")[:-1] | map({test: .})')
-    if [ -z "${TESTS_ARRAY:-}" ]; then
-        TESTS_ARRAY="${TESTS_ARRAY_PART}"
-    else
-        TESTS_ARRAY=$(jq -n --argjson a "$TESTS_ARRAY" --argjson b "$TESTS_ARRAY_PART" '$a + $b')
-    fi
+        # shellcheck disable=SC2086
+        TESTS_ARRAY_PART=$(find ./$PATTERN | jq -R -s -c 'split("\n")[:-1] | map({test: .})')
+        if [ -z "${TESTS_ARRAY:-}" ]; then
+            TESTS_ARRAY="${TESTS_ARRAY_PART}"
+        else
+            TESTS_ARRAY=$(jq -n --argjson a "$TESTS_ARRAY" --argjson b "$TESTS_ARRAY_PART" '$a + $b')
+        fi
+    done
+    cd "$WORKING_DIRECTORY"
 done
 
 if [ "$PATTERNS_WITH_MATCH" -eq 0 ]; then
