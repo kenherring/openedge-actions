@@ -88,29 +88,31 @@ jobs:
       - name: compile-4
         id: compile-4
         uses: ./compile
+        continue-on-error: true
         with:
           working-directory: compile/test/test4
       - name: test-4
         id: test-4
         shell: bash
         run: |
+          [ "${{ steps.compile-4.outcome }}" = "failure" ] || (echo "::error::Expected compile-5 outcome 'failure' but got '${{ steps.compile-4.outcome}}'" && exit 1)
           [ "${{ steps.compile-4.outputs.files-compiled }}" -eq 2 ] || (echo "::error::Expected files-compiled=2 but got ${{ steps.compile-4.outputs.files-compiled }}" && exit 1)
           [ "${{ steps.compile-4.outputs.compile-errors }}" -eq 1 ] || (echo "::error::Expected compile-errors=1 but got ${{ steps.compile-4.outputs.compile-errors }}" && exit 1)
           find . -name "*.r" -delete
 
-      ## compile failure stops build by default
+      ## compile failure with stopOnError=false
       - name: compile-5
         id: compile-5
         uses: ./compile
-        continue-on-error: true
         with:
           working-directory: compile/test/test5
+          pct-stopOnError: false
       - name: test-5
         id: test-5
         shell: bash
         run: |
-          [ "${{ steps.compile-5.outcome }}" = "failure" ] || (echo "::error::Expected compile-5 outcome 'failure' but got '${{ steps.compile-5.outcome}}'" && exit 1)
-          [ "${{ steps.compile-5.outputs.files-compiled }}" -eq 2 ] || (echo "::error::Expected files-compiled=2 but got ${{ steps.compile-5.outputs.files-compiled }}" && exit 1)
+          [ "${{ steps.compile-5.outcome }}" = "success" ] || (echo "::error::Expected compile-5 outcome 'success' but got '${{ steps.compile-5.outcome}}'" && exit 1)
+          [ "${{ steps.compile-5.outputs.files-compiled }}" -eq 0 ] || (echo "::error::Expected files-compiled=0 but got ${{ steps.compile-5.outputs.files-compiled }}" && exit 1)
           [ "${{ steps.compile-5.outputs.compile-errors }}" -eq 1 ] || (echo "::error::Expected compile-errors=1 but got ${{ steps.compile-5.outputs.compile-errors }}" && exit 1)
           find . -name "*.r" -delete
 
