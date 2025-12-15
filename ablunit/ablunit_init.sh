@@ -48,7 +48,7 @@ for PROPATH_ENTRY in "${PROPATH_ENTRIES[@]}"; do
         PATTERNS_WITH_MATCH=$((PATTERNS_WITH_MATCH + 1))
 
         # shellcheck disable=SC2086
-        TESTS_ARRAY_PART=$(find ./$PATTERN | jq -R -s -c 'split("\n")[:-1] | map({test: .})')
+        TESTS_ARRAY_PART=$(find ./$PATTERN | sed 's/^.\///g' | jq -R -s -c 'split("\n")[:-1] | map({test: .})')
         if [ -z "${TESTS_ARRAY:-}" ]; then
             TESTS_ARRAY="${TESTS_ARRAY_PART}"
         else
@@ -59,7 +59,7 @@ for PROPATH_ENTRY in "${PROPATH_ENTRIES[@]}"; do
 done
 
 if [ "$PATTERNS_WITH_MATCH" -eq 0 ]; then
-    echo "::error file=$0::No test files found for any of the provided patterns: $TEST_FILE_PATTERN"
+    echo "::error file=$0::No test files found for any of the provided patterns!"
     exit 1
 fi
 
