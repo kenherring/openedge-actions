@@ -83,6 +83,32 @@ jobs:
         shell: bash
         working-directory: ablunit/test/test5
         run: |
+          [ "${{ steps.ablunit-5.outputs.test-count }}" -eq 1 ] || (echo "expected test-count=1, got ${{ steps.ablunit-5.outputs.test-count }}" && exit 1)
+          [ "${{ steps.ablunit-5.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-5.outputs.error-count }}" && exit 1)
+          [ "${{ steps.ablunit-5.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-5.outputs.failure-count }}" && exit 1)
+          [ "${{ steps.ablunit-5.outputs.skipped-count }}" -eq 0 ] || (echo "expected skipped-count=0, got ${{ steps.ablunit-5.outputs.skipped-count }}" && exit 1)
+
+      ## rcode
+      - name: ablunit-6A
+        id: ablunit-6A
+        uses: ./compile
+        with:
+          working-directory: ablunit/test/test6
+          propath: src
+          pct-keepXref: true
+          pct-xmlXref: true
+      - name: ablunit-6B
+        id: ablunit-6B
+        uses: ./ablunit
+        with:
+          working-directory: ablunit/test/test6
+          propath: rcode
+          test-file-pattern: "**/*.r"
+      - name: test-6
+        shell: bash
+        working-directory: ablunit/test/test6
+        run: |
+          find .
           [ "${{ steps.ablunit-5.outputs.test-count }}" -eq 1 ] || (echo "expected test-count=1, got ${{ steps.ablunit-3.outputs.test-count }}" && exit 1)
           [ "${{ steps.ablunit-5.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-3.outputs.error-count }}" && exit 1)
           [ "${{ steps.ablunit-5.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-3.outputs.failure-count }}" && exit 1)

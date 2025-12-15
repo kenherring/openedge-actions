@@ -63,8 +63,27 @@ if [ "$PATTERNS_WITH_MATCH" -eq 0 ]; then
     exit 1
 fi
 
-jq -n --argjson tests "$TESTS_ARRAY" '{
-    "options": {},
+for TEST_PROGRAM in "${TESTS_ARRAY[@]}"; do
+    ## ends with ".r"
+    if [[ "$TEST_PROGRAM" == *.r ]]; then
+        RCODE_TEST_DETECTED=true
+        break
+    fi
+done
+OPTIONS_JSON='{}'
+if ${RCODE_TEST_DETECTED:-false}; then
+    OPTIONS_JSON='{
+        "xref": {
+            "useXref": true,
+            "xrefLocation": ".pct",
+            "xrefExtension": ".xref"
+        }
+    }'
+fi
+echo "OPTIONS_JSON=$OPTIONS_JSON"
+
+jq -n --argjson tests "$TESTS_ARRAY" --argjson opts "$OPTIONS_JSON" '{
+    "options": $opts,
     "tests": $tests
 }' > "$ABLUNIT_JSON"
 
