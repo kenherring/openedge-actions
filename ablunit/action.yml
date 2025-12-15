@@ -34,7 +34,8 @@ inputs:
     default: 'true'
   startup-procedure:
     description: Startup parameter -p
-    required: true
+    required: false
+    default: ABLUnitCore.p
   parameter-file:
     description: Startup parameter -pf
     required: false
