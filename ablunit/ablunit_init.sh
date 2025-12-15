@@ -63,7 +63,7 @@ if [ "$PATTERNS_WITH_MATCH" -eq 0 ]; then
     exit 1
 fi
 
-for TEST_PROGRAM in "${TESTS_ARRAY[@]}"; do
+for TEST_PROGRAM in $(echo "$TESTS_ARRAY" | jq -r '.[].test'); do
     ## ends with ".r"
     if [[ "$TEST_PROGRAM" == *.r ]]; then
         RCODE_TEST_DETECTED=true
