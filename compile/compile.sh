@@ -39,7 +39,7 @@ if ant compile -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUN
     echo "COMPILE SUCCESS (EXIT_CODE=$EXIT_CODE)"
 else
     EXIT_CODE=$?
-    exho "COMPILE FAILED (EXIT_CODE=$EXIT_CODE)"
+    echo "COMPILE FAILED (EXIT_CODE=$EXIT_CODE)"
 fi
 
 FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f2)
