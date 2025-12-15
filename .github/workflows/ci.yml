@@ -1,0 +1,29 @@
+name: CI - Setup
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+    ci_ablunit:
+        uses: ./.github/workflows/ci_ablunit.yml
+    ci_compile:
+        uses: ./.github/workflows/ci_compile.yml
+    ci_create_library:
+        uses: ./.github/workflows/ci_create_library.yml
+    ci_database_start:
+        uses: ./.github/workflows/ci_database_start.yml
+    ci_root:
+        uses: ./.github/workflows/ci_root.yml
+    ci_run:
+        uses: ./.github/workflows/ci_run.yml
+    ci_setup:
+        uses: ./.github/workflows/ci_setup.yml
