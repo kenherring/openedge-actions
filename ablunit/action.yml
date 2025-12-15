@@ -96,6 +96,7 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       env:
         ABLUNIT_JSON: ${{ inputs.ablunit-json }}
+        PROPATH: ${{ inputs.propath }}
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
       run: ablunit_init.sh
 
