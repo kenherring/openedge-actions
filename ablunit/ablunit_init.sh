@@ -76,7 +76,7 @@ if ${RCODE_TEST_DETECTED:-false}; then
         "xref": {
             "useXref": true,
             "xrefLocation": ".pct",
-            "xrefExtension": ".xref"
+            "xrefExtension": "xref"
         }
     }'
 fi
