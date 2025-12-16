@@ -72,20 +72,30 @@ runs:
         uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
         with: |
           {
-            "post": "echo \"Stopping database server...\"; proshut -by \"${{ inputs.path }}\""
+            "main": "echo \"main process\"",
+            "post": "echo \"Stopping database server...\""
           }
 
-    - name: database-start
-      id: database-start
-      shell: bash
-      env:
-        OPT_PATH: ${{ inputs.path }}
-        OPT_PORT: ${{ inputs.port }}
-        OPT_MINPORT: ${{ inputs.minport }}
-        OPT_MAXPORT: ${{ inputs.maxport }}
-        OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
-        OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
-      run: database_start.sh
+    # - uses: jenseng/dynamic-uses@v1.1.1
+    #   if: ${{ inputs.license }}
+    #   with:
+    #     uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
+    #     with: |
+    #       {
+    #         "post": "echo \"Stopping database server...\"; proshut -by \"${{ inputs.path }}\""
+    #       }
+
+    # - name: database-start
+    #   id: database-start
+    #   shell: bash
+    #   env:
+    #     OPT_PATH: ${{ inputs.path }}
+    #     OPT_PORT: ${{ inputs.port }}
+    #     OPT_MINPORT: ${{ inputs.minport }}
+    #     OPT_MAXPORT: ${{ inputs.maxport }}
+    #     OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
+    #     OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
+    #   run: database_start.sh
 
     # - uses: jenseng/dynamic-uses@v1.1.1
     #   if: ${{ inputs.license }}
