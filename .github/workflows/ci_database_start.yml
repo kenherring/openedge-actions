@@ -30,24 +30,20 @@ jobs:
           port: 2000
           minport: 3000
           maxport: 3100
-      # - name: database-start-1D run
-      #   uses: ./run
-      #   with:
-      #     working-directory: database-start/test
-      #     parameter-file: db.pf
-      #     startup-procedure: customer_count.p
-      #     additional-parameters: "-clientlog client.log"
-      # - name: test-1
-      #   shell: bash
-      #   working-directory: database-start/test
-      #   run: |
-      #     cat client.log
-      #     grep 'customerCount=1117' client.log || (echo "::error::expected 1117 customers!" && exit 1)
-      # - name: database-stop-1
-      #   uses: ./database-stop
-      #   with:
-      #     path: database-start/test/target/db/sp2k
+      - name: database-start-1D run
+        uses: ./run
+        with:
+          working-directory: database-start/test
+          parameter-file: db.pf
+          startup-procedure: customer_count.p
+          additional-parameters: "-clientlog client.log"
+      - name: test-1
+        shell: bash
+        working-directory: database-start/test
+        run: |
+          cat client.log
+          grep 'customerCount=1117' client.log || (echo "::error::expected 1117 customers!" && exit 1)
 
-      # - name: pre-merge-validation
-      #   shell: bash
-      #   run: ./.github/workflows/pre_merge_validation.sh database-start
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh database-start
