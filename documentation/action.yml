@@ -84,7 +84,7 @@ runs:
           }
 
     - uses: jenseng/dynamic-uses@v1.1.1
-      if: ${{ inputs.license }}
+      if: ${{ inputs.license }} && ${{ inputs.skip-compile != "true" }}
       with:
         uses: kenherring/openedge-actions/compile@${{ steps.set-github-path.outputs.action-ref }}
         with: |
@@ -94,8 +94,9 @@ runs:
               "download-ade-source": ${{ inputs.download-ade-source }},
               "cache-key": ${{ inputs.cache-key }},
               "cache-token": ${{ inputs.cache-token }},
+              "working-directory": ${{ inputs.working-directory }},
               "propath": ${{ inputs.propath }},
-              "pct-destDir": ${{ inputs.pct-buildDir }},
+              "pct-destDir": ${{ inputs.pct-buildDir }}
           }
 
     - id: abl-json-documentation
