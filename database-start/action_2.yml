@@ -1,5 +1,0 @@
-- name: Cache
-      uses: ./.github/actions/with-post-steps
-      with:
-        main: ... # run commands to restore app build artifacts
-        post: ... # run commands to rebuild app build artifacts
