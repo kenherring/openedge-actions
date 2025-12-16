@@ -54,7 +54,7 @@ runs:
         echo '${{ github.action_path }}' >> "$GITHUB_PATH"
         echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
-    - uses: jenseng/dynamic-uses@v1.0.2
+    - uses: jenseng/dynamic-uses@v1.1.1
       if: ${{ inputs.license }}
       with:
         uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
@@ -67,13 +67,14 @@ runs:
           }
 
     - name: database-start
-      id: database-start
-      shell: bash
-      env:
-        OPT_PATH: ${{ inputs.path }}
-        OPT_PORT: ${{ inputs.port }}
-        OPT_MINPORT: ${{ inputs.minport }}
-        OPT_MAXPORT: ${{ inputs.maxport }}
-        OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
-        OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
-      run: database_start.sh
+      uses: pyTooling/Actions/with-post-step@v6.7.0
+      with:
+        main: |
+          export OPT_PATH='${{ inputs.path }}'
+          export OPT_PORT='${{ inputs.port }}'
+          export OPT_MINPORT='${{ inputs.minport }}'
+          export OPT_MAXPORT='${{ inputs.maxport }}'
+          export OPT_PARAMETER_FILE='${{ inputs.parameter-file }}'
+          export OPT_ADDITIONAL_PARAMETERS='${{ inputs.additional-parameters }}'
+          ${{ github.action_path }}/database_start.sh
+        post: proshut -by '${{ inputs.path }}'
