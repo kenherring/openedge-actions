@@ -7,6 +7,7 @@ inputs:
   main:
     description: "Main command/script"
     required: false
+    default: "echo 'post-step only!'"
   post:
     description: "Post command/script"
     required: true

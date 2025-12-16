@@ -43,10 +43,10 @@ jobs:
         run: |
           cat client.log
           grep 'customerCount=1117' client.log || (echo "::error::expected 1117 customers!" && exit 1)
-      - name: database-stop-1
-        uses: ./database-stop
-        with:
-          path: database-start/test/target/db/sp2k
+      # - name: database-stop-1
+      #   uses: ./database-stop
+      #   with:
+      #     path: database-start/test/target/db/sp2k
 
       - name: pre-merge-validation
         shell: bash

@@ -66,6 +66,15 @@ runs:
             "cache-token": ${{ inputs.cache-token }}
           }
 
+    - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {
+            "post": "echo \"Stopping database server...\"; proshut -by \"${{ inputs.path }}\""
+          }
+
     - name: database-start
       id: database-start
       shell: bash
@@ -78,11 +87,13 @@ runs:
         OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
       run: database_start.sh
 
-    - uses: jenseng/dynamic-uses@v1.1.1
-      if: ${{ inputs.license }}
-      with:
-        uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
-        with: |
-          {
-            "post": "echo \"Stopping database server...\"; dbstop -db '${{ inputs.path }}' -port '${{ inputs.port }}' || echo \"Database server not running.\""
-          }
+    # - uses: jenseng/dynamic-uses@v1.1.1
+    #   if: ${{ inputs.license }}
+    #   with:
+    #     uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
+    #     with: |
+    #       {
+    #         "post": "echo \"Stopping database server...\"; proshut -by \"${{ inputs.path }}\""
+    #       }
+
+    # "post": "echo \"Stopping database server...\"; proshut -by "${{ inputs.path }}" || echo \"Database server not running.\""
