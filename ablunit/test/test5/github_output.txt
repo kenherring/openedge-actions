@@ -1,5 +1,0 @@
-ablunit-json=/d/openedge-actions/ablunit/test/test5/ablunit.json
-created-ablunit-json=true
-ablunit-json=/d/openedge-actions/ablunit/test/test5/ablunit.json
-created-ablunit-json=true
-ablunit-json=/d/openedge-actions/ablunit/test/test5/ablunit.json

@@ -90,16 +90,11 @@ jobs:
 
       ## rcode
       - name: ablunit-6A
-        id: ablunit-6A
         uses: ./compile
         with:
           working-directory: ablunit/test/test6
           pct-keepXref: true
           pct-xmlXref: true
-      - shell: bash
-        working-directory: ablunit/test/test6
-        run: |
-          find .
       - name: ablunit-6B
         id: ablunit-6B
         uses: ./ablunit
@@ -110,11 +105,10 @@ jobs:
         shell: bash
         working-directory: ablunit/test/test6
         run: |
-          find .
-          [ "${{ steps.ablunit-5.outputs.test-count }}" -eq 1 ] || (echo "expected test-count=1, got ${{ steps.ablunit-3.outputs.test-count }}" && exit 1)
-          [ "${{ steps.ablunit-5.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-3.outputs.error-count }}" && exit 1)
-          [ "${{ steps.ablunit-5.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-3.outputs.failure-count }}" && exit 1)
-          [ "${{ steps.ablunit-5.outputs.skipped-count }}" -eq 0 ] || (echo "expected skipped-count=0, got ${{ steps.ablunit-3.outputs.skipped-count }}" && exit 1)
+          [ "${{ steps.ablunit-6B.outputs.test-count }}" -eq 1 ] || (echo "expected test-count=1, got ${{ steps.ablunit-6B.outputs.test-count }}" && exit 1)
+          [ "${{ steps.ablunit-6B.outputs.error-count }}" -eq 0 ] || (echo "expected error-count=0, got ${{ steps.ablunit-6B.outputs.error-count }}" && exit 1)
+          [ "${{ steps.ablunit-6B.outputs.failure-count }}" -eq 0 ] || (echo "expected failure-count=0, got ${{ steps.ablunit-6B.outputs.failure-count }}" && exit 1)
+          [ "${{ steps.ablunit-6B.outputs.skipped-count }}" -eq 0 ] || (echo "expected skipped-count=0, got ${{ steps.ablunit-6B.outputs.skipped-count }}" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
