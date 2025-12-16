@@ -30,12 +30,16 @@ jobs:
 | `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
 | `working-directory` | false | | The working directory to run the tests in |
-| `test-file-pattern` | false | `*.cls,**/*.cls,*.p,**/*.p` | Pattern to match ABLUnit test files |
+| `propath` | false | `,` | Initial propath, set via PROPATH environment variable |
+| `batch-mode` | false | `true` | Startup parameter -b |
 | `startup-procedure` | false | `ABLUnitCore.p` | Startup parameter -p |
 | `parameter-file` | false | | Startup parameter -pf |
 | `temp-directory` | false | `$RUNNER_TEMP` | Startup parameter -T |
+| `parameter` | false | | Startup parameter -param |
 | `additional-parameters` | false | | Additional startup parameters |
+| `test-file-pattern` | false | `*.cls,**/*.cls,*.p,**/*.p` | Pattern to match ABLUnit test files |
 | `ablunit-json` | false | `ablunit.json` | The ABLUnit configuration file, will be generated when not provided |
+| `debug` | false | `true` | Additional debug logging |
 
 ## Outputs
 

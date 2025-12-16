@@ -33,8 +33,9 @@ done
 [ -z "${PROPATH_ENTRY_9:-}" ] && PROPATH_ENTRY_9=$PROPATH_ENTRY_1
 export PROPATH_ENTRY_1 PROPATH_ENTRY_2 PROPATH_ENTRY_3 PROPATH_ENTRY_4 PROPATH_ENTRY_5 PROPATH_ENTRY_6 PROPATH_ENTRY_7 PROPATH_ENTRY_8 PROPATH_ENTRY_9
 
-EXIT_CODE=0
-if ! ant compile -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"; then
+if ant compile -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"; then
+    EXIT_CODE=$?
+else
     EXIT_CODE=$?
 fi
 
@@ -42,7 +43,6 @@ FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/com
 echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
 COMPILE_ERRORS=$(grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f6 || echo 0)
 echo "compile-errors=$COMPILE_ERRORS" >> "$GITHUB_OUTPUT"
-
 
 if [ "$EXIT_CODE" != "0" ]; then
     echo "::error file=$0::ant compile failed (EXIT_CODE=$EXIT_CODE)"
