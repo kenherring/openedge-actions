@@ -49,7 +49,7 @@ setup_params () {
     [ -n "${PCT_destFile:-}" ] || PCT_destFile="documentation.json"
 
     [ -n "${PCT_destFile:-}" ] && LIBRARY_PARAMS=("destFile=\"${PCT_destFile}\"")
-    [ -n "${PCT_buildDir:-}" ] && LIBRARY_PARAMS+=("sharedFile=\"${PCT_buildDir}\"")
+    [ -n "${PCT_buildDir:-}" ] && LIBRARY_PARAMS+=("buildDir=\"${PCT_buildDir}\"")
     [ -n "${PCT_encoding:-}" ] && LIBRARY_PARAMS+=("encoding=\"${PCT_encoding}\"")
     [ -n "${PCT_style:-}" ] && LIBRARY_PARAMS+=("style=\"${PCT_style}\"")
     [ -n "${PCT_indent:-}" ] && LIBRARY_PARAMS+=("indent=\"${PCT_indent}\"")
