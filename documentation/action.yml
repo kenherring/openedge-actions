@@ -91,7 +91,6 @@ runs:
           {  "license": "${{ inputs.license }}",
               "version": ${{ inputs.version }},
               "dlc": ${{ inputs.dlc }},
-              "download-ade-source": ${{ inputs.download-ade-source }},
               "cache-key": ${{ inputs.cache-key }},
               "cache-token": ${{ inputs.cache-token }},
               "working-directory": ${{ inputs.working-directory }},
