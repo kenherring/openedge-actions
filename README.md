@@ -341,7 +341,7 @@ jobs:
 | `pct-destFile` | false | `documentation.json` | JSON file output |
 | `pct-buildDir` | false | `.` | Directory where rcode will be read |
 | `pct-encoding` | false | `None` | Use specific encoding when reading source files |
-| `pct-style` | false | `Javadoc` | Comment style: Javadoc (/**), simple (/*), consultingwerk (/*-) |
+| `pct-style` | false | `Javadoc` | Comment style: Javadoc, simple, consultingwerk |
 | `pct-indent` | false | `false` | JSON pretty-printing |
 
 ## License File

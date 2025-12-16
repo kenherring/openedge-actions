@@ -48,7 +48,7 @@ inputs:
     description: Use specific encoding when reading source files
     required: false
   pct-style:
-    description: "Comment style: Javadoc (/**), simple (/*), consultingwerk (/*-)"
+    description: "Comment style: Javadoc, simple, consultingwerk"
     required: false
     default: "Javadoc"
   pct-indent:
