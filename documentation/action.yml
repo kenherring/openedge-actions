@@ -29,7 +29,7 @@ inputs:
     required: false
     default: .
   artifact-name:
-    description: Artifact name for uploading documetation
+    description: Artifact name for uploading documentation
     required: false
   ##### Compile Options #####
   skip-compile:
