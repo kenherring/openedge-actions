@@ -1,20 +1,11 @@
 name: CI - Setup
 
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  workflow_call:
 
 jobs:
   test-action-A:
-    name: test-action/setup - A
+    name: test-action/setup-A
     runs-on: ubuntu-latest
 
     steps:
@@ -145,7 +136,7 @@ jobs:
           [ "$(awk '{print $3}' "$DLC/version")" = "12.8.6" ] || (echo "::error::could not set abl version to 12.8.6" && exit 1)
 
   test-action-B:
-    name: test-action/setup - B
+    name: test-action/setup-B
     runs-on: ubuntu-latest
     needs: [ test-action-A ]
 

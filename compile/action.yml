@@ -1,0 +1,265 @@
+name: openedge-actions/compile
+description: Compile OpenEdge code
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  propath:
+    description: Initial propath, set via PROPATH environment variable
+    required: false
+    default: .
+  artifact-name:
+    description: Artifact name for uploading rcode
+    required: false
+  ##### PCTCompile Options #####
+  pct-destDir:
+    description: "Directory where to put compiled code"
+    required: false
+  pct-stopOnError:
+    description: "If set to true, stop compilation as soon as an error occurs."
+    required: false
+    default: "false"
+  pct-numThreads:
+    description: "Starts n parallel compilation threads. Don't use multiple threads when compiling classes."
+    required: false
+    default: "1"
+  pct-multiCompile:
+    description: "Change COMPILER:MULTI-COMPILE attribute."
+    required: false
+    default: "false"
+  pct-minSize:
+    description: "Boolean value of MIN-SIZE option."
+    required: false
+    default: "false"
+  pct-MD5:
+    description: "Boolean value of GENERATE-MD5 option."
+    required: false
+    default: "false"
+  pct-streamIO:
+    description: "Boolean value of STREAM-IO option."
+    required: false
+    default: "false"
+  pct-v6Frame:
+    description: "Boolean value of V6FRAME option."
+    required: false
+    default: "false"
+  pct-useUnderline:
+    description: "USE-UNDERLINE option of V6FRAME"
+    required: false
+    default: "false"
+  pct-useRevVideo:
+    description: "USE-REVVIDEO option of V6FRAME"
+    required: false
+    default: "false"
+  pct-runList:
+    description: "true to generate a .run file for each compiled file, which summarizes RUN statements"
+    required: false
+    default: "false"
+  pct-listing:
+    description: "Boolean value of LISTING option. Generated file name is identical to source file name, and is stored in xrefDir"
+    required: false
+    default: "false"
+  pct-listingSource:
+    description: "Generates listing file from preprocessed source code (value preprocessor) or from standard source code (empty value or not defined)."
+    required: false
+  pct-preprocess:
+    description: "Boolean value of PREPROCESSattribute. Generated file name appends .preprocess to source file name, and is stored in preprocessDir."
+    required: false
+    default: "false"
+  pct-preprocessDir:
+    description: "Target directory where preprocessed files are written."
+    required: false
+  pct-debugListing:
+    description: "Boolean value of DEBUG-LIST option. Generated file name appends .dbg to file name, and is stored in debugListingDir."
+    required: false
+    default: "false"
+  pct-debugListingDir:
+    description: "Target directory where debug listing files are written."
+    required: false
+  pct-flattenDebugListing:
+    description: "Flattens directory structure for debug listing files"
+    required: false
+    default: "true"
+  pct-stringXref:
+    description: "Boolean value of STRING-XREFoption. Generated file name appends .strxref to source file name."
+    required: false
+    default: "false"
+  pct-appendStringXref:
+    description: "Appends STRING-XREF to a single file."
+    required: false
+    default: "false"
+  pct-keepXref:
+    description: "Keeps the generated XREF file for each file. Generated file name replaces extension of source file name with .xref."
+    required: false
+    default: "false"
+  pct-noParse:
+    description: "Always recompile, and skip XREF generation as well as .crc and .inc files."
+    required: false
+    default: "false"
+  pct-xrefDir:
+    description: "Target directory where PCT files (CRC, includes, preprocess, listing) will be created."
+    required: false
+  pct-xmlXref:
+    description: "Generates XREF in XML format."
+    required: false
+    default: "false"
+  pct-forceCompile:
+    description: "Always compile everything."
+    required: false
+    default: "false"
+  pct-xcode:
+    description: "Compiles using XCODE option. Disables XREF and LISTING options."
+    required: false
+    default: "false"
+  pct-languages:
+    description: "Comma-separated list of language segments to include in the compiled r-code. LANGUAGES option of the COMPILE statement"
+    required: false
+  pct-relativePaths:
+    description: "Use relative paths instead of absolute paths for propath and filesets. Every fileset dir has to be in propath."
+    required: false
+    default: "false"
+  pct-progPerc:
+    description: "Show progression percentage every x percent."
+    required: false
+    default: "0"
+  pct-displayFiles:
+    description: "1 will display files to be recompiled (and reason). 2 will display all files. 0 doesn't display anything"
+    required: false
+    default: "0"
+  pct-requireFullKeywords:
+    description: "Strict-mode compiler option (11.7+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-requireFullNames:
+    description: "Strict-mode compiler option (11.7+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-requireFieldQualifiers:
+    description: "Strict-mode compiler option (11.7+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-requireReturnValues:
+    description: "Strict-mode compiler option (12.2+). Output redirected to .warnings files in .pct directory"
+    required: false
+    default: "false"
+  pct-outputType:
+    description: "comma separated list of outputs"
+    required: false
+    default: "console"
+  pct-callbackClass:
+    description: "Callback class (implementation of rssw.pct.AbstractCompileCallback)"
+    required: false
+
+outputs:
+  files-compiled:
+    description: Number of files compiled
+    value: ${{ steps.compile-abl.outputs.files-compiled }}
+  compile-errors:
+    description: Number of files that failed to compile
+    value: ${{ steps.compile-abl.outputs.compile-errors }}
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.0.2
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - id: compile-abl
+      name: compile-abl
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+        PROPATH: ${{ inputs.propath }}
+        PCT_destDir: ${{ inputs.pct-destDir }}
+        PCT_stopOnError: ${{ inputs.pct-stopOnError }}
+        PCT_numThreads: ${{ inputs.pct-numThreads }}
+        PCT_multiCompile: ${{ inputs.pct-multiCompile }}
+        PCT_minSize: ${{ inputs.pct-minSize }}
+        PCT_MD5: ${{ inputs.pct-MD5 }}
+        PCT_streamIO: ${{ inputs.pct-streamIO }}
+        PCT_v6Frame: ${{ inputs.pct-v6Frame }}
+        PCT_useUnderline: ${{ inputs.pct-useUnderline }}
+        PCT_useRevVideo: ${{ inputs.pct-useRevVideo }}
+        PCT_runList: ${{ inputs.pct-runList }}
+        PCT_listing: ${{ inputs.pct-listing }}
+        PCT_listingSource: ${{ inputs.pct-listingSource }}
+        PCT_preprocess: ${{ inputs.pct-preprocess }}
+        PCT_preprocessDir: ${{ inputs.pct-preprocessDir }}
+        PCT_debugListing: ${{ inputs.pct-debugListing }}
+        PCT_debugListingDir: ${{ inputs.pct-debugListingDir }}
+        PCT_flattenDebugListing: ${{ inputs.pct-flattenDebugListing }}
+        PCT_stringXref: ${{ inputs.pct-stringXref }}
+        PCT_appendStringXref: ${{ inputs.pct-appendStringXref }}
+        PCT_keepXref: ${{ inputs.pct-keepXref }}
+        PCT_noParse: ${{ inputs.pct-noParse }}
+        PCT_xrefDir: ${{ inputs.pct-xrefDir }}
+        PCT_xmlXref: ${{ inputs.pct-xmlXref }}
+        PCT_forceCompile: ${{ inputs.pct-forceCompile }}
+        PCT_xcode: ${{ inputs.pct-xcode }}
+        PCT_languages: ${{ inputs.pct-languages }}
+        PCT_relativePaths: ${{ inputs.pct-relativePaths }}
+        PCT_progPerc: ${{ inputs.pct-progPerc }}
+        PCT_displayFiles: ${{ inputs.pct-displayFiles }}
+        PCT_requireFullKeywords: ${{ inputs.pct-requireFullKeywords }}
+        PCT_requireFullNames: ${{ inputs.pct-requireFullNames }}
+        PCT_requireFieldQualifiers: ${{ inputs.pct-requireFieldQualifiers }}
+        PCT_requireReturnValues: ${{ inputs.pct-requireReturnValues }}
+        PCT_outputType: ${{ inputs.pct-outputType }}
+        PCT_callbackClass: ${{ inputs.pct-callbackClass }}
+      run: compile.sh
+
+    - shell: bash
+      if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
+      run: touch .gitignore
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: |
+          .gitignore
+          ${{ inputs.working-directory }}/${{ inputs.pct-destDir }}
+        include-hidden-files: true
+        if-no-files-found: error

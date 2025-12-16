@@ -1,0 +1,105 @@
+name: CI - Compile
+
+on:
+  workflow_call
+
+jobs:
+  test-action:
+    name: test-action/compile
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      ## a simple compile test
+      - name: compile-1A
+        uses: ./compile
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: compile/test/test1
+      - name: test-1A
+        shell: bash
+        working-directory: compile/test/test1
+        run: |
+          RCODE_COUNT=$(find . -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+          [ -f "source_program1.r" ] || (echo "::error::Expected compiled file source_program1.r but it was not found" && exit 1)
+          [ -f "src/source_program2.r" ] || (echo "::error::Expected compiled file src/source_program2.r but it was not found" && exit 1)
+          find . -name "*.r" -delete
+
+      ## a simple compile test with dest-dir
+      - name: compile-1B
+        id: compile-1B
+        uses: ./compile
+        with:
+            working-directory: compile/test/test1
+            pct-destDir: rcode
+      - name: test-1B
+        shell: bash
+        working-directory: compile/test/test1
+        run: |
+          RCODE_COUNT=$(find rcode -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+          [ "$RCODE_COUNT" = "${{ steps.compile-1B.outputs.files-compiled }}" ] || (echo "::error::Expected rcode count=${{ steps.compile-1B.outputs.files-compiled }} but got $RCODE_COUNT" && exit 1)
+          [ -f "rcode/source_program1.r" ] || (echo "::error::Expected compiled file rcode/source_program1.r but it was not found" && exit 1)
+          [ -f "rcode/src/source_program2.r" ] || (echo "::error::Expected compiled file rcode/src/source_program2.r but it was not found" && exit 1)
+          find . -name "*.r" -delete
+
+      ## compile using propath
+      - name: compile-2
+        id: compile-2
+        uses: ./compile
+        with:
+            working-directory: compile/test/test2
+            propath: src,test
+            pct-destDir: rcode
+      - name: test-2
+        shell: bash
+        working-directory: compile/test/test2
+        run: |
+          RCODE_COUNT=$(find rcode -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+          [ -f "rcode/com/org/source_class.r" ] || (echo "::error::Expected compiled file rcode/src/com/org/source_class.r but it was not found" && exit 1)
+          [ -f "rcode/com/org/source_classTest.r" ] || (echo "::error::Expected compiled file rcode/test/com/org/source_class.r but it was not found" && exit 1)
+          find . -name "*.r" -delete
+
+      ## compile and upload artifact
+      - name: compile-3
+        id: compile-3
+        uses: ./compile
+        with:
+          working-directory: compile/test/test3
+          artifact-name: compiled_code_artifact
+          pct-destDir: compiled.code
+      - shell: bash
+        run: find . -name "*.r" -delete
+      - uses: actions/download-artifact@v4
+        with:
+          name: compiled_code_artifact
+      - name: test-3
+        shell: bash
+        working-directory: compile/test/test3
+        run: |
+          [ -d compiled.code ] || (echo "::error::Expected compiled.code directory but it was not found" && exit 1)
+          RCODE_COUNT=$(find . -name "*.r" | wc -l)
+          [ "$RCODE_COUNT" -eq 2 ] || (echo "::error::Expected rcode count=2 but got $RCODE_COUNT" && exit 1)
+
+      ## compile-errors output
+      - name: compile-4
+        id: compile-4
+        uses: ./compile
+        continue-on-error: true
+        with:
+          working-directory: compile/test/test4
+      - name: test-4
+        id: test-4
+        shell: bash
+        run: |
+          [ "${{ steps.compile-4.outcome }}" = "failure" ] || (echo "::error::Expected compile-5 outcome 'failure' but got '${{ steps.compile-4.outcome}}'" && exit 1)
+          [ "${{ steps.compile-4.outputs.files-compiled }}" -eq 2 ] || (echo "::error::Expected files-compiled=2 but got ${{ steps.compile-4.outputs.files-compiled }}" && exit 1)
+          [ "${{ steps.compile-4.outputs.compile-errors }}" -eq 1 ] || (echo "::error::Expected compile-errors=1 but got ${{ steps.compile-4.outputs.compile-errors }}" && exit 1)
+          find . -name "*.r" -delete
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh compile
