@@ -54,7 +54,7 @@ runs:
         echo '${{ github.action_path }}' >> "$GITHUB_PATH"
         echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
-    - uses: jenseng/dynamic-uses@v1.0.2
+    - uses: jenseng/dynamic-uses@v1.1
       if: ${{ inputs.license }}
       with:
         uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
@@ -66,14 +66,32 @@ runs:
             "cache-token": ${{ inputs.cache-token }}
           }
 
-    - name: database-start
-      id: database-start
-      shell: bash
-      env:
-        OPT_PATH: ${{ inputs.path }}
-        OPT_PORT: ${{ inputs.port }}
-        OPT_MINPORT: ${{ inputs.minport }}
-        OPT_MAXPORT: ${{ inputs.maxport }}
-        OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
-        OPT_ADDITIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
-      run: database_start.sh
+    - uses: jenseng/dynamic-uses@v1.1
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          { "main": "OPT_PATH='${{ inputs.path }}' \
+                     OPT_PORT='${{ inputs.port }}' \
+                     OPT_MINPORT='${{ inputs.minport }}' \
+                     OPT_MAXPORT='${{ inputs.maxport }}' \
+                     OPT_PARAMETER_FILE='${{ inputs.parameter-file }}' \
+                     OPT_ADDITIONAL_PARAMETERS='${{ inputs.additional-parameters }}' \
+                     ../database-start/database_start.sh",
+            "post": "echo \"Stopping database server...\"; dbstop -db '${{ inputs.path }}' -port '${{ inputs.port }}' || echo \"Database server not running.\""
+          }
+
+    # - name: database-start
+    #   uses: ./with-post-step
+    #   with:
+    #     main: |
+    #       OPT_PATH='${{ inputs.path }}' \
+    #       OPT_PORT='${{ inputs.port }}' \
+    #       OPT_MINPORT='${{ inputs.minport }}' \
+    #       OPT_MAXPORT='${{ inputs.maxport }}' \
+    #       OPT_PARAMETER_FILE='${{ inputs.parameter-file }}' \
+    #       OPT_ADDITIONAL_PARAMETERS='${{ inputs.additional-parameters }}' \
+    #       ../database-start/database_start.sh
+    #     post: |
+    #       echo "Stopping database server..."
+    #       dbstop -db '${{ inputs.path }}' -port '${{ inputs.port }}' || echo "Database server not running."
