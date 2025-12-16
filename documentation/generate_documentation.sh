@@ -60,7 +60,7 @@ setup_params () {
 }
 
 generate_documentation () {
-    if "$ANT_COMMAND" documentation -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/documentation.log"; then
+    if "$ANT_COMMAND" documentation -f "$RUNNER_TEMP/documentation.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/documentation.log"; then
         EXIT_CODE=$?
     else
         EXIT_CODE=$?
