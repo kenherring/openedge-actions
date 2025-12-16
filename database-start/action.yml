@@ -44,27 +44,27 @@ runs:
   using: composite
   steps:
 
-    - name: set-github-path
-      id: set-github-path
-      shell: bash
-      env:
-        ACTION_REF: ${{ github.action_ref }}
-        GITHUB_SHA: ${{ github.sha }}
-      run: |
-        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+    # - name: set-github-path
+    #   id: set-github-path
+    #   shell: bash
+    #   env:
+    #     ACTION_REF: ${{ github.action_ref }}
+    #     GITHUB_SHA: ${{ github.sha }}
+    #   run: |
+    #     echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+    #     echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
-    - uses: jenseng/dynamic-uses@v1.1.1
-      if: ${{ inputs.license }}
-      with:
-        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
-        with: |
-          { "license": "${{ inputs.license }}",
-            "version": ${{ inputs.version }},
-            "dlc": ${{ inputs.dlc }},
-            "cache-key": ${{ inputs.cache-key }},
-            "cache-token": ${{ inputs.cache-token }}
-          }
+    # - uses: jenseng/dynamic-uses@v1.1.1
+    #   if: ${{ inputs.license }}
+    #   with:
+    #     uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+    #     with: |
+    #       { "license": "${{ inputs.license }}",
+    #         "version": ${{ inputs.version }},
+    #         "dlc": ${{ inputs.dlc }},
+    #         "cache-key": ${{ inputs.cache-key }},
+    #         "cache-token": ${{ inputs.cache-token }}
+    #       }
 
     - uses: jenseng/dynamic-uses@v1.1.1
       if: ${{ inputs.license }}
