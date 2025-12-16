@@ -119,5 +119,5 @@ runs:
           export OPT_MAXPORT='${{ inputs.maxport }}'
           export OPT_PARAMETER_FILE='${{ inputs.parameter-file }}'
           export OPT_ADDITIONAL_PARAMETERS='${{ inputs.additional-parameters }}'
-          ./database_start.sh
+          ${{ github.action_path }}/database_start.sh
         post: proshut -by '${{ inputs.path }}'
