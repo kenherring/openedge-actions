@@ -17,7 +17,7 @@ jobs:
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
             working-directory: documentation/test/test1
-            encoding: utf8
+            pct-encoding: utf8
       - name: test-1A
         shell: bash
         working-directory: documentation/test/test1
