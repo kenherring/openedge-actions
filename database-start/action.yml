@@ -44,15 +44,15 @@ runs:
   using: composite
   steps:
 
-    # - name: set-github-path
-    #   id: set-github-path
-    #   shell: bash
-    #   env:
-    #     ACTION_REF: ${{ github.action_ref }}
-    #     GITHUB_SHA: ${{ github.sha }}
-    #   run: |
-    #     echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-    #     echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
     # - uses: jenseng/dynamic-uses@v1.1.1
     #   if: ${{ inputs.license }}
@@ -66,15 +66,15 @@ runs:
     #         "cache-token": ${{ inputs.cache-token }}
     #       }
 
-    - uses: jenseng/dynamic-uses@v1.1.1
-      if: ${{ inputs.license }}
-      with:
-        uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
-        with: |
-          {
-            "main": "echo \"main process\"",
-            "post": "echo \"Stopping database server...\""
-          }
+    # - uses: jenseng/dynamic-uses@v1.1.1
+    #   if: ${{ inputs.license }}
+    #   with:
+    #     uses: kenherring/openedge-actions/with-post-step@${{ steps.set-github-path.outputs.action-ref }}
+    #     with: |
+    #       {
+    #         "main": "echo \"main process\"",
+    #         "post": "echo \"Stopping database server...\""
+    #       }
 
     # - uses: jenseng/dynamic-uses@v1.1.1
     #   if: ${{ inputs.license }}
@@ -107,3 +107,17 @@ runs:
     #       }
 
     # "post": "echo \"Stopping database server...\"; proshut -by "${{ inputs.path }}" || echo \"Database server not running.\""
+
+
+    - name: start-database
+      uses: pyTooling/Actions/with-post-step@v6.7.0
+      with:
+        main: |
+          export OPT_PATH='${{ inputs.path }}'
+          export OPT_PORT='${{ inputs.port }}'
+          export OPT_MINPORT='${{ inputs.minport }}'
+          export OPT_MAXPORT='${{ inputs.maxport }}'
+          export OPT_PARAMETER_FILE='${{ inputs.parameter-file }}'
+          export OPT_ADDITIONAL_PARAMETERS='${{ inputs.additional-parameters }}'
+          ./database_start.sh
+        post: proshut -by '${{ inputs.path }}'
