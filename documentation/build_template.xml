@@ -9,7 +9,7 @@
 		<JsonDocumentation
 			params="PARAMS"
 			>
-			<fileset dir="." includes="**/*.cls,**/*.p" excludes="**/.pct/**"/>
+			<fileset dir="." includes="**/*.cls" excludes="**/.pct/**"/>
 			<propath>
 				<pathelement location="${env.PROPATH_ENTRY_1}" />
 				<pathelement location="${env.PROPATH_ENTRY_2}" />
