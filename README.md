@@ -8,12 +8,15 @@ A collection of GitHub Actions simplifying CI/CD workflows for OpenEdge ABL proj
 
 * `kenherring/openedge-actions/setup` - install and configure OpenEdge
   * similar to [actions/setup-node](https://github.com/actions/setup-node)
-* `kenherring/openedge-actions/run` - execute OpenEdge code
+* `kenherring/openedge-actions/ablunit` - execute ABLUnit tests
 * `kenherring/openedge-actions/compile` - compile OpenEdge code
 * `kenherring/openedge-actions/create-library` - create a procedure library (.pl)
 * `kenherring/openedge-actions/ablunit` - execute ABLUnit tests
+* `kenherring/openedge-actions/database-create` - create an OpenEdge database
 * `kenherring/openedge-actions/database-start` - start an OpenEdge database server
 * `kenherring/openedge-actions/documentation` - generate json documentation
+* `kenherring/openedge-actions/dump-schema` - dump openedge database schema (.df)
+* `kenherring/openedge-actions/run` - execute OpenEdge code
 * `kenherring/openedge-actions/schema-doc` - generate scheme docs for database schema
 <!--
 * `kenherring/openedge-actions/database-stop` - stop an OpenEdge database server
@@ -276,6 +279,37 @@ Execute ablunit tests. Automatically calls `setup` if DLC is not yet configured.
 | `error-count` | test with errors |
 | `skipped-count` | tests skipped |
 
+## Action: `database-create`
+
+Create an openedge database
+
+```yml
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: kenherring/openedge-actions/database-create@v0
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          db-name: myDb
+```
+
+### Inputs: `database-create`
+
+| Input          | Required | Default | Description                     |
+| -------------- | -------- | ------- | ------------------------------- |
+| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
+| `version` | false | `latest` | The ABL version to use |
+| `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
+| `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
+| `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
+| `working-directory` | false | | The working directory to run the OpenEdge program in |
+| `artifact-name` | false | | Artifact name for uploading procedure library |
+| `db-name` | true | | Database name |
+| `db-directory` | false | `db` | Database directory |
+| `debug` | false | `false` | Additional debug logging |
+
 ## Action: `database-start`
 
 Start a database server
@@ -346,9 +380,44 @@ jobs:
 | `pct-style` | false | `Javadoc` | Comment style: Javadoc, simple, consultingwerk |
 | `pct-indent` | false | `false` | JSON pretty-printing |
 
-## Action: `schema-doc`
+## Action: `dump-schema`
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_schema_doc.yml/badge.svg)
+Dump openedge database schema
+
+```yml
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: kenherring/openedge-actions/dump-schema@v0
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          dest-file: my-schema.df
+```
+
+### Inputs: `dump-schema`
+
+| Input          | Required | Default | Description                     |
+| -------------- | -------- | ------- | ------------------------------- |
+| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
+| `version` | false | `latest` | The ABL version to use |
+| `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
+| `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
+| `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
+| `working-directory` | false | | The working directory to run the OpenEdge program in |
+| `artifact-name` | false | | Artifact name for uploading schema |
+| `db-name` | true | | Database name |
+| `db-directory` | false | `db` | Database directory |
+| `dest-file` | false | `schema/{db-name}.df` | Schema file path |
+
+### Outputs: `dump-schema
+
+| Output | Description |
+| ------ | ----------- |
+| `schema-file` | Schema file path |
+
+## Action: `schema-doc`
 
 Generate Schema Doc for OpenEdge database schema - [sports2000 example](https://kenherring.github.io/openedge-actions/doc/sp2k/sp2k.html)
 

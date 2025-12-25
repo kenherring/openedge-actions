@@ -34,7 +34,7 @@ jobs:
             working-directory: schema-doc/test/test1
             db-name: sp2k
             artifact-name: schema-doc-test-1
-            gh-pages-branch: gh-pages
+            # gh-pages-branch: gh-pages
       - name: test-1
         shell: bash
         working-directory: schema-doc/test/test1

@@ -1,7 +1,5 @@
 # kenherring/openedge-actions/setup
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_setup.yml/badge.svg)
-
 GitHub Action to setup and cache OpenEdge ABL version and adds `$DLC/bin` to the `PATH`.
 
 ## Sample

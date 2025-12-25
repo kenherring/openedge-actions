@@ -1,7 +1,5 @@
 # kenherring/openedge-actions/compile
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_compile.yml/badge.svg)
-
 Compile OpenEdge code
 
 ## Sample
