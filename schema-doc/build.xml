@@ -20,7 +20,7 @@
 		</PCTSchemaDoc>
 		<xslt in="${env.PCT_file}" style="${env.GITHUB_ACTION_PATH}/SchemaDoc.xsl" out="${env.PCT_textFile}">
 			<param name="outputdir" expression="${env.PCT_outputDir}" />
-			<param name="dbname" expression="${PCT_dbName}" />
+			<param name="dbname" expression="${env.PCT_dbName}" />
 		</xslt>
 	</target>
 

@@ -5,7 +5,7 @@ on:
 
 jobs:
   test-action:
-    name: test-action/documentation
+    name: test-action/schema-doc
     runs-on: ubuntu-latest
 
     steps:
