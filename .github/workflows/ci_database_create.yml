@@ -26,8 +26,7 @@ jobs:
         shell: bash
         working-directory: database-create/test/test1
         run: |
-          ls -al db/
-          [ -f "db/myDb" ] || (echo "::error::Expected database file db/myDb but it was not found" && exit 1)
+          [ -f "db/myDb.db" ] || (echo "::error::Expected database file db/myDb.db but it was not found" && exit 1)
 
       - name: pre-merge-validation
         shell: bash
