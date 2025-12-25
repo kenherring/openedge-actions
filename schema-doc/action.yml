@@ -29,10 +29,10 @@ inputs:
     required: false
   ##### Database Options #####
   db-name:
-    description: database name
+    description: Database name
     required: true
   db-directory:
-    description: database directory
+    description: Database directory
     required: false
     default: db
   ##### SchemaDoc Options #####
@@ -46,7 +46,7 @@ inputs:
     required: false
     default: doc/{db-name}.txt
   output-directory:
-    description: output directory
+    description: Output directory
     required: false
     default: doc/{db-name}
   ##### GH Pages Options #####
