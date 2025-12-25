@@ -53,26 +53,17 @@ inputs:
   gh-pages-branch:
     description: GitHub Pages branch to push to
     required: false
-    default: gh-pages
 
 runs:
   using: composite
   steps:
 
-    - name: set-github-path
-      id: set-github-path
-      shell: bash
-      env:
-        ACTION_REF: ${{ github.action_ref }}
-        GITHUB_SHA: ${{ github.sha }}
-      run: |
-        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
-
     - uses: jenseng/dynamic-uses@v1.1.1
       if: ${{ inputs.license }}
+      env:
+        action_ref: ${{ github.action_ref }}
       with:
-        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        uses: kenherring/openedge-actions/setup@${{ github.repository == 'kenherring/openedge-actions' && github.sha || env.action_ref }}
         with: |
           {  "license": "${{ inputs.license }}",
               "version": ${{ inputs.version }},
@@ -93,7 +84,7 @@ runs:
         PCT_dbName: ${{ inputs.db-name }}
         PCT_dbDir: ${{ inputs.db-directory }}
         PCT_outputDir: ${{ inputs.output-directory }}
-      run: generate_schemadoc.sh
+      run: ${{ github.action_path }}/generate_schemadoc.sh
 
     - uses: actions/upload-artifact@v4
       if: inputs.artifact-name
@@ -139,7 +130,6 @@ runs:
       id: remove-gh-pages-branch-clone
       shell: bash
       run: rm -rf GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}
-
 
     # - name: Create GitHub Pages artifact
     #   id: gh-pages-artifact

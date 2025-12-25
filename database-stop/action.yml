@@ -11,15 +11,9 @@ runs:
   using: composite
   steps:
 
-    - name: set-github-path
-      id: set-github-path
-      shell: bash
-      run: |
-        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-
     - name: database-stop
       id: database-stop
       shell: bash
       env:
         OPT_PATH: ${{ inputs.path }}
-      run: database_stop.sh
+      run: ${{ github.action_path }}/database_stop.sh

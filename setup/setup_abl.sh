@@ -21,11 +21,23 @@ check-existing-dlc () {
     if [ -d "$DLC" ] && [ "$(ls -A "$DLC")" ]; then
         if [ -f "$DLC/version" ]; then
             EXISTING_VERSION=$(awk '{print $3}' "$DLC/version")
+
             if [ "$ABL_VERSION" = "latest" ]; then
-                TARGET_VERSION=$(docker run --rm "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" bash -c 'cat /psc/dlc/version' | awk '{print $3}')
+                if [ -f "$DLC/digest.txt" ]; then
+                    TARGET_DIGEST=$(docker buildx imagetools inspect "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" --format '{{json .Manifest.Digest}}')
+                    EXISTING_DIGEST=$(cat "$DLC/digest.txt")
+                    if [ "$EXISTING_DIGEST" = "$TARGET_DIGEST" ]; then
+                        echo "::notice file=$0::DLC directory $DLC already contains requested OpenEdge version $EXISTING_VERSION."
+                        echo "skipped=true" >> "$GITHUB_OUTPUT"
+                        return 0
+                    fi
+                else
+                    TARGET_VERSION=$(docker run --rm "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" bash -c 'cat /psc/dlc/version' | awk '{print $3}')
+                fi
             else
                 TARGET_VERSION=$ABL_VERSION
             fi
+
             if [ "$EXISTING_VERSION" = "$TARGET_VERSION" ]; then
                 echo "::notice file=$0::DLC directory $DLC already contains requested OpenEdge version $EXISTING_VERSION."
                 echo "skipped=true" >> "$GITHUB_OUTPUT"
@@ -45,6 +57,7 @@ copy-dlc-from-container () {
     docker run --name setup_abl "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" bash -c 'exit 0' 2>&1
     docker cp setup_abl:/psc/dlc/. "$DLC"
     docker rm setup_abl >/dev/null
+    docker buildx imagetools inspect "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" --format '{{json .Manifest.Digest}}' > "$DLC/digest.txt"
     echo "::groupend::"
 }
 

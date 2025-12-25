@@ -21,5 +21,3 @@ set -euo pipefail
 [ -n "${PCT_defaultExcludes:-}" ] && LIBRARY_PARAMS+=("defaultExcludes=\"${PCT_defaultExcludes}\"")
 
 sed "s|params=\"PARAMS\"|${LIBRARY_PARAMS[*]}|" build_template.xml > "$RUNNER_TEMP/create-library.xml"
-
-cat "$RUNNER_TEMP/create-library.xml"
