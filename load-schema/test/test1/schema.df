@@ -1,5 +1,4 @@
 ADD TABLE "Customer"
-  AREA "Cust_Data"
   DESCRIPTION "The customer table contains customer  information including  balance and address."
   DUMP-NAME "customer"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crcust.p" CRC "?"
@@ -113,21 +112,17 @@ ADD FIELD "EmailAddress" OF "Customer" AS character
   ORDER 200
 
 ADD INDEX "CustNum" ON "Customer"
-  AREA "Cust_Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "CustNum" ASCENDING
 
 ADD INDEX "Comments" ON "Customer"
-  AREA "Cust_Index"
   WORD
   INDEX-FIELD "Comments" ASCENDING
 
 ADD INDEX "CountryPost" ON "Customer"
-  AREA "Cust_Index"
   INDEX-FIELD "Country" ASCENDING
   INDEX-FIELD "PostalCode" ASCENDING
 
 ADD INDEX "Name" ON "Customer"
-  AREA "Cust_Index"
   INDEX-FIELD "Name" ASCENDING
