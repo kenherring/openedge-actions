@@ -47,3 +47,8 @@ jobs:
     ci_setup:
         uses: ./.github/workflows/ci_setup.yml
         secrets: inherit
+    ci_shellcheck:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Run ShellCheck
+            uses: ludeeus/action-shellcheck@2.0.0
