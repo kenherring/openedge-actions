@@ -13,7 +13,10 @@ initialize () {
 }
 
 validate_inputs () {
-    [ -z "$PCT_dbName" ] && echo "dbName is not set and is required!" && exit 1
+    if [ -n "$PCT_dbName" ]; then
+        echo "dbName is not set and is required!"
+        exit 1
+    fi
 }
 
 database_create () {
