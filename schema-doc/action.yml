@@ -137,9 +137,12 @@ runs:
       working-directory: GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}_branch
       run: |
         set -x
+        git config --global user.email "${{ github.actor }}@github.com"
+        git config --global user.name "${{ github.actor }}"
         git add ${{ steps.abl-schema-doc.outputs.output-directory }}/**
         git status
-        git commit -m "Update schema-doc for ${{ inputs.db-name }}" || (echo "No changes to commit" && exit 0)
+        git commit -m "Update gh pages schema-doc for ${{ inputs.db-name }}"
+        # git commit -m "Update schema-doc for ${{ inputs.db-name }}" || (echo "No changes to commit" && exit 0)
         git status
         git push
 
