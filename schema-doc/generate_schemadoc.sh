@@ -19,12 +19,6 @@ set_inputs () {
 
     echo "text-file=${PCT_textFile}" >> "$GITHUB_OUTPUT"
     echo "output-directory=${PCT_outputDir}" >> "$GITHUB_OUTPUT"
-
-    echo "PCT_file=${PCT_file:-}"
-    echo "PCT_textFile=${PCT_textFile:-}"
-    echo "PCT_dbName=${PCT_dbName:-}"
-    echo "PCT_dbDir=${PCT_dbDir:-}"
-    echo "PCT_outputDir=${PCT_outputDir:-}"
 }
 
 generate_schemadoc () {
