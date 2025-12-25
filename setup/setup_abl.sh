@@ -23,12 +23,14 @@ check-existing-dlc () {
             EXISTING_VERSION=$(awk '{print $3}' "$DLC/version")
 
             if [ "$ABL_VERSION" = "latest" ]; then
-                TARGET_DIGEST=$(docker buildx imagetools inspect "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" --format '{{json .Manifest.Digest}}')
-                EXISTING_DIGEST=$(cat "$DLC/digest.txt")
-                if [ "$EXISTING_DIGEST" = "$TARGET_DIGEST" ]; then
-                    echo "::notice file=$0::DLC directory $DLC already contains requested OpenEdge version $EXISTING_VERSION."
-                    echo "skipped=true" >> "$GITHUB_OUTPUT"
-                    return 0
+                if [ -f "$DLC/digest.txt" ]; then
+                    TARGET_DIGEST=$(docker buildx imagetools inspect "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" --format '{{json .Manifest.Digest}}')
+                    EXISTING_DIGEST=$(cat "$DLC/digest.txt")
+                    if [ "$EXISTING_DIGEST" = "$TARGET_DIGEST" ]; then
+                        echo "::notice file=$0::DLC directory $DLC already contains requested OpenEdge version $EXISTING_VERSION."
+                        echo "skipped=true" >> "$GITHUB_OUTPUT"
+                        return 0
+                    fi
                 fi
             else
                 TARGET_VERSION=$ABL_VERSION
