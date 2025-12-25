@@ -13,7 +13,7 @@ initialize () {
 }
 
 validate_inputs () {
-    if [ -n "$PCT_dbName" ]; then
+    if [ -z "$PCT_dbName" ]; then
         echo "dbName is not set and is required!"
         exit 1
     fi
