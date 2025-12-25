@@ -81,15 +81,6 @@ runs:
   using: composite
   steps:
 
-    # - name: set-github-path
-    #   id: set-github-path
-    #   shell: bash
-    #   env:
-    #     ACTION_REF: ${{ github.action_ref }}
-    #     GITHUB_SHA: ${{ github.sha }}
-    #   run: |
-    #     echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-
     - id: ablunit-init
       shell: bash
       working-directory: ${{ inputs.working-directory }}

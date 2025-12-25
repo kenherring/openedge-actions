@@ -40,10 +40,6 @@ runs:
   using: composite
   steps:
 
-    - name: set-github-path
-      shell: bash
-      run: echo '${{ github.action_path }}' >> $GITHUB_PATH
-
     - name: setup-abl-init
       id: setup-abl-init
       shell: bash
@@ -54,7 +50,7 @@ runs:
         INPUTS_DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
         INPUTS_VERSION: ${{ inputs.version }}
         RUNNER_OS: ${{ runner.os }}
-      run: setup_abl_init.sh
+      run: ${{ github.action_path }}/setup_abl_init.sh
 
     - name: cache-abl-restore
       id: cache-abl-restore
@@ -70,12 +66,12 @@ runs:
       env:
         ABL_VERSION: ${{ inputs.version }}
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
-      run: setup_abl.sh
+      run: ${{ github.action_path }}/setup_abl.sh
 
     - shell: bash
       env:
         DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
-      run: download_deps.sh
+      run: ${{ github.action_path }}/download_deps.sh
 
     - name: check-abl-license-before-cache-save
       id: check-abl-license-before-cache-save
@@ -98,4 +94,4 @@ runs:
       env:
         DLC: ${{ steps.setup-abl-init.outputs.dlc }}
         LICENSE_FILE: ${{ inputs.license }}
-      run: setup_license.sh
+      run: ${{ github.action_path }}/setup_license.sh

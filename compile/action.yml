@@ -182,20 +182,12 @@ runs:
   using: composite
   steps:
 
-    - name: set-github-path
-      id: set-github-path
-      shell: bash
-      env:
-        ACTION_REF: ${{ github.action_ref }}
-        GITHUB_SHA: ${{ github.sha }}
-      run: |
-        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
-
     - uses: jenseng/dynamic-uses@v1.1.1
+      env:
+        action_ref: ${{ github.action_ref }}
       if: ${{ inputs.license }}
       with:
-        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        uses: kenherring/openedge-actions/setup@${{ github.repository == 'kenherring/openedge-actions' && github.sha || env.action_ref }}
         with: |
           {  "license": "${{ inputs.license }}",
               "version": ${{ inputs.version }},
@@ -248,7 +240,7 @@ runs:
         PCT_requireReturnValues: ${{ inputs.pct-requireReturnValues }}
         PCT_outputType: ${{ inputs.pct-outputType }}
         PCT_callbackClass: ${{ inputs.pct-callbackClass }}
-      run: compile.sh
+      run: ${{ github.action_path }}/compile.sh
 
     - shell: bash
       if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
