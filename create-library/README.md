@@ -1,7 +1,5 @@
 # kenherring/openedge-actions/create-library
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_create_library.yml/badge.svg)
-
 Create Procedure Library (.pl)
 
 ## Sample

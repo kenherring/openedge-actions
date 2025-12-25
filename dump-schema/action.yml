@@ -37,7 +37,7 @@ inputs:
     required: false
     default: db
   dest-file:
-    description: Schema file
+    description: Schema file path
     required: false
     default: schema/{db-name}.df
 
@@ -73,7 +73,7 @@ runs:
         PCT_dbName: ${{ inputs.db-name }}
         PCT_dbDir: ${{ inputs.db-directory }}
         PCT_destFile: ${{ inputs.dest-file }}
-      run: ${{ github.action_path }}/dump-schema.sh
+      run: ${{ github.action_path}}/dump_schema.sh
 
     - uses: actions/upload-artifact@v4
       if: ${{ inputs.artifact-name != '' }}

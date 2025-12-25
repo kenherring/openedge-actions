@@ -1,0 +1,10 @@
+<project name="openedge-actions/schema-doc/test/test1">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+	<property environment="env" />
+
+    <mkdir dir="db" />
+    <sports2000 dbName="sp2k" destDir="db" dlcHome="${env.DLC}" />
+
+</project>
