@@ -22,11 +22,14 @@ jobs:
     ci_create_library:
         uses: ./.github/workflows/ci_create_library.yml
         secrets: inherit
+    ci_database_start:
+        uses: ./.github/workflows/ci_database_start.yml
+        secrets: inherit
     ci_documentation:
         uses: ./.github/workflows/ci_documentation.yml
         secrets: inherit
-    ci_database_start:
-        uses: ./.github/workflows/ci_database_start.yml
+    ci_dump_schema:
+        uses: ./.github/workflows/ci_dump_schema.yml
         secrets: inherit
     ci_root:
         uses: ./.github/workflows/ci_root.yml

@@ -81,9 +81,9 @@ runs:
   steps:
 
     - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license }}
       env:
         action_ref: ${{ github.action_ref }}
-      if: ${{ inputs.license }}
       with:
         uses: kenherring/openedge-actions/setup@${{ github.repository == 'kenherring/openedge-actions' && github.sha || env.action_ref }}
         with: |
