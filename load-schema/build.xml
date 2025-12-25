@@ -1,0 +1,14 @@
+<project name="openedge-actions/load-schema">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+	<property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+	<target name="load-schema">
+		<PCTLoadSchema srcFile="${env.PCT_srcFile}">
+  			<DBConnection dbName="${env.PCT_dbName}" dbDir="${env.PCT_dbDir}" singleUser="true" />
+		</PCTLoadSchema>
+	</target>
+
+</project>
