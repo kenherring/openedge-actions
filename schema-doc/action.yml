@@ -124,32 +124,21 @@ runs:
         name: gh-pages
         path: GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}_branch/${{ steps.abl-schema-doc.outputs.output-directory }}
 
-    - shell: bash
-      working-directory: GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}_branch
-      run: |
-        set -x
-        ls -al
-        ls -al ${{ steps.abl-schema-doc.outputs.output-directory }}
-
     - name: push to gh pages branch
       if: inputs.gh-pages-branch
       shell: bash
       working-directory: GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}_branch
       run: |
-        set -x
         git config --global user.email "${{ github.actor }}@github.com"
         git config --global user.name "${{ github.actor }}"
         git add ${{ steps.abl-schema-doc.outputs.output-directory }}/**
-        git status
         git commit -m "Update gh pages schema-doc for ${{ inputs.db-name }}"
-        # git commit -m "Update schema-doc for ${{ inputs.db-name }}" || (echo "No changes to commit" && exit 0)
-        git status
         git push
 
-    # - name: remove gh pages branch clone
-    #   id: remove-gh-pages-branch-clone
-    #   shell: bash
-    #   run: rm -rf GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}
+    - name: remove gh pages branch clone
+      id: remove-gh-pages-branch-clone
+      shell: bash
+      run: rm -rf GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}
 
 
     # - name: Create GitHub Pages artifact
