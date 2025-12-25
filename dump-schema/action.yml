@@ -37,7 +37,7 @@ inputs:
     required: false
     default: db
   dest-file:
-    description: Schema file
+    description: Schema file path
     required: false
     default: schema/{db-name}.df
 

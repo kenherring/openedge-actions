@@ -28,9 +28,9 @@ jobs:
 | `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
 | `working-directory` | false | | The working directory to run the OpenEdge program in |
-| `artifact-name` | false | | Artifact name for uploading procedure library |
+| `artifact-name` | false | | Artifact name for uploading schema |
 | `db-name` | true | | Database name |
-| `db-dir` | false | `db` | Database directory |
+| `db-directory` | false | `db` | Database directory |
 | `dest-file` | false | `schema/{db-name}.df` | Schema file path |
 
 ## Outputs
