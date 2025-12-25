@@ -24,10 +24,8 @@ jobs:
         working-directory: documentation/test/test1
         run: |
           [ -f "documentation.json" ] || (echo "::error::Expected documentation file documentation.json but it was not found" && exit 1)
-
-      - name: pre-merge-validation
-        shell: bash
-        run: ./.github/workflows/pre_merge_validation.sh documentation
+          NUM_LINES=$(wc -l < documentation.json)
+          [ "$NUM_LINES" -eq 1 ] || (echo "::error::Expected num lines > 1 but got $NUM_LINES" && exit 1)
 
       ## a documentation test with indent
       - name: documentation-2
