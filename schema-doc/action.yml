@@ -105,6 +105,6 @@ runs:
         name: ${{ inputs.artifact-name }}
         path: |
           ${{ inputs.working-directory }}/${{ inputs.file }}
-          ${{ inputs.working-directory }}/${{ inputs.text-file }}
-          ${{ inputs.working-directory }}/${{ inputs.output-directory }}
+          ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.text-file }}
+          ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
         if-no-files-found: error

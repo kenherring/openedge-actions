@@ -17,6 +17,9 @@ set_inputs () {
     [ "$PCT_outputDir" = "doc/{db-name}" ] && PCT_outputDir="doc/$PCT_dbName"
     export PCT_textFile PCT_outputDir
 
+    echo "text-file=${PCT_textFile}" >> "$GITHUB_OUTPUT"
+    echo "output-directory=${PCT_outputDir}" >> "$GITHUB_OUTPUT"
+
     echo "PCT_file=${PCT_file:-}"
     echo "PCT_textFile=${PCT_textFile:-}"
     echo "PCT_dbName=${PCT_dbName:-}"
