@@ -81,15 +81,14 @@ runs:
   using: composite
   steps:
 
-    - name: set-github-path
-      id: set-github-path
-      shell: bash
-      env:
-        ACTION_REF: ${{ github.action_ref }}
-        GITHUB_SHA: ${{ github.sha }}
-      run: |
-        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+    # - name: set-github-path
+    #   id: set-github-path
+    #   shell: bash
+    #   env:
+    #     ACTION_REF: ${{ github.action_ref }}
+    #     GITHUB_SHA: ${{ github.sha }}
+    #   run: |
+    #     echo '${{ github.action_path }}' >> "$GITHUB_PATH"
 
     - id: ablunit-init
       shell: bash
@@ -98,13 +97,15 @@ runs:
         ABLUNIT_JSON: ${{ inputs.ablunit-json }}
         PROPATH: ${{ inputs.propath }}
         TEST_FILE_PATTERN: ${{ inputs.test-file-pattern }}
-      run: ablunit_init.sh
+      run: ${{ github.action_path }}/ablunit_init.sh
 
     - uses: jenseng/dynamic-uses@v1.1.1
+      env:
+        action_ref: ${{ github.action_ref }}
       with:
-        uses: kenherring/openedge-actions/run@${{ steps.set-github-path.outputs.action-ref }}
+        uses: kenherring/openedge-actions/run@${{ github.repository == 'kherring/openedge-actions' && github.sha || env.action_ref }}
         with: |
-          { "license": "${{ inputs.license }}",
+          { "license": ${{ inputs.license }},
             "version": ${{ inputs.version }},
             "dlc": ${{ inputs.dlc }},
             "cache-key": ${{ inputs.cache-key }},
@@ -118,17 +119,6 @@ runs:
             "additional-parameters": ${{ inputs.additional-parameters }}
           }
 
-    ## need to use dynamic uses above because actions local to the first action called don't work
-    # - uses: ./run
-    #   with:
-    #     license: ${{ inputs.license }}
-    #     version: ${{ inputs.version }}
-    #     dlc: ${{ inputs.dlc }}
-    #     cache-key: ${{ inputs.cache-key }}
-    #     propath: '${{ inputs.propath }},$DLC/src/ablunit'
-    #     startup-procedure: ${{ inputs.startup-procedure }}
-    #     parameter: "CFG=${{ inputs.ablunit-json }}"
-
     - id: analyze-results
       shell: bash
       working-directory: ${{ inputs.working-directory }}
@@ -136,4 +126,4 @@ runs:
         ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.ablunit-json }}
         ACTIONS_STEP_DEBUG: ${{ inputs.debug }}
         DELETE_ABLUNIT_JSON: ${{ steps.ablunit-init.outputs.created-ablunit-json }}
-      run: analyze_results.sh
+      run: ${{ github.action_path }}/analyze_results.sh
