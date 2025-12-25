@@ -32,6 +32,10 @@ inputs:
     description: Database directory
     required: false
     default: db
+  debug:
+    description: Additional debug logging
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -57,6 +61,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       env:
+        ACTIONS_STEP_DEBUG: ${{ inputs.debug }}
         PCT_dbName: ${{ inputs.db-name }}
         PCT_dbDir: ${{ inputs.db-directory }}
       run: ${{ github.action_path }}/database_create.sh

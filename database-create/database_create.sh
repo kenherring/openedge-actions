@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+${ACTIONS_STEP_DEBUG:-false} && set -x
 
 initialize () {
     GITHUB_ACTION_PATH=${GITHUB_ACTION_PATH:-$(dirname "$0")}
