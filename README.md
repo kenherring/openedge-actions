@@ -13,6 +13,8 @@ A collection of GitHub Actions simplifying CI/CD workflows for OpenEdge ABL proj
 * `kenherring/openedge-actions/create-library` - create a procedure library (.pl)
 * `kenherring/openedge-actions/ablunit` - execute ABLUnit tests
 * `kenherring/openedge-actions/database-start` - start an OpenEdge database server
+* `kenherring/openedge-actions/documentation` - generate json documentation
+* `kenherring/openedge-actions/schema-doc` - generate scheme docs for database schema
 <!--
 * `kenherring/openedge-actions/database-stop` - stop an OpenEdge database server
 -->
