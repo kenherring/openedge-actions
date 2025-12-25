@@ -61,7 +61,7 @@ inputs:
   debug:
     description: Additional debug logging
     required: false
-    default: "true"
+    default: "false"
 
 outputs:
   test-count:

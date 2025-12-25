@@ -1,6 +1,5 @@
 #!/bin/bash
 set -euo pipefail
-echo "ACTIONS_STEP_DEBUG=$ACTIONS_STEP_DEBUG"
 ${ACTIONS_STEP_DEBUG:-false} && set -x
 
 if [ ! -f results.xml ]; then
