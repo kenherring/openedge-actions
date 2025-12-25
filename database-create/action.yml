@@ -59,4 +59,4 @@ runs:
       env:
         PCT_dbName: ${{ inputs.db-name }}
         PCT_dbDir: ${{ inputs.db-directory }}
-      run: ${{ github.action_path }}/database-create.sh
+      run: ${{ github.action_path }}/database_create.sh
