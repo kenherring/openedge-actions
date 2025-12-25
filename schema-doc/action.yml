@@ -1,0 +1,106 @@
+name: openedge-actions/documentation
+description: Generate OpenEdge JsonDocumentation
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  artifact-name:
+    description: Artifact name for uploading documentation
+    required: false
+  ##### Database Options #####
+  db-name:
+    description: database name
+    required: true
+  db-directory:
+    description: database directory
+    required: false
+    default: db
+  ##### SchemaDoc Options #####
+  file:
+    description: XML file output
+    required: false
+    default: schemadoc.xml
+  ##### XLST Options #####
+  textFile:
+    description: Text file output
+    required: false
+    default: doc/${{ inputs.dbName }}.txt
+  outputDir:
+    description: output directory
+    required: false
+    default: doc/${{ inputs.dbName }}
+  ##### GH Pages Options #####
+  gh-pages-branch:
+    description: Branch to push documentation to
+    required: false
+    default: gh-pages
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - id: abl-schema-doc
+      name: abl-schema-doc
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+        PCT_file: ${{ inputs.file }}
+        PCT_textFile: ${{ inputs.textFile }}
+        PCT_dbName: ${{ inputs.dbName }}
+        PCT_dbDir: ${{ inputs.dbDir }}
+        PCT_outputDir: ${{ inputs.outputDir}}
+      run: generate_schemadoc.sh
+
+    - uses: actions/upload-artifact@v4
+      if: inputs.artifact-name
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: |
+          ${{ inputs.working-directory }}/${{ inputs.file }}
+          ${{ inputs.working-directory }}/${{ inputs.textFile }}
+          ${{ inputs.working-directory }}/${{ inputs.outputDir }}
+        if-no-files-found: error

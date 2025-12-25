@@ -1,0 +1,44 @@
+name: CI - Schema Doc
+
+on:
+  workflow_call
+
+jobs:
+  test-action:
+    name: test-action/documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: setup-1
+        uses: ./setup
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+
+      ## create a sports2000 database
+      - name: create-sports2000-db
+        shell: bash
+        working-directory: schema-doc/test/test1
+        run: ant
+        # $DLC/ant/bin/ant -f schema-doc/test/test1/build.xml
+
+      ## a simple schema-doc test
+      - name: schema-doc-1
+        uses: ./schema-doc
+        with:
+            working-directory: schema-doc/test/test1
+            db-name: sp2k
+            artifact-name: schema-doc-test-1
+      - name: test-1
+        shell: bash
+        working-directory: schema-doc/test/test1
+        run: |
+          if [ ! -f doc/sp2k.txt ]; then
+            echo "::error file=$0::schema-doc failed to create doc/sp2k.txt"
+            exit 1
+          fi
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh schema-doc
