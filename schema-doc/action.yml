@@ -123,16 +123,22 @@ runs:
         name: gh-pages
         path: ${{ steps.abl-schema-doc.outputs.output-directory }}
 
+    - shell: bash
+      run: |
+        set -x
+        ls -al
+        ls -al ${{ steps.abl-schema-doc.outputs.output-directory }}
+
     - name: push to gh pages branch
       if: inputs.gh-pages-branch
       shell: bash
       run: |
-        git add ${{ steps.abl-schema-doc.outputs.output-directory }}
+        set -x
+        git add ${{ steps.abl-schema-doc.outputs.output-directory }}/**
+        git status
         git commit -m "Update schema-doc for ${{ inputs.db-name }}" || (echo "No changes to commit" && exit 0)
+        git status
         git push
-        # git push origin HEAD:${{ inputs.gh-pages-branch }}
-
-
 
     # - name: Create GitHub Pages artifact
     #   id: gh-pages-artifact
