@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       ## setup latest version
       - name: setup-1
@@ -141,7 +141,7 @@ jobs:
     needs: [ test-action-A ]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       ## was not cached in setup-3A so we shouldn't get a cache hit here
       - name: setup-3B
