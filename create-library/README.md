@@ -19,8 +19,8 @@ jobs:
 
 ## Inputs
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |

@@ -1,5 +1,5 @@
 name: openedge-actions/load-schema
-description: Create an openedge database
+description: Load openedge database schema
 author: kenherring
 
 inputs:
