@@ -1,7 +1,5 @@
 # kenherring/openedge-actions/documentation
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_documentation.yml/badge.svg)
-
 Generate Json Documentation for OpenEdge code
 
 ## Sample

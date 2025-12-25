@@ -1,7 +1,5 @@
 # kherring/openedge-action/database-start
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_database_start.yml/badge.svg)
-
 GitHub Action that executes ABLUnit tests
 
 ## Sample

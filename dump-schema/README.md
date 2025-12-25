@@ -1,7 +1,5 @@
 # kenherring/openedge-actions/dump-schema
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_dump_schema.yml/badge.svg)
-
 Dump openedge database schema
 
 ## Sample
