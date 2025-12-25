@@ -33,4 +33,5 @@ generate_schemadoc () {
 
 ########## MAIN BLOCK ##########
 initialize
-generate_documentation
+set_inputs
+generate_schemadoc
