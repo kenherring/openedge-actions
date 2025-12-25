@@ -111,10 +111,11 @@ runs:
         name: gh-pages
         path: ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       if: inputs.gh-pages-branch
       with:
         ref: ${{ inputs.gh-pages-branch }}
+        persist-credentials: true
 
     - uses: actions/download-artifact@v4
       if: inputs.gh-pages-branch
