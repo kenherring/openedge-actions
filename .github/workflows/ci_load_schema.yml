@@ -29,7 +29,7 @@ jobs:
             schema-file: schema.df
       - name: test-1A
         shell: bash
-        working-directory: database-create/test/test1
+        working-directory: load-schema/test/test1
         run: |
           [ -f "db/myDb.db" ] || (echo "::error::Expected database file db/myDb.db but it was not found" && exit 1)
       - name: test-1B
@@ -42,4 +42,4 @@ jobs:
 
       - name: pre-merge-validation
         shell: bash
-        run: ./.github/workflows/pre_merge_validation.sh database-create
+        run: ./.github/workflows/pre_merge_validation.sh load-schema
