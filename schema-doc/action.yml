@@ -1,0 +1,154 @@
+name: openedge-actions/schema-doc
+description: Generate OpenEdge Schema Docs
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  artifact-name:
+    description: Artifact name for uploading documentation
+    required: false
+  ##### Database Options #####
+  db-name:
+    description: Database name
+    required: true
+  db-directory:
+    description: Database directory
+    required: false
+    default: db
+  ##### SchemaDoc Options #####
+  file:
+    description: XML file output
+    required: false
+    default: schemadoc.xml
+  ##### XLST Options #####
+  text-file:
+    description: Text file output
+    required: false
+    default: doc/{db-name}.txt
+  output-directory:
+    description: Output directory
+    required: false
+    default: doc/{db-name}
+  ##### GH Pages Options #####
+  gh-pages-branch:
+    description: GitHub Pages branch to push to
+    required: false
+    default: gh-pages
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - id: abl-schema-doc
+      name: abl-schema-doc
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+        PCT_file: ${{ inputs.file }}
+        PCT_textFile: ${{ inputs.text-file }}
+        PCT_dbName: ${{ inputs.db-name }}
+        PCT_dbDir: ${{ inputs.db-directory }}
+        PCT_outputDir: ${{ inputs.output-directory }}
+      run: generate_schemadoc.sh
+
+    - uses: actions/upload-artifact@v4
+      if: inputs.artifact-name
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: |
+          ${{ inputs.working-directory }}/${{ inputs.file }}
+          ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.text-file }}
+          ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v4
+      if: inputs.gh-pages-branch
+      with:
+        name: gh-pages
+        path: ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
+
+    - uses: actions/checkout@v6
+      if: inputs.gh-pages-branch
+      with:
+        ref: ${{ inputs.gh-pages-branch }}
+        persist-credentials: true
+        path: GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}_branch
+
+    - uses: actions/download-artifact@v4
+      if: inputs.gh-pages-branch
+      with:
+        name: gh-pages
+        path: GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}_branch/${{ steps.abl-schema-doc.outputs.output-directory }}
+
+    - name: push to gh pages branch
+      if: inputs.gh-pages-branch
+      shell: bash
+      working-directory: GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}_branch
+      run: |
+        git config --global user.email "${{ github.actor }}@github.com"
+        git config --global user.name "${{ github.actor }}"
+        git add ${{ steps.abl-schema-doc.outputs.output-directory }}/**
+        git commit -m "Update gh pages schema-doc for ${{ inputs.db-name }}"
+        git push
+
+    - name: remove gh pages branch clone
+      id: remove-gh-pages-branch-clone
+      shell: bash
+      run: rm -rf GITHUB_ACTIONS_TEMP/${{ inputs.gh-pages-branch }}
+
+
+    # - name: Create GitHub Pages artifact
+    #   id: gh-pages-artifact
+    #   if: inputs.gh-pages-branch
+    #   uses: actions/upload-pages-artifact@v4
+    #   with:
+    #     path: ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
+
+    # - name: Deploy to GitHub Pages
+    #   id: gh-pages-deploy
+    #   if: inputs.gh-pages-branch
+    #   uses: actions/deploy-pages@v4
