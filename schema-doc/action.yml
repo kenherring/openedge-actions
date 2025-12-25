@@ -109,14 +109,6 @@ runs:
           ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
         if-no-files-found: error
 
-    - uses: actions/upload-artifact@v4
-      if: inputs.gh-pages-branch
-      with:
-        name: gh-pages
-        path: |
-          ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
-        if-no-files-found: error
-
     - name: Create GitHub Pages artifact
       id: gh-pages-artifact
       if: inputs.gh-pages-branch
