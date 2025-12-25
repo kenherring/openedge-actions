@@ -1,8 +1,8 @@
 <project name="openedge-actions/schema-doc">
 
-	<!-- <taskdef resource="PCT.properties" /> -->
-	<!-- <typedef resource="types.properties" /> -->
-	<!-- <property environment="env" /> -->
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+	<property environment="env" />
 	<DlcHome value="${env.DLC}" />
 
 	<target name="schema-doc">
