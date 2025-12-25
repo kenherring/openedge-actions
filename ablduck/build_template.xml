@@ -1,0 +1,18 @@
+<project name="openedge-actions/ablduck">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+	<taskdef resource="extras115.properties" />
+	<property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+	<target name="ablduck">
+		<ABLDuck
+			params="PARAMS"
+			>
+			<fileset dir="${PCT_preprocessDir}" includes="**/*.cls" />
+			<propath path="${PCT_preprocessDir}" />
+		</ABLDuck>
+	</target>
+
+</project>

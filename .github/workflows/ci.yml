@@ -22,6 +22,9 @@ jobs:
     ci_create_library:
         uses: ./.github/workflows/ci_create_library.yml
         secrets: inherit
+    ci_ablduck:
+        uses: ./.github/workflows/ci_ablduck.yml
+        secrets: inherit
     ci_database_start:
         uses: ./.github/workflows/ci_database_start.yml
         secrets: inherit

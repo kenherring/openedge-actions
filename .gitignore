@@ -1,8 +1,10 @@
 *.bk
 *.cfg
 *.log
+*.r
 *.tar.gz
 /ablunit.json
+.pct/
 ADE-*/
 build_temp.xml
 DEV_NOTES.md

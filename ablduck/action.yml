@@ -1,0 +1,140 @@
+name: openedge-actions/ablduck
+description: Generate OpenEdge ABLDuck Documentation
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  propath:
+    description: Initial propath, set via PROPATH environment variable
+    required: false
+    default: .
+  artifact-name:
+    description: Artifact name for uploading ablduck
+    required: false
+  ##### Compile Options #####
+  skip-compile:
+    description: Skip compilation
+    required: false
+    default: "false"
+  pct-buildDir:
+    description: Directory where to put compiled files
+    required: false
+    default: .
+  pct-preprocessDir:
+    description: Directory where to put preprocessed files
+    required: false
+    default: preprocess
+  ##### ABLDuck Options #####
+  pct-destDir:
+    description: Directory where to put files
+    required: false
+    default: doc
+  pct-encoding:
+    description: Character encoding
+    required: false
+  pct-title:
+    description: Title to use for the documentation
+    required: false
+    default: ABLDuck Documentation
+  ##### gh-pages #####
+  # deploy-gh-pages:
+  #   description: Deploy generated ablduck documentation to GitHub Pages
+  #   required: false
+  #   default: "false"
+  # gh-pages-path:
+  #   description: Path to generated ablduck documentation for GitHub Pages deployment
+  #   required: false
+  #   default: ablduck.json
+  # gh-pages-branch: ## can we interpret this from the repo?
+  #   description: GitHub Pages branch
+  #   required: false
+  #   default: gh-pages
+  # gh-pages-deploy-branch:
+  #   description: Branch to deploy to GitHub Pages from
+  #   required: false
+  #   default: main
+
+
+runs:
+  using: composite
+  steps:
+
+    - name: set-github-path
+      id: set-github-path
+      shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license && inputs.skip-compile != true }}
+      with:
+        uses: kenherring/openedge-actions/compile@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }},
+              "working-directory": ${{ inputs.working-directory }},
+              "propath": ${{ inputs.propath }},
+              "pct-destDir": ${{ inputs.pct-buildDir }},
+              "pct-preprocessDir": ${{ inputs.pct-preprocessDir }}
+          }
+
+    - id: ablduck
+      name: ablduck
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+        PROPATH: ${{ inputs.propath }}
+        PCT_preprocessDir: ${{ inputs.pct-preprocessDir }}
+        PCT_destDir: ${{ inputs.pct-destDir }}
+        PCT_encoding: ${{ inputs.pct-encoding }}
+        PCT_title: ${{ inputs.pct-title }}
+      run: generate_ablduck.sh
+
+    - uses: actions/upload-artifact@v4
+      if: inputs.artifact-name
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: |
+          ${{ inputs.working-directory }}/${{ inputs.pct-destFile }}
+        if-no-files-found: error
