@@ -11,33 +11,24 @@ initialize () {
     fi
 }
 
-setup_params () {
-    [ -n "${PCT_destFile:-}" ] || PCT_destFile="documentation.json"
-    [ -n "${PCT_encoding:-}" ] || PCT_encoding="utf8"
-
-    [ -n "${PCT_destFile:-}" ] && LIBRARY_PARAMS=("destFile=\"${PCT_destFile}\"")
-    [ -n "${PCT_buildDir:-}" ] && LIBRARY_PARAMS+=("buildDir=\"${PCT_buildDir}\"")
-    [ -n "${PCT_encoding:-}" ] && LIBRARY_PARAMS+=("encoding=\"${PCT_encoding}\"")
-    [ -n "${PCT_style:-}" ] && LIBRARY_PARAMS+=("style=\"${PCT_style}\"")
-    [ -n "${PCT_indent:-}" ] && LIBRARY_PARAMS+=("indent=\"${PCT_indent}\"")
-
-    sed "s|params=\"PARAMS\"|${LIBRARY_PARAMS[*]}|" "$GITHUB_ACTION_PATH/build_template.xml" > "$RUNNER_TEMP/documentation.xml"
+validate_inputs () {
+    [ -z "$PCT_dbName" ] && echo "dbName is not set and is required!" && exit 1
 }
 
-generate_documentation () {
-    if "$ANT_COMMAND" documentation -f "$RUNNER_TEMP/documentation.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/documentation.log"; then
+database_create () {
+    if "$ANT_COMMAND" database-create -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/database-create.log"; then
         EXIT_CODE=$?
     else
         EXIT_CODE=$?
     fi
 
     if [ "$EXIT_CODE" != "0" ]; then
-        echo "::error file=$0::ant documentation failed (EXIT_CODE=$EXIT_CODE)"
+        echo "::error file=$0::ant database-create failed (EXIT_CODE=$EXIT_CODE)"
         exit "$EXIT_CODE"
     fi
 }
 
 ########## MAIN BLOCK ##########
 initialize
-setup_params
-generate_documentation
+validate_inputs
+database_create
