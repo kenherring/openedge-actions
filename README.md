@@ -386,8 +386,6 @@ jobs:
 
 ## Action: `schema-doc`
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_schema_doc.yml/badge.svg)
-
 Generate Schema Doc for OpenEdge database schema - [sports2000 example](https://kenherring.github.io/openedge-actions/doc/sp2k/sp2k.html)
 
 ```yml
