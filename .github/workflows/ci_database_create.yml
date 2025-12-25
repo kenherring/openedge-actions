@@ -1,0 +1,33 @@
+name: CI - Database Create
+
+on:
+  workflow_call
+
+permissions:
+  contents: read
+
+jobs:
+  test-action:
+    name: test-action/database-create
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      ## a simple database create test
+      - name: database-create-1
+        uses: ./database-create
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: database-create/test/test1
+            db-name: myDb
+            debug: true
+      - name: test-1
+        shell: bash
+        working-directory: database-create/test/test1
+        run: |
+          [ -f "db/myDb.db" ] || (echo "::error::Expected database file db/myDb.db but it was not found" && exit 1)
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh database-create

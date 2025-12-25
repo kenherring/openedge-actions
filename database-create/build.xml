@@ -1,0 +1,13 @@
+<project name="openedge-actions/database-create">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+	<property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+	<target name="database-create">
+		<mkdir dir="${env.PCT_dbDir}" />
+		<PCTCreateDatabase dbName="${env.PCT_dbName}" destDir="${env.PCT_dbDir}" />
+	</target>
+
+</project>
