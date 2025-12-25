@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table LocalDefault</h1>
+        <h3>The local default table contains default information for the application.</h3>
+        <h2>Area Misc</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>Country</td><td>10</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Country</td><td></td>
+            </tr>
+            <tr>
+                <td>Region1Label</td><td>20</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>Region1 Label</td><td></td>
+            </tr>
+            <tr>
+                <td>Region2Label</td><td>30</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>Region2 Label</td><td></td>
+            </tr>
+            <tr>
+                <td>PostalLabel</td><td>40</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>Postal Label</td><td></td>
+            </tr>
+            <tr>
+                <td>PostalFormat</td><td>50</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>Postal Format</td><td></td>
+            </tr>
+            <tr>
+                <td>TelFormat</td><td>60</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>Tel Format</td><td></td>
+            </tr>
+            <tr>
+                <td>CurrencySymbol</td><td>70</td><td>character</td><td>no</td><td>x(6)</td><td>0</td><td></td><td>Currency Symbol</td><td></td>
+            </tr>
+            <tr>
+                <td>DateFormat</td><td>80</td><td>character</td><td>no</td><td>x(8)</td><td>0</td><td>MDY</td><td>Date Format</td><td></td>
+            </tr>
+            <tr>
+                <td>LocalDefNum</td><td>90</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Local Default Num</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>localdefnum</td><td>True</td><td>True</td><td>True</td><td>LocalDefNum
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/crlocdef.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>

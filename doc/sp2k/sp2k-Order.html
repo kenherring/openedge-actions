@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Order</h1>
+        <h3>The order table contains order header information.</h3>
+        <h2>Area Order</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>Ordernum</td><td>10</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Order Num</td><td></td>
+            </tr>
+            <tr>
+                <td>CustNum</td><td>20</td><td>integer</td><td>no</td><td>&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Cust Num</td><td>                                                       Help:Name</td>
+            </tr>
+            <tr>
+                <td>OrderDate</td><td>90</td><td>date</td><td>no</td><td>99/99/99</td><td>0</td><td>TODAY</td><td>Ordered</td><td></td>
+            </tr>
+            <tr>
+                <td>ShipDate</td><td>100</td><td>date</td><td>no</td><td>99/99/9999</td><td>0</td><td>?</td><td>Shipped</td><td></td>
+            </tr>
+            <tr>
+                <td>PromiseDate</td><td>110</td><td>date</td><td>no</td><td>99/99/99</td><td>0</td><td>?</td><td>Promised</td><td></td>
+            </tr>
+            <tr>
+                <td>Carrier</td><td>120</td><td>character</td><td>no</td><td>x(25)</td><td>0</td><td></td><td>Carrier</td><td>Should lookup valid carriers.</td>
+            </tr>
+            <tr>
+                <td>Instructions</td><td>130</td><td>character</td><td>no</td><td>x(50)</td><td>0</td><td></td><td>Instructions</td><td></td>
+            </tr>
+            <tr>
+                <td>PO</td><td>140</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>PO</td><td></td>
+            </tr>
+            <tr>
+                <td>Terms</td><td>150</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td>Net30</td><td>Terms</td><td>This should default to the TERMS specified by the CUSTOMER record.</td>
+            </tr>
+            <tr>
+                <td>SalesRep</td><td>160</td><td>character</td><td>no</td><td>x(4)</td><td>0</td><td></td><td>Sales Rep</td><td></td>
+            </tr>
+            <tr>
+                <td>BillToID</td><td>170</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Bill To ID</td><td></td>
+            </tr>
+            <tr>
+                <td>ShipToID</td><td>180</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Ship To ID</td><td></td>
+            </tr>
+            <tr>
+                <td>OrderStatus</td><td>190</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td>Ordered</td><td>Order Status</td><td></td>
+            </tr>
+            <tr>
+                <td>WarehouseNum</td><td>200</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Warehouse Num</td><td></td>
+            </tr>
+            <tr>
+                <td>Creditcard</td><td>210</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td>Visa</td><td>Credit Card</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>CustOrder</td><td>True</td><td>False</td><td>True</td><td>CustNum
+                    <br>
+                    Ordernum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>OrderNum</td><td>True</td><td>True</td><td>True</td><td>Ordernum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>OrderDate</td><td>True</td><td>False</td><td>False</td><td>OrderDate
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>OrderStatus</td><td>True</td><td>False</td><td>False</td><td>OrderStatus
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>SalesRep</td><td>True</td><td>False</td><td>False</td><td>SalesRep
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/crord.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>

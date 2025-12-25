@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Employee</h1>
+        <h3>The employee table stores employee information including name and address</h3>
+        <h2>Area Employee</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>EmpNum</td><td>5</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Emp No</td><td></td>
+            </tr>
+            <tr>
+                <td>LastName</td><td>10</td><td>character</td><td>no</td><td>x(25)</td><td>0</td><td></td><td>Last Name</td><td></td>
+            </tr>
+            <tr>
+                <td>FirstName</td><td>20</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>First Name</td><td></td>
+            </tr>
+            <tr>
+                <td>Address</td><td>30</td><td>character</td><td>no</td><td>x(35)</td><td>0</td><td></td><td>Address</td><td></td>
+            </tr>
+            <tr>
+                <td>Address2</td><td>40</td><td>character</td><td>no</td><td>x(35)</td><td>0</td><td></td><td>Address2</td><td></td>
+            </tr>
+            <tr>
+                <td>City</td><td>50</td><td>character</td><td>no</td><td>x(25)</td><td>0</td><td></td><td>City</td><td></td>
+            </tr>
+            <tr>
+                <td>State</td><td>60</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>State</td><td></td>
+            </tr>
+            <tr>
+                <td>PostalCode</td><td>70</td><td>character</td><td>no</td><td>x(10)</td><td>0</td><td></td><td>Postal Code</td><td></td>
+            </tr>
+            <tr>
+                <td>HomePhone</td><td>75</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Home Phone</td><td></td>
+            </tr>
+            <tr>
+                <td>WorkPhone</td><td>76</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Work Phone</td><td></td>
+            </tr>
+            <tr>
+                <td>DeptCode</td><td>80</td><td>character</td><td>no</td><td>x(3)</td><td>0</td><td></td><td>Dept Code</td><td></td>
+            </tr>
+            <tr>
+                <td>Position</td><td>90</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Position</td><td></td>
+            </tr>
+            <tr>
+                <td>Birthdate</td><td>97</td><td>date</td><td>no</td><td>99/99/9999</td><td>0</td><td>?</td><td>Birthdate</td><td></td>
+            </tr>
+            <tr>
+                <td>StartDate</td><td>98</td><td>date</td><td>no</td><td>99/99/9999</td><td>0</td><td>?</td><td>Start Date</td><td></td>
+            </tr>
+            <tr>
+                <td>VacationDaysLeft</td><td>100</td><td>integer</td><td>no</td><td>&gt;&gt;9</td><td>0</td><td>0</td><td>Vacation Days Left</td><td></td>
+            </tr>
+            <tr>
+                <td>SickDaysLeft</td><td>110</td><td>integer</td><td>no</td><td>&gt;&gt;9</td><td>0</td><td>0</td><td>Sick Days Left</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>EmpNo</td><td>True</td><td>True</td><td>True</td><td>EmpNum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Name</td><td>True</td><td>False</td><td>True</td><td>LastName
+                    <br>
+                    FirstName
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>DeptCode</td><td>True</td><td>False</td><td>False</td><td>DeptCode
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/cremp.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>

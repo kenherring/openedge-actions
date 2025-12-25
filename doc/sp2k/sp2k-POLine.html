@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table POLine</h1>
+        <h3>The poline table contains the PO detail information including the item and quantity on the PO.</h3>
+        <h2>Area Inventory</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>Linenum</td><td>20</td><td>integer</td><td>no</td><td>&gt;&gt;9</td><td>0</td><td>0</td><td>Line Num</td><td>To be generated automatically by key value generator!</td>
+            </tr>
+            <tr>
+                <td>Itemnum</td><td>30</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Item Num</td><td>                                                      Help:Idesc</td>
+            </tr>
+            <tr>
+                <td>Price</td><td>40</td><td>decimal</td><td>no</td><td>-&gt;,&gt;&gt;&gt;,&gt;&gt;9.99</td><td>0</td><td>0</td><td>Price</td><td>This field should get its default from the ITEM file's price field.</td>
+            </tr>
+            <tr>
+                <td>Qty</td><td>50</td><td>integer</td><td>no</td><td>-&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Qty</td><td></td>
+            </tr>
+            <tr>
+                <td>Discount</td><td>70</td><td>integer</td><td>no</td><td>&gt;&gt;9%</td><td>0</td><td>0</td><td>Discount</td><td></td>
+            </tr>
+            <tr>
+                <td>ExtendedPrice</td><td>80</td><td>decimal</td><td>no</td><td>-&gt;&gt;,&gt;&gt;9.99</td><td>0</td><td>0</td><td>Extended Price</td><td></td>
+            </tr>
+            <tr>
+                <td>PONum</td><td>90</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Order Num</td><td></td>
+            </tr>
+            <tr>
+                <td>POLineStatus</td><td>100</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td>Ordered</td><td>PO Line Status</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>PONumLinenum</td><td>True</td><td>True</td><td>True</td><td>PONum
+                    <br>
+                    Linenum
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Salesrep</h1>
+        <h3>The salesrep table contains sales representative information</h3>
+        <h2>Area Misc</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>SalesRep</td><td>1</td><td>character</td><td>no</td><td>x(4)</td><td>0</td><td></td><td>Sales Rep</td><td></td>
+            </tr>
+            <tr>
+                <td>RepName</td><td>20</td><td>character</td><td>no</td><td>x(30)</td><td>0</td><td></td><td>Rep Name</td><td></td>
+            </tr>
+            <tr>
+                <td>Region</td><td>30</td><td>character</td><td>no</td><td>x(8)</td><td>0</td><td></td><td>Region</td><td></td>
+            </tr>
+            <tr>
+                <td>MonthQuota</td><td>40</td><td>integer</td><td>no</td><td>-&gt;,&gt;&gt;&gt;,&gt;&gt;9</td><td>12</td><td>0</td><td>Month Quota</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>SalesRep</td><td>True</td><td>True</td><td>True</td><td>SalesRep
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+        </table>
+    </body>
+</html>

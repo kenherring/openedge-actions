@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Feedback</h1>
+        <h3>The feedback table allows customers to provide feedback about what they like and don't like.</h3>
+        <h2>Area Misc</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>Contact</td><td>10</td><td>character</td><td>no</td><td>x(30)</td><td>0</td><td></td><td>Contact Name</td><td></td>
+            </tr>
+            <tr>
+                <td>Company</td><td>20</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Company</td><td></td>
+            </tr>
+            <tr>
+                <td>EmailAddress</td><td>30</td><td>character</td><td>no</td><td>x(50)</td><td>0</td><td></td><td>Email</td><td></td>
+            </tr>
+            <tr>
+                <td>Phone</td><td>40</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Phone</td><td>Format/Label/Help based on status of NON-US field.</td>
+            </tr>
+            <tr>
+                <td>Fax</td><td>50</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Fax</td><td>Format/Label/Help based on status of NON-US field.</td>
+            </tr>
+            <tr>
+                <td>Comments</td><td>60</td><td>character</td><td>no</td><td>x(80)</td><td>0</td><td></td><td>Comments</td><td></td>
+            </tr>
+            <tr>
+                <td>Department</td><td>70</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>Department</td><td></td>
+            </tr>
+            <tr>
+                <td>Rating</td><td>80</td><td>integer</td><td>no</td><td>9</td><td>0</td><td>0</td><td>Rating</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>Comments</td><td>True</td><td>False</td><td>False</td><td>Comments
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Company</td><td>True</td><td>False</td><td>False</td><td>Company
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Contact</td><td>True</td><td>False</td><td>False</td><td>Contact
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Department</td><td>True</td><td>True</td><td>False</td><td>Department
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Rating</td><td>True</td><td>False</td><td>False</td><td>Rating
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+        </table>
+    </body>
+</html>

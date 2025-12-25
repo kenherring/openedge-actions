@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table InventoryTrans</h1>
+        <h3>The inventorytrans table contains information about the movement of inventory.</h3>
+        <h2>Area Inventory</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>InvTransNum</td><td>10</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Inventory Trans Num</td><td></td>
+            </tr>
+            <tr>
+                <td>WarehouseNum</td><td>20</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Warehouse Num</td><td></td>
+            </tr>
+            <tr>
+                <td>BinNum</td><td>30</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Bin Num</td><td></td>
+            </tr>
+            <tr>
+                <td>Qty</td><td>40</td><td>integer</td><td>no</td><td>-&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Qty</td><td></td>
+            </tr>
+            <tr>
+                <td>Itemnum</td><td>50</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Item Num</td><td></td>
+            </tr>
+            <tr>
+                <td>TransDate</td><td>60</td><td>date</td><td>no</td><td>99/99/9999</td><td>0</td><td>?</td><td>Trans Date</td><td></td>
+            </tr>
+            <tr>
+                <td>InvType</td><td>70</td><td>character</td><td>no</td><td>X(12)</td><td>0</td><td></td><td>Type</td><td></td>
+            </tr>
+            <tr>
+                <td>PONum</td><td>80</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>PO Num</td><td></td>
+            </tr>
+            <tr>
+                <td>Ordernum</td><td>90</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Order Num</td><td></td>
+            </tr>
+            <tr>
+                <td>Transtime</td><td>100</td><td>character</td><td>no</td><td>X(5)</td><td>0</td><td></td><td>Trans Time</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>default</td><td>True</td><td>True</td><td>False</td><td>
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/crintr.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table RefCall</h1>
+        <h3>The refcall table contains information about a sale.</h3>
+        <h2>Area Misc</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>CallNum</td><td>10</td><td>character</td><td>no</td><td>x(6)</td><td>0</td><td></td><td>Call Num</td><td></td>
+            </tr>
+            <tr>
+                <td>CustNum</td><td>20</td><td>integer</td><td>no</td><td>&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Cust Num</td><td></td>
+            </tr>
+            <tr>
+                <td>CallDate</td><td>30</td><td>date</td><td>no</td><td>99/99/9999</td><td>0</td><td>?</td><td>Call Date</td><td></td>
+            </tr>
+            <tr>
+                <td>SalesRep</td><td>40</td><td>character</td><td>no</td><td>x(4)</td><td>0</td><td></td><td>Sales Rep</td><td></td>
+            </tr>
+            <tr>
+                <td>Parent</td><td>50</td><td>character</td><td>no</td><td>x(6)</td><td>0</td><td></td><td>Parent</td><td></td>
+            </tr>
+            <tr>
+                <td>Txt</td><td>60</td><td>character</td><td>no</td><td>x(300)</td><td>0</td><td></td><td>Txt</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>CallNum</td><td>True</td><td>True</td><td>True</td><td>CallNum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>CustNum</td><td>True</td><td>False</td><td>True</td><td>CustNum
+                    <br>
+                    CallNum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Sibling</td><td>True</td><td>False</td><td>True</td><td>Parent
+                    <br>
+                    CallNum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Txt</td><td>True</td><td>False</td><td>False</td><td>Txt
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/ref_call.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>

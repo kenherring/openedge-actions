@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Warehouse</h1>
+        <h3>The warehouse table contains warehouse information including warehouse name and address.</h3>
+        <h2>Area Inventory</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>WarehouseNum</td><td>10</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Warehouse Num</td><td></td>
+            </tr>
+            <tr>
+                <td>WarehouseName</td><td>20</td><td>character</td><td>no</td><td>x(30)</td><td>0</td><td></td><td>Warehouse Name</td><td></td>
+            </tr>
+            <tr>
+                <td>Country</td><td>30</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td>USA</td><td>Country</td><td></td>
+            </tr>
+            <tr>
+                <td>Address</td><td>40</td><td>character</td><td>no</td><td>x(35)</td><td>0</td><td></td><td>Address</td><td></td>
+            </tr>
+            <tr>
+                <td>Address2</td><td>50</td><td>character</td><td>no</td><td>x(35)</td><td>0</td><td></td><td>Address2</td><td></td>
+            </tr>
+            <tr>
+                <td>City</td><td>60</td><td>character</td><td>no</td><td>x(25)</td><td>0</td><td></td><td>City</td><td></td>
+            </tr>
+            <tr>
+                <td>State</td><td>70</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>State</td><td>Label/Valexp/Valmsg/Help are set based on value of NON-US field!</td>
+            </tr>
+            <tr>
+                <td>PostalCode</td><td>80</td><td>character</td><td>no</td><td>x(10)</td><td>0</td><td></td><td>Postal Code</td><td>Format/Label/Help Message based on status of NON-US field.</td>
+            </tr>
+            <tr>
+                <td>Phone</td><td>90</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Phone</td><td>Format/Label/Help based on status of NON-US field.</td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>warehousenum</td><td>True</td><td>True</td><td>True</td><td>WarehouseNum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>warehousename</td><td>True</td><td>False</td><td>False</td><td>WarehouseName
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/crware.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>

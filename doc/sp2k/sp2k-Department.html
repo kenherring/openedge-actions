@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Department</h1>
+        <h3>The department contains a master listing of departments.</h3>
+        <h2>Area Employee</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>DeptCode</td><td>10</td><td>character</td><td>no</td><td>x(3)</td><td>0</td><td></td><td>Dept Code</td><td></td>
+            </tr>
+            <tr>
+                <td>DeptName</td><td>20</td><td>character</td><td>no</td><td>x(15)</td><td>0</td><td></td><td>Dept Name</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>DeptCode</td><td>True</td><td>True</td><td>True</td><td>DeptCode
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+        </table>
+    </body>
+</html>

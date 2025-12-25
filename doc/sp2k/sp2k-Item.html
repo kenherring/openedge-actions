@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Item</h1>
+        <h3>The item table provides a quick reference for items in stock and quantity on-hand.</h3>
+        <h2>Area Inventory</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>Itemnum</td><td>10</td><td>integer</td><td>no</td><td>zzzzzzzzz9</td><td>0</td><td>0</td><td>Item Num</td><td></td>
+            </tr>
+            <tr>
+                <td>ItemName</td><td>20</td><td>character</td><td>no</td><td>x(25)</td><td>0</td><td></td><td>Item Name</td><td></td>
+            </tr>
+            <tr>
+                <td>Price</td><td>22</td><td>decimal</td><td>no</td><td>-&gt;,&gt;&gt;&gt;,&gt;&gt;9.99</td><td>0</td><td>0</td><td>Price</td><td></td>
+            </tr>
+            <tr>
+                <td>Onhand</td><td>50</td><td>integer</td><td>no</td><td>-&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>On Hand</td><td></td>
+            </tr>
+            <tr>
+                <td>Allocated</td><td>60</td><td>integer</td><td>no</td><td>-&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Allocated</td><td></td>
+            </tr>
+            <tr>
+                <td>ReOrder</td><td>80</td><td>integer</td><td>no</td><td>-&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Re Order</td><td></td>
+            </tr>
+            <tr>
+                <td>OnOrder</td><td>90</td><td>integer</td><td>no</td><td>-&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>On Order</td><td></td>
+            </tr>
+            <tr>
+                <td>CatPage</td><td>100</td><td>integer</td><td>no</td><td>&gt;&gt;9</td><td>0</td><td>0</td><td>Cat Page</td><td></td>
+            </tr>
+            <tr>
+                <td>CatDescription</td><td>110</td><td>character</td><td>no</td><td>X(200)</td><td>0</td><td></td><td>Cat-Description</td><td></td>
+            </tr>
+            <tr>
+                <td>Category1</td><td>120</td><td>character</td><td>no</td><td>x(30)</td><td>0</td><td></td><td>Category1</td><td></td>
+            </tr>
+            <tr>
+                <td>Category2</td><td>130</td><td>character</td><td>no</td><td>x(30)</td><td>0</td><td></td><td>Category2</td><td></td>
+            </tr>
+            <tr>
+                <td>Special</td><td>140</td><td>character</td><td>no</td><td>x(8)</td><td>0</td><td></td><td>Special</td><td></td>
+            </tr>
+            <tr>
+                <td>Weight</td><td>150</td><td>decimal</td><td>no</td><td>-&gt;&gt;,&gt;&gt;9.99</td><td>0</td><td>0</td><td>Weight</td><td></td>
+            </tr>
+            <tr>
+                <td>Minqty</td><td>160</td><td>integer</td><td>no</td><td>-&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Min Qty</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>ItemNum</td><td>True</td><td>True</td><td>True</td><td>Itemnum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>CatDescription</td><td>True</td><td>False</td><td>False</td><td>CatDescription
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Category2ItemName</td><td>True</td><td>False</td><td>False</td><td>Category2
+                    <br>
+                    ItemName
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>CategoryItemName</td><td>True</td><td>False</td><td>False</td><td>Category1
+                    <br>
+                    ItemName
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>ItemName</td><td>True</td><td>False</td><td>False</td><td>ItemName
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/critem.p</td><td>False</td>
+            </tr>
+            <tr>
+                <td>DELETE</td><td>sports2000trgs/delitem.p</td><td>False</td>
+            </tr>
+            <tr>
+                <td>WRITE</td><td>sports2000trgs/writem.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>

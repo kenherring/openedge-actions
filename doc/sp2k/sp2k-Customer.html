@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="sp2k-stylesheet.css">
+    </head>
+    <body>
+        <h1>Table Customer</h1>
+        <h3>The customer table contains customer  information including  balance and address.</h3>
+        <h2>Area Cust_Data</h2>
+        <h2>Field list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Order</th><th>Data type</th><th>Mandatory</th><th>Format</th><th>Extent</th><th>Initial value</th><th>Label</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>CustNum</td><td>10</td><td>integer</td><td>no</td><td>&gt;&gt;&gt;&gt;9</td><td>0</td><td>0</td><td>Cust Num</td><td></td>
+            </tr>
+            <tr>
+                <td>Country</td><td>15</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td>USA</td><td>Country</td><td></td>
+            </tr>
+            <tr>
+                <td>Name</td><td>30</td><td>character</td><td>no</td><td>x(30)</td><td>0</td><td></td><td>Name</td><td></td>
+            </tr>
+            <tr>
+                <td>Address</td><td>40</td><td>character</td><td>no</td><td>x(35)</td><td>0</td><td></td><td>Address</td><td></td>
+            </tr>
+            <tr>
+                <td>Address2</td><td>50</td><td>character</td><td>no</td><td>x(35)</td><td>0</td><td></td><td>Address2</td><td></td>
+            </tr>
+            <tr>
+                <td>City</td><td>60</td><td>character</td><td>no</td><td>x(25)</td><td>0</td><td></td><td>City</td><td></td>
+            </tr>
+            <tr>
+                <td>State</td><td>70</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>State</td><td>Label/Valexp/Valmsg/Help are set based on value of NON-US field!</td>
+            </tr>
+            <tr>
+                <td>PostalCode</td><td>80</td><td>character</td><td>no</td><td>x(10)</td><td>0</td><td></td><td>Postal Code</td><td>Format/Label/Help Message based on status of NON-US field.</td>
+            </tr>
+            <tr>
+                <td>Contact</td><td>110</td><td>character</td><td>no</td><td>x(30)</td><td>0</td><td></td><td>Contact</td><td></td>
+            </tr>
+            <tr>
+                <td>Phone</td><td>115</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Phone</td><td>Format/Label/Help based on status of NON-US field.</td>
+            </tr>
+            <tr>
+                <td>SalesRep</td><td>125</td><td>character</td><td>no</td><td>x(4)</td><td>0</td><td></td><td>Sales Rep</td><td></td>
+            </tr>
+            <tr>
+                <td>CreditLimit</td><td>130</td><td>decimal</td><td>no</td><td>-&gt;,&gt;&gt;&gt;,&gt;&gt;9</td><td>0</td><td>1500</td><td>Credit Limit</td><td>Maximum credit</td>
+            </tr>
+            <tr>
+                <td>Balance</td><td>140</td><td>decimal</td><td>no</td><td>-&gt;,&gt;&gt;&gt;,&gt;&gt;9.99</td><td>0</td><td>0</td><td>Balance</td><td></td>
+            </tr>
+            <tr>
+                <td>Terms</td><td>150</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td>Net30</td><td>Terms</td><td></td>
+            </tr>
+            <tr>
+                <td>Discount</td><td>170</td><td>integer</td><td>no</td><td>&gt;&gt;9%</td><td>0</td><td>0</td><td>Discount</td><td></td>
+            </tr>
+            <tr>
+                <td>Comments</td><td>180</td><td>character</td><td>no</td><td>x(80)</td><td>0</td><td></td><td>Comments</td><td></td>
+            </tr>
+            <tr>
+                <td>Fax</td><td>190</td><td>character</td><td>no</td><td>x(20)</td><td>0</td><td></td><td>Fax</td><td>Format/Label/Help based on status of NON-US field.</td>
+            </tr>
+            <tr>
+                <td>EmailAddress</td><td>200</td><td>character</td><td>no</td><td>x(50)</td><td>0</td><td></td><td>Email</td><td></td>
+            </tr>
+        </table>
+        <h2>Index list</h2>
+        <table>
+            <tr>
+                <th>Name</th><th>Active</th><th>Primary</th><th>Unique</th><th>Fields</th><th>Description</th>
+            </tr>
+            <tr>
+                <td>CustNum</td><td>True</td><td>True</td><td>True</td><td>CustNum
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Comments</td><td>True</td><td>False</td><td>False</td><td>Comments
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>CountryPost</td><td>True</td><td>False</td><td>False</td><td>Country
+                    <br>
+                    PostalCode
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>Name</td><td>True</td><td>False</td><td>False</td><td>Name
+                    <br>
+                </td><td></td>
+            </tr>
+            <tr>
+                <td>SalesRep</td><td>True</td><td>False</td><td>False</td><td>SalesRep
+                    <br>
+                </td><td></td>
+            </tr>
+        </table>
+        <h2>Trigger list</h2>
+        <table>
+            <tr>
+                <th>Event</th><th>Procedure</th><th>Overridable ?</th>
+            </tr>
+            <tr>
+                <td>CREATE</td><td>sports2000trgs/crcust.p</td><td>False</td>
+            </tr>
+            <tr>
+                <td>DELETE</td><td>sports2000trgs/delcust.p</td><td>False</td>
+            </tr>
+        </table>
+    </body>
+</html>
