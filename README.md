@@ -310,9 +310,9 @@ jobs:
 | `parameter-file` | false | | Startup parameter -pf |
 | `additional-parameters` | false | | Additional database startup parameters |
 
-## Action: `documentation`
+## Action: `ablduck`
 
-Generate Json Documentation for OpenEdge code
+Generate ABLDuck documentation for OpenEdge code
 
 ```yml
 jobs:
@@ -320,12 +320,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: kenherring/openedge-actions/documentation@v0
+      - uses: kenherring/openedge-actions/ablduck@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
 ```
 
-### Inputs: `documentation`
+### Inputs: `ablduck`
 
 | Input          | Required | Default | Description                     |
 | -------------- | -------- | ------- | ------------------------------- |
@@ -338,7 +338,7 @@ jobs:
 | `propath` | false | `.` | Initial propath, set via PROPATH environment variable |
 | `artifact-name` | false | | Artifact name for uploading documentation |
 | `skip-compile` | false | `false` | Skip compilation |
-| `pct-destFile` | false | `documentation.json` | JSON file output |
+| `pct-destFile` | false | `ablduck.json` | JSON file output |
 | `pct-buildDir` | false | `.` | Directory where rcode will be read |
 | `pct-encoding` | false | `None` | Use specific encoding when reading source files |
 | `pct-style` | false | `Javadoc` | Comment style: Javadoc, simple, consultingwerk |

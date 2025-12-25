@@ -1,7 +1,7 @@
 class src.someClass :
 
     /*------------------------------------------------------------------------------
-        Purpose: A sample method with documentation
+        Purpose: A sample method for ablduck
         Notes: These are notes!
         @param parameter1 an integer parameter
         @return

@@ -1,5 +1,5 @@
-name: openedge-actions/documentation
-description: Generate OpenEdge JsonDocumentation
+name: openedge-actions/ablduck
+description: Generate OpenEdge ABLDuck Documentation
 author: kenherring
 
 inputs:
@@ -29,42 +29,42 @@ inputs:
     required: false
     default: .
   artifact-name:
-    description: Artifact name for uploading documentation
+    description: Artifact name for uploading ablduck
     required: false
   ##### Compile Options #####
   skip-compile:
     description: Skip compilation
     required: false
     default: "false"
-  ##### JsonDocumentation Options #####
-  pct-destFile:
-    description: JSON file output
-    required: false
-    default: documentation.json
   pct-buildDir:
-    description: Directory where rcode will be read
+    description: Directory where to put compiled files
     required: false
     default: .
+  pct-preprocessDir:
+    description: Directory where to put preprocessed files
+    required: false
+    default: preprocess
+  ##### ABLDuck Options #####
+  pct-destDir:
+    description: Directory where to put files
+    required: false
+    default: doc
   pct-encoding:
-    description: Use specific encoding when reading source files
+    description: Character encoding
     required: false
-  pct-style:
-    description: "Comment style: Javadoc, simple, consultingwerk"
+  pct-title:
+    description: Title to use for the documentation
     required: false
-    default: Javadoc
-  pct-indent:
-    description: JSON pretty-printing
-    required: false
-    default: "false"
+    default: ABLDuck Documentation
   ##### gh-pages #####
   # deploy-gh-pages:
-  #   description: Deploy generated documentation to GitHub Pages
+  #   description: Deploy generated ablduck documentation to GitHub Pages
   #   required: false
   #   default: "false"
   # gh-pages-path:
-  #   description: Path to generated documentation for GitHub Pages deployment
+  #   description: Path to generated ablduck documentation for GitHub Pages deployment
   #   required: false
-  #   default: documentation.json
+  #   default: ablduck.json
   # gh-pages-branch: ## can we interpret this from the repo?
   #   description: GitHub Pages branch
   #   required: false
@@ -114,22 +114,22 @@ runs:
               "cache-token": ${{ inputs.cache-token }},
               "working-directory": ${{ inputs.working-directory }},
               "propath": ${{ inputs.propath }},
-              "pct-destDir": ${{ inputs.pct-buildDir }}
+              "pct-destDir": ${{ inputs.pct-buildDir }},
+              "pct-preprocessDir": ${{ inputs.pct-preprocessDir }}
           }
 
-    - id: abl-json-documentation
-      name: abl-json-documentation
+    - id: ablduck
+      name: ablduck
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
         PROPATH: ${{ inputs.propath }}
-        PCT_destFile: ${{ inputs.pct-destFile }}
-        PCT_buildDir: ${{ inputs.pct-buildDir }}
+        PCT_preprocessDir: ${{ inputs.pct-preprocessDir }}
+        PCT_destDir: ${{ inputs.pct-destDir }}
         PCT_encoding: ${{ inputs.pct-encoding }}
-        PCT_style: ${{ inputs.pct-style }}
-        PCT_indent: ${{ inputs.pct-indent }}
-      run: generate_documentation.sh
+        PCT_title: ${{ inputs.pct-title }}
+      run: generate_ablduck.sh
 
     - uses: actions/upload-artifact@v4
       if: inputs.artifact-name

@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------
-	Purpose: A sample procedure with documentation
+	Purpose: A sample procedure for ablduck
 	Notes: These are notes!
 	@param parameter1 and integer parameter
 	@return

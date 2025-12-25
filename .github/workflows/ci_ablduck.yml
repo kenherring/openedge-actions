@@ -1,0 +1,31 @@
+name: CI - ABLDuck
+
+on:
+  workflow_call
+
+jobs:
+  test-action:
+    name: test-action/ablduck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      ## a simple ablduck test
+      - name: ablduck-1
+        uses: ./ablduck
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: ablduck/test/test1
+            artifact-name: ablduck-test-1
+            # pct-buildDir: .
+            pct-encoding: utf8
+      - name: test-1
+        shell: bash
+        working-directory: ablduck/test/test1
+        run: |
+          [ -f "ablduck.json" ] || (echo "::error::Expected ablduck file ablduck.json but it was not found" && exit 1)
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh ablduck
