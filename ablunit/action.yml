@@ -103,7 +103,7 @@ runs:
       env:
         action_ref: ${{ github.action_ref }}
       with:
-        uses: kenherring/openedge-actions/run@${{ github.repository == 'kherring/openedge-actions' && github.sha || env.action_ref }}
+        uses: kenherring/openedge-actions/run@${{ github.repository == 'kenherring/openedge-actions' && github.sha || env.action_ref }}
         with: |
           { "license": ${{ inputs.license }},
             "version": ${{ inputs.version }},
