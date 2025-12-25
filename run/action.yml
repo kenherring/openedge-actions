@@ -58,20 +58,12 @@ runs:
   using: composite
   steps:
 
-    - name: set-github-path
-      id: set-github-path
-      shell: bash
-      env:
-        ACTION_REF: ${{ github.action_ref }}
-        GITHUB_SHA: ${{ github.sha }}
-      run: |
-        echo '${{ github.action_path }}' >> "$GITHUB_PATH"
-        echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
-
     - uses: jenseng/dynamic-uses@v1.1.1
       if: ${{ inputs.license }}
+      env:
+        action_ref: ${{ github.action_ref }}
       with:
-        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        uses: kenherring/openedge-actions/setup@${{ github.repository == 'kenherring/openedge-actions' && github.sha || env.action_ref }}
         with: |
           {  "license": "${{ inputs.license }}",
               "version": ${{ inputs.version }},
@@ -80,17 +72,6 @@ runs:
               "cache-key": ${{ inputs.cache-key }},
               "cache-token": ${{ inputs.cache-token }}
           }
-
-    ## need to use dynamic uses above because actions local to the first action called don't work
-    # - uses: ./setup
-    #   # uses: kenherring/openedge-actions/setup@${{ github.ref }}
-    #   with:
-    #     license: ${{ inputs.license }}
-    #     version: ${{ inputs.version }}
-    #     dlc: ${{ inputs.dlc }}
-    #     download-ade-source: ${{ inputs.download-ade-source }}
-    #     cache-key: ${{ inputs.cache-key }}
-    #     cache-token: ${{ inputs.cache-token }}
 
     - id: run-abl
       name: run-abl
@@ -104,4 +85,4 @@ runs:
         OPT_STARTUP_PROCEDURE: ${{ inputs.startup-procedure }}
         OPT_TEMP_DIRECTORY: ${{ inputs.temp-directory }}
         OPT_ADDTIIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
-      run: abl_run.sh
+      run: ${{ github.action_path }}/abl_run.sh
