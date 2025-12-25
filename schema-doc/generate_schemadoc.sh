@@ -11,6 +11,13 @@ initialize () {
     fi
 }
 
+set_inputs () {
+    [ -z "$PCT_dbName" ] && echo "dbName is not set and is required!" && exit 1
+    [ "$PCT_textFile" = "doc/{db-name}.txt" ] && PCT_textFile="doc/$PCT_dbName.txt"
+    [ "$PCT_outputDir" = "doc/{db-name}" ] && PCT_outputDir="doc/$PCT_dbName"
+    export PCT_textFile PCT_outputDir
+}
+
 generate_schemadoc () {
     if "$ANT_COMMAND" schema-doc -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/schemadoc.log"; then
         EXIT_CODE=$?

@@ -44,11 +44,11 @@ inputs:
   text-file:
     description: Text file output
     required: false
-    default: doc/${{ inputs.db-name }}.txt
+    default: doc/{db-name}.txt
   output-directory:
     description: output directory
     required: false
-    default: doc/${{ inputs.db-name }}
+    default: doc/{db-name}
   ##### GH Pages Options #####
   gh-pages-branch:
     description: GitHub Pages branch to push to
