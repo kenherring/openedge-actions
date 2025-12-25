@@ -36,8 +36,8 @@ jobs:
         uses: ./run
         with:
           working-directory: load-schema/test/test1
-          startup_procedure: verify.p
-          additional-parameter: -db db/myDb -singleUser
+          startup-procedure: verify.p
+          additional-parameters: -db db/myDb -singleUser
 
 
       - name: pre-merge-validation
