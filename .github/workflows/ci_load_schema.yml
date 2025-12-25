@@ -1,4 +1,4 @@
-name: CI - Database Create
+name: CI - Load Schema
 
 on:
   workflow_call
@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   test-action:
-    name: test-action/database-create
+    name: test-action/load-schema
     runs-on: ubuntu-latest
 
     steps:
@@ -35,8 +35,9 @@ jobs:
       - name: test-1B
         uses: ./run
         with:
-          startup_procedure: load-schema/test/test1/verify.p
-          additional-parameter: -db load-schema/test/test1/db/myDb -singleUser
+          working-directory: load-schema/test/test1
+          startup_procedure: verify.p
+          additional-parameter: -db db/myDb -singleUser
 
 
       - name: pre-merge-validation
