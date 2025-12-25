@@ -2,6 +2,7 @@
 
 	<taskdef resource="PCT.properties" />
 	<typedef resource="types.properties" />
+	<taskdef resource="extras115.properties" />
 	<property environment="env" />
 	<DlcHome value="${env.DLC}" />
 
