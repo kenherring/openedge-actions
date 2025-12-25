@@ -8,6 +8,8 @@ calculate-vars () {
         echo "Caching disabled due to cache-key='null' input"
     fi
 
+    echo "CACHE_KEY=$CACHE_KEY"
+    echo "CACHE_TOKEN=$CACHE_TOKEN"
     echo "cache-key=$CACHE_KEY" >> "$GITHUB_OUTPUT"
     echo "DLC=$DLC" >> "$GITHUB_OUTPUT"
 }

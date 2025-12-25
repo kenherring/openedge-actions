@@ -1,0 +1,18 @@
+<project name="openedge-actions/schema-doc">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+	<property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+	<target name="schema-doc">
+		<PCTSchemaDoc file="${env.PCT_file}">
+			<DBConnection dbName="${env.PCT_dbName}" dbDir="${env.PCT_dbDir}" readOnly="true" />
+		</PCTSchemaDoc>
+		<xslt in="${env.PCT_file}" style="${env.GITHUB_ACTION_PATH}/SchemaDoc.xsl" out="${env.PCT_textFile}">
+			<param name="outputdir" expression="${env.PCT_outputDir}" />
+			<param name="dbname" expression="${env.PCT_dbName}" />
+		</xslt>
+	</target>
+
+</project>

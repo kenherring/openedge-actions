@@ -1,0 +1,40 @@
+#!/bin/bash
+set -euo pipefail
+
+initialize () {
+    GITHUB_ACTION_PATH=${GITHUB_ACTION_PATH:-$(dirname "$0")}
+    GITHUB_OUTPUT=${GITHUB_OUTPUT:-./github_output.txt}
+    [ -z "${RUNNER_TEMP:-}" ] && RUNNER_TEMP=$TEMP
+    ANT_COMMAND=ant
+    if ! command -v ant; then
+        ANT_COMMAND="$DLC/ant/bin/ant"
+    fi
+}
+
+set_inputs () {
+    [ -z "$PCT_dbName" ] && echo "dbName is not set and is required!" && exit 1
+    [ "$PCT_textFile" = "doc/{db-name}.txt" ] && PCT_textFile="doc/$PCT_dbName.txt"
+    [ "$PCT_outputDir" = "doc/{db-name}" ] && PCT_outputDir="doc/$PCT_dbName"
+    export PCT_textFile PCT_outputDir
+
+    echo "text-file=${PCT_textFile}" >> "$GITHUB_OUTPUT"
+    echo "output-directory=${PCT_outputDir}" >> "$GITHUB_OUTPUT"
+}
+
+generate_schemadoc () {
+    if "$ANT_COMMAND" schema-doc -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/schemadoc.log"; then
+        EXIT_CODE=$?
+    else
+        EXIT_CODE=$?
+    fi
+
+    if [ "$EXIT_CODE" != "0" ]; then
+        echo "::error file=$0::ant schema-doc failed (EXIT_CODE=$EXIT_CODE)"
+        exit "$EXIT_CODE"
+    fi
+}
+
+########## MAIN BLOCK ##########
+initialize
+set_inputs
+generate_schemadoc

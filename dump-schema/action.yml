@@ -1,5 +1,5 @@
-name: openedge-actions/run
-description: Execute an OpenEdge source program
+name: openedge-actions/dump-schema
+description: Dump schema from an openedge database
 author: kenherring
 
 inputs:
@@ -14,10 +14,6 @@ inputs:
   dlc:
     description: Target path for ABL installation, defaults to /psc/dlc-${version}
     required: false
-  download-ade-source:
-    description: Download progress/ADE and add it to the propath when 'true'
-    required: false
-    default: 'true'
   cache-key:
     description: An explicit key for a cache entry, or 'null' to disable caching
     required: false
@@ -28,31 +24,27 @@ inputs:
   working-directory:
     description: The working directory to run the OpenEdge program in
     required: false
-  propath:
-    description: Initial propath, set via PROPATH environment variable
+  artifact-name:
+    description: Artifact name for uploading schema
     required: false
-    default: .
-  ##### startup parameters #####
-  batch-mode:
-    description: Startup parameter -b
-    required: false
-    default: 'true'
-  startup-procedure:
-    description: Startup parameter -p
+    default: schema-artifact
+  ##### Dump Schema Options #####
+  db-name:
+    description: Database name
     required: true
-  parameter-file:
-    description: Startup parameter -pf
+  db-directory:
+    description: Database directory
     required: false
-  temp-directory:
-    description: Startup parameter -T
+    default: db
+  dest-file:
+    description: Schema file path
     required: false
-    default: /tmp
-  parameter:
-    description: Startup parameter -param
-    required: false
-  additional-parameters:
-    description: Additional startup parameters
-    required: false
+    default: schema/{db-name}.df
+
+outputs:
+  schema-file:
+    description: Schema file path
+    value: ${{ steps.abl-dump-schema.outputs.schema-file }}
 
 runs:
   using: composite
@@ -73,16 +65,19 @@ runs:
               "cache-token": ${{ inputs.cache-token }}
           }
 
-    - id: run-abl
-      name: run-abl
+    - id: abl-dump-schema
+      name: abl-dump-schema
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       env:
-        OPT_PROPATH: ${{ inputs.propath }}
-        OPT_BATCH_MODE: ${{ inputs.batch-mode }}
-        OPT_PARAMETER: ${{ inputs.parameter }}
-        OPT_PARAMETER_FILE: ${{ inputs.parameter-file }}
-        OPT_STARTUP_PROCEDURE: ${{ inputs.startup-procedure }}
-        OPT_TEMP_DIRECTORY: ${{ inputs.temp-directory }}
-        OPT_ADDTIIONAL_PARAMETERS: ${{ inputs.additional-parameters }}
-      run: ${{ github.action_path }}/abl_run.sh
+        PCT_dbName: ${{ inputs.db-name }}
+        PCT_dbDir: ${{ inputs.db-directory }}
+        PCT_destFile: ${{ inputs.dest-file }}
+      run: ${{ github.action_path}}/dump_schema.sh
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ inputs.artifact-name != '' }}
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.working-directory }}/${{ steps.abl-dump-schema.outputs.schema-file }}
+        if-no-files-found: error
