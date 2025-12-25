@@ -3,6 +3,9 @@ name: CI - Database Create
 on:
   workflow_call
 
+permissions:
+  contents: read
+
 jobs:
   test-action:
     name: test-action/database-create
