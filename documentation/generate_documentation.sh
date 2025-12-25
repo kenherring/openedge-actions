@@ -9,18 +9,6 @@ initialize () {
     if ! command -v ant; then
         ANT_COMMAND="$DLC/ant/bin/ant"
     fi
-
-    export PCT_numThreads=${PCT_numThreads:-1}
-    export PCT_listingSource=${PCT_listingSource:-}
-    export PCT_progPerc=${PCT_progPerc:-0}
-    export PCT_languages=${PCT_languages:-}
-    export PCT_displayFiles=${PCT_displayFiles:-0}
-    export PCT_outputType=${PCT_outputType:-console}
-    export PCT_callbackClass=${PCT_callbackClass:-}
-    export PCT_destDir=${PCT_destDir:-}
-    export PCT_debugListingDir=${PCT_debugListingDir:-}
-    export PCT_preprocessDir=${PCT_preprocessDir:-}
-    export PCT_xrefDir=${PCT_xrefDir:-}
 }
 
 setup_propath_env_vars () {
@@ -57,20 +45,28 @@ setup_propath_env_vars () {
     export PROPATH_ENTRY_1 PROPATH_ENTRY_2 PROPATH_ENTRY_3 PROPATH_ENTRY_4 PROPATH_ENTRY_5 PROPATH_ENTRY_6 PROPATH_ENTRY_7 PROPATH_ENTRY_8 PROPATH_ENTRY_9
 }
 
-do_compile () {
-    if "$ANT_COMMAND" compile -f "$GITHUB_ACTION_PATH/build.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/compile.log"; then
+setup_params () {
+    [ -n "${PCT_destFile:-}" ] || PCT_destFile="documentation.json"
+    [ -n "${PCT_encoding:-}" ] || PCT_encoding="utf8"
+
+    [ -n "${PCT_destFile:-}" ] && LIBRARY_PARAMS=("destFile=\"${PCT_destFile}\"")
+    [ -n "${PCT_buildDir:-}" ] && LIBRARY_PARAMS+=("buildDir=\"${PCT_buildDir}\"")
+    [ -n "${PCT_encoding:-}" ] && LIBRARY_PARAMS+=("encoding=\"${PCT_encoding}\"")
+    [ -n "${PCT_style:-}" ] && LIBRARY_PARAMS+=("style=\"${PCT_style}\"")
+    [ -n "${PCT_indent:-}" ] && LIBRARY_PARAMS+=("indent=\"${PCT_indent}\"")
+
+    sed "s|params=\"PARAMS\"|${LIBRARY_PARAMS[*]}|" "$GITHUB_ACTION_PATH/build_template.xml" > "$RUNNER_TEMP/documentation.xml"
+}
+
+generate_documentation () {
+    if "$ANT_COMMAND" documentation -f "$RUNNER_TEMP/documentation.xml" -Dbasedir="$(pwd)" | tee "$RUNNER_TEMP/documentation.log"; then
         EXIT_CODE=$?
     else
         EXIT_CODE=$?
     fi
 
-    FILES_COMPILED=$(grep "\[PCTCompile\] [0-9]* file(s) compiled" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f2)
-    echo "files-compiled=$FILES_COMPILED" >> "$GITHUB_OUTPUT"
-    COMPILE_ERRORS=$(grep "\[PCTCompile\] Failed to compile *[0-9]* *file(s)" "$RUNNER_TEMP/compile.log" | tail -1 | cut -d' ' -f6 || echo 0)
-    echo "compile-errors=$COMPILE_ERRORS" >> "$GITHUB_OUTPUT"
-
     if [ "$EXIT_CODE" != "0" ]; then
-        echo "::error file=$0::ant compile failed (EXIT_CODE=$EXIT_CODE)"
+        echo "::error file=$0::ant documentation failed (EXIT_CODE=$EXIT_CODE)"
         exit "$EXIT_CODE"
     fi
 }
@@ -78,4 +74,5 @@ do_compile () {
 ########## MAIN BLOCK ##########
 initialize
 setup_propath_env_vars
-do_compile
+setup_params
+generate_documentation

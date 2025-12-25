@@ -1,0 +1,27 @@
+<project name="openedge-actions/documentation">
+
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+	<property environment="env" />
+	<DlcHome value="${env.DLC}" />
+
+	<target name="documentation">
+		<JsonDocumentation
+			params="PARAMS"
+			>
+			<fileset dir="." includes="**/*.cls" excludes="**/.pct/**"/>
+			<propath>
+				<pathelement location="${env.PROPATH_ENTRY_1}" />
+				<pathelement location="${env.PROPATH_ENTRY_2}" />
+				<pathelement location="${env.PROPATH_ENTRY_3}" />
+				<pathelement location="${env.PROPATH_ENTRY_4}" />
+				<pathelement location="${env.PROPATH_ENTRY_5}" />
+				<pathelement location="${env.PROPATH_ENTRY_6}" />
+				<pathelement location="${env.PROPATH_ENTRY_7}" />
+				<pathelement location="${env.PROPATH_ENTRY_8}" />
+				<pathelement location="${env.PROPATH_ENTRY_9}" />
+			</propath>
+		</JsonDocumentation>
+	</target>
+
+</project>
