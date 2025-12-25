@@ -16,6 +16,12 @@ set_inputs () {
     [ "$PCT_textFile" = "doc/{db-name}.txt" ] && PCT_textFile="doc/$PCT_dbName.txt"
     [ "$PCT_outputDir" = "doc/{db-name}" ] && PCT_outputDir="doc/$PCT_dbName"
     export PCT_textFile PCT_outputDir
+
+    echo "PCT_file=${PCT_file:-}"
+    echo "PCT_textFile=${PCT_textFile:-}"
+    echo "PCT_dbName=${PCT_dbName:-}"
+    echo "PCT_dbDir=${PCT_dbDir:-}"
+    echo "PCT_outputDir=${PCT_outputDir:-}"
 }
 
 generate_schemadoc () {

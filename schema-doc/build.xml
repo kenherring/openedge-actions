@@ -6,6 +6,12 @@
 	<DlcHome value="${env.DLC}" />
 
 	<target name="schema-doc">
+		<echo>env.PCT_file=${env.PCT_file}</echo>
+		<echo>env.PCT_dbName=${env.PCT_dbName}</echo>
+		<echo>env.PCT_dbDir=${env.PCT_dbDir}</echo>
+		<echo>env.PCT_textFile=${env.PCT_textFile}</echo>
+		<echo>env.PCT_outputDir=${env.PCT_outputDir}</echo>
+		
 		<PCTSchemaDoc file="${env.PCT_file}">
 			<DBConnection dbName="${env.PCT_dbName}" dbDir="${env.PCT_dbDir}" readOnly="true" />
 			<!--
