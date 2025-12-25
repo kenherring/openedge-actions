@@ -1,0 +1,45 @@
+name: CI - Load Schema
+
+on:
+  workflow_call
+
+permissions:
+  contents: read
+
+jobs:
+  test-action:
+    name: test-action/load-schema
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      ## create a database
+      - name: database-create-1
+        uses: ./database-create
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+            working-directory: load-schema/test/test1
+            db-name: myDb
+      - name: load-schema-1
+        uses: ./load-schema
+        with:
+            working-directory: load-schema/test/test1
+            db-name: myDb
+            schema-file: schema.df
+      - name: test-1A
+        shell: bash
+        working-directory: load-schema/test/test1
+        run: |
+          [ -f "db/myDb.db" ] || (echo "::error::Expected database file db/myDb.db but it was not found" && exit 1)
+      - name: test-1B
+        uses: ./run
+        with:
+          working-directory: load-schema/test/test1
+          startup-procedure: verify.p
+          additional-parameters: -db db/myDb -1
+
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh load-schema

@@ -21,7 +21,6 @@ jobs:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
             working-directory: database-create/test/test1
             db-name: myDb
-            debug: true
       - name: test-1
         shell: bash
         working-directory: database-create/test/test1

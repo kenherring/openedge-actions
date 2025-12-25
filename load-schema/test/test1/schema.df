@@ -1,0 +1,128 @@
+ADD TABLE "Customer"
+  DESCRIPTION "The customer table contains customer  information including  balance and address."
+  DUMP-NAME "customer"
+  TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crcust.p" CRC "?"
+  TABLE-TRIGGER "DELETE" NO-OVERRIDE PROCEDURE "sports2000trgs/delcust.p" CRC "?"
+
+ADD FIELD "CustNum" OF "Customer" AS integer
+  FORMAT ">>>>9"
+  INITIAL "0"
+  LABEL "Cust Num"
+  POSITION 2
+  MAX-WIDTH 4
+  ORDER 10
+
+ADD FIELD "Name" OF "Customer" AS character
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Name"
+  POSITION 3
+  MAX-WIDTH 60
+  ORDER 30
+
+ADD FIELD "Address" OF "Customer" AS character
+  FORMAT "x(35)"
+  INITIAL ""
+  LABEL "Address"
+  POSITION 4
+  MAX-WIDTH 70
+  ORDER 40
+
+ADD FIELD "Address2" OF "Customer" AS character
+  FORMAT "x(35)"
+  INITIAL ""
+  LABEL "Address2"
+  POSITION 5
+  MAX-WIDTH 70
+  HELP "Please enter an address."
+  ORDER 50
+
+ADD FIELD "City" OF "Customer" AS character
+  FORMAT "x(25)"
+  INITIAL ""
+  LABEL "City"
+  POSITION 6
+  MAX-WIDTH 50
+  ORDER 60
+
+ADD FIELD "State" OF "Customer" AS character
+  FORMAT "x(20)"
+  INITIAL ""
+  LABEL "State"
+  POSITION 7
+  MAX-WIDTH 40
+  ORDER 70
+
+ADD FIELD "Country" OF "Customer" AS character
+  FORMAT "x(20)"
+  INITIAL "USA"
+  LABEL "Country"
+  POSITION 8
+  MAX-WIDTH 40
+  ORDER 15
+
+ADD FIELD "Phone" OF "Customer" AS character
+  FORMAT "x(20)"
+  INITIAL ""
+  LABEL "Phone"
+  POSITION 9
+  MAX-WIDTH 40
+  ORDER 115
+
+ADD FIELD "Contact" OF "Customer" AS character
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Contact"
+  POSITION 10
+  MAX-WIDTH 60
+  ORDER 110
+
+ADD FIELD "Comments" OF "Customer" AS character
+  FORMAT "x(80)"
+  INITIAL ""
+  LABEL "Comments"
+  POSITION 12
+  MAX-WIDTH 160
+  ORDER 180
+
+ADD FIELD "Terms" OF "Customer" AS character
+  FORMAT "x(20)"
+  INITIAL "Net30"
+  LABEL "Terms"
+  POSITION 15
+  MAX-WIDTH 40
+  HELP "Please enter terms"
+  ORDER 150
+
+ADD FIELD "PostalCode" OF "Customer" AS character
+  FORMAT "x(10)"
+  INITIAL ""
+  LABEL "Postal Code"
+  POSITION 17
+  MAX-WIDTH 20
+  ORDER 80
+
+ADD FIELD "EmailAddress" OF "Customer" AS character
+  FORMAT "x(50)"
+  INITIAL ""
+  LABEL "Email"
+  POSITION 19
+  MAX-WIDTH 100
+  LENGTH 0
+  ORDER 200
+
+ADD INDEX "CustNum" ON "Customer"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "CustNum" ASCENDING
+
+ADD INDEX "Comments" ON "Customer"
+  WORD
+  INDEX-FIELD "Comments" ASCENDING
+
+ADD INDEX "CountryPost" ON "Customer"
+  INDEX-FIELD "Country" ASCENDING
+  INDEX-FIELD "PostalCode" ASCENDING
+
+ADD INDEX "Name" ON "Customer"
+  INDEX-FIELD "Name" ASCENDING

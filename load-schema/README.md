@@ -1,6 +1,6 @@
-# kenherring/openedge-actions/database-create
+# kenherring/openedge-actions/load-schema
 
-Create an openedge database
+Load openedge database schema
 
 ## Sample
 
@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: kenherring/openedge-actions/database-create@v0
+      - uses: kenherring/openedge-actions/load-schema@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          db-name: myDb
+          dest-file: my-schema.df
 ```
 
 ## Inputs
@@ -26,7 +26,7 @@ jobs:
 | `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
 | `working-directory` | false | | The working directory to run the OpenEdge program in |
-| `artifact-name` | false | | Artifact name for uploading procedure library |
 | `db-name` | true | | Database name |
 | `db-directory` | false | `db` | Database directory |
+| `schema-file` | true | | Schema file to load |
 | `debug` | false | `false` | Additional debug logging |

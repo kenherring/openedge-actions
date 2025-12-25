@@ -16,6 +16,7 @@ A collection of GitHub Actions simplifying CI/CD workflows for OpenEdge ABL proj
 * `kenherring/openedge-actions/database-start` - start an OpenEdge database server
 * `kenherring/openedge-actions/documentation` - generate json documentation
 * `kenherring/openedge-actions/dump-schema` - dump openedge database schema (.df)
+* `kenherring/openedge-actions/load-schema` - load openedge database schema (.df)
 * `kenherring/openedge-actions/run` - execute OpenEdge code
 * `kenherring/openedge-actions/schema-doc` - generate scheme docs for database schema
 <!--
@@ -69,8 +70,8 @@ Install and configure openedge for use with later steps. By default the installa
 
 ### Inputs: `setup`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
@@ -102,8 +103,8 @@ Execute an OpenEdge source program. Automatically calls `setup` if DLC is not ye
 
 ### Inputs: `run`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](#license-file1)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
@@ -138,8 +139,8 @@ jobs:
 
 ### Inputs: `compile`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
@@ -211,8 +212,8 @@ jobs:
 
 ### Inputs: `create-library`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
@@ -297,8 +298,8 @@ jobs:
 
 ### Inputs: `database-create`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
@@ -363,8 +364,8 @@ jobs:
 
 ### Inputs: `documentation`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
@@ -398,8 +399,8 @@ jobs:
 
 ### Inputs: `dump-schema`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
@@ -416,6 +417,37 @@ jobs:
 | Output | Description |
 | ------ | ----------- |
 | `schema-file` | Schema file path |
+
+## Action: `load-schema`
+
+Load openedge database schema
+
+```yml
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: kenherring/openedge-actions/load-schema@v0
+        with:
+          license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+          dest-file: my-schema.df
+```
+
+### Inputs: `load-schema`
+
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
+| `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
+| `version` | false | `latest` | The ABL version to use |
+| `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |
+| `cache-key` | false | calculated | An explicit key for a cache entry, or 'null' to disable caching |
+| `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
+| `working-directory` | false | | The working directory to run the OpenEdge program in |
+| `db-name` | true | | Database name |
+| `db-directory` | false | `db` | Database directory |
+| `schema-file` | true | | Schema file to load |
+| `debug` | false | `false` | Additional debug logging |
 
 ## Action: `schema-doc`
 
@@ -434,8 +466,8 @@ jobs:
 
 ### Inputs: `schema-doc`
 
-| Input          | Required | Default | Description                     |
-| -------------- | -------- | ------- | ------------------------------- |
+| Input | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
 | `license` | false | | Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces <sup>[more info](../README.md#license-file)</sup> |
 | `version` | false | `latest` | The ABL version to use |
 | `dlc` | false | `/psc/dlc-${version}` | Target path for ABL installation, defaults to /psc/dlc-${version} |

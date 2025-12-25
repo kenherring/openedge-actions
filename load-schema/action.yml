@@ -1,0 +1,71 @@
+name: openedge-actions/load-schema
+description: Load openedge database schema
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  ##### PCTLoadSchema Options #####
+  db-name:
+    description: Database name
+    required: true
+  db-directory:
+    description: Database directory
+    required: false
+    default: db
+  schema-file:
+    description: Schema file to load
+    required: true
+  debug:
+    description: Additional debug logging
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+
+    - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license }}
+      env:
+        action_ref: ${{ github.action_ref }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ github.repository == 'kenherring/openedge-actions' && github.sha || env.action_ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - id: abl-load-schema
+      name: abl-load-schema
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        ACTIONS_STEP_DEBUG: ${{ inputs.debug }}
+        PCT_dbName: ${{ inputs.db-name }}
+        PCT_dbDir: ${{ inputs.db-directory }}
+        PCT_srcFile: ${{ inputs.schema-file }}
+      run: ${{ github.action_path }}/load_schema.sh
