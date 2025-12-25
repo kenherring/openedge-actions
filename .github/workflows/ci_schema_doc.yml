@@ -25,7 +25,6 @@ jobs:
         shell: bash
         working-directory: schema-doc/test/test1
         run: ant
-        # $DLC/ant/bin/ant -f schema-doc/test/test1/build.xml
 
       ## a simple schema-doc test
       - name: schema-doc-1
@@ -35,7 +34,6 @@ jobs:
             db-name: sp2k
             artifact-name: schema-doc-test-1
             gh-pages-branch: gh-pages
-            gh-pages-path: schema-docs
       - name: test-1
         shell: bash
         working-directory: schema-doc/test/test1

@@ -34,4 +34,3 @@ jobs:
 | `text-file` | false | `doc/{db-name}.txt` | Text file output |
 | `output-directory` | false | `doc/{db-name}` | Output directory |
 | `gh-pages-branch` | false | `gh-pages` | GitHub Pages branch to push to |
-| `gh-pages-path` | false | `schema-doc` | Path within the GitHub Pages branch to push to |

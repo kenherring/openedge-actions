@@ -54,10 +54,6 @@ inputs:
     description: GitHub Pages branch to push to
     required: false
     default: gh-pages
-  gh-pages-path:
-    description: Path within the GitHub Pages branch to push to
-    required: false
-    default: schema-doc
 
 runs:
   using: composite
@@ -109,18 +105,45 @@ runs:
           ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
         if-no-files-found: error
 
-    - name: Create GitHub Pages artifact
-      id: gh-pages-artifact
+    - uses: actions/upload-artifact@v4
       if: inputs.gh-pages-branch
-      uses: actions/upload-pages-artifact@v4
       with:
+        name: gh-pages
         path: ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
 
-    # environment:
-    #   name: github-pages
-    #   url: ${{ steps.gh-pages-artifact.outputs.page_url }}
-
-    - name: Deploy to GitHub Pages
-      id: gh-pages-deploy
+    - uses: actions/checkout@v5
       if: inputs.gh-pages-branch
-      uses: actions/deploy-pages@v4
+      with:
+        ref: ${{ inputs.gh-pages-branch }}
+
+    - uses: actions/download-artifact@v4
+      if: inputs.gh-pages-branch
+      with:
+        name: gh-pages
+        path: ${{ steps.abl-schema-doc.outputs.output-directory }}
+
+    - name: push to gh pages branch
+      if: inputs.gh-pages-branch
+      shell: bash
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run:
+        git add ${{ steps.abl-schema-doc.outputs.output-directory }}
+        git commit -m "Update schema-doc for ${{ inputs.db-name }}" || (echo "No changes to commit" && exit 0)
+        git push
+        # git push origin HEAD:${{ inputs.gh-pages-branch }}
+
+
+
+    # - name: Create GitHub Pages artifact
+    #   id: gh-pages-artifact
+    #   if: inputs.gh-pages-branch
+    #   uses: actions/upload-pages-artifact@v4
+    #   with:
+    #     path: ${{ inputs.working-directory }}/${{ steps.abl-schema-doc.outputs.output-directory }}
+
+    # - name: Deploy to GitHub Pages
+    #   id: gh-pages-deploy
+    #   if: inputs.gh-pages-branch
+    #   uses: actions/deploy-pages@v4
