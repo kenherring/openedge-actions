@@ -37,8 +37,9 @@ jobs:
     ci_schema_doc:
         uses: ./.github/workflows/ci_schema_doc.yml
         permissions:
-            pages: write
-            id-token: write
+            # pages: write
+            # id-token: write
+            contents: write
         secrets: inherit
     ci_setup:
         uses: ./.github/workflows/ci_setup.yml
