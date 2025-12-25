@@ -29,3 +29,4 @@ jobs:
 | `artifact-name` | false | | Artifact name for uploading procedure library |
 | `db-name` | true | | Database name |
 | `db-directory` | false | `db` | Database directory |
+| `debug` | false | `false` | Additional debug logging |
