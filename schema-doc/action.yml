@@ -1,5 +1,5 @@
-name: openedge-actions/documentation
-description: Generate OpenEdge JsonDocumentation
+name: openedge-actions/schema-doc
+description: Generate OpenEdge Schema Docs
 author: kenherring
 
 inputs:
@@ -41,19 +41,23 @@ inputs:
     required: false
     default: schemadoc.xml
   ##### XLST Options #####
-  textFile:
+  text-file:
     description: Text file output
     required: false
-    default: doc/${{ inputs.dbName }}.txt
-  outputDir:
+    default: doc/${{ inputs.db-name }}.txt
+  output-directory:
     description: output directory
     required: false
-    default: doc/${{ inputs.dbName }}
+    default: doc/${{ inputs.db-name }}
   ##### GH Pages Options #####
   gh-pages-branch:
-    description: Branch to push documentation to
+    description: GitHub Pages branch to push to
     required: false
     default: gh-pages
+  gh-pages-path:
+    description: Path within the GitHub Pages branch to push to
+    required: false
+    default: schema-doc
 
 runs:
   using: composite
@@ -89,10 +93,10 @@ runs:
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
         PCT_file: ${{ inputs.file }}
-        PCT_textFile: ${{ inputs.textFile }}
-        PCT_dbName: ${{ inputs.dbName }}
-        PCT_dbDir: ${{ inputs.dbDir }}
-        PCT_outputDir: ${{ inputs.outputDir}}
+        PCT_textFile: ${{ inputs.text-file }}
+        PCT_dbName: ${{ inputs.db-name }}
+        PCT_dbDir: ${{ inputs.db-directory }}
+        PCT_outputDir: ${{ inputs.output-directory }}
       run: generate_schemadoc.sh
 
     - uses: actions/upload-artifact@v4
@@ -101,6 +105,6 @@ runs:
         name: ${{ inputs.artifact-name }}
         path: |
           ${{ inputs.working-directory }}/${{ inputs.file }}
-          ${{ inputs.working-directory }}/${{ inputs.textFile }}
-          ${{ inputs.working-directory }}/${{ inputs.outputDir }}
+          ${{ inputs.working-directory }}/${{ inputs.text-file }}
+          ${{ inputs.working-directory }}/${{ inputs.output-directory }}
         if-no-files-found: error

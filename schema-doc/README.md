@@ -31,6 +31,7 @@ jobs:
 | `db-name` | true | | Database name |
 | `db-directory` | true | | Database directory |
 | `file` | false | `schemadoc.xml` | XML file output |
-| `textFile` | false | `doc/${{ db-name }}.txt` | Text file output |
-| `outputDir` | false | `doc/${{ db-name }}/` | Output directory |
-| `gh-pages-branch` | false | `gh-pages` | Branch to push documentation to |
+| `text-file` | false | `doc/${{ db-name }}.txt` | Text file output |
+| `output-directory` | false | `doc/${{ db-name }}` | Output directory |
+| `gh-pages-branch` | false | `gh-pages` | GitHub Pages branch to push to |
+| `gh-pages-path` | false | `schema-doc` | Path within the GitHub Pages branch to push to |
