@@ -31,14 +31,17 @@ check-existing-dlc () {
                         echo "skipped=true" >> "$GITHUB_OUTPUT"
                         return 0
                     fi
+                else
+                    TARGET_VERSION=$(docker run --rm "progresssoftware/prgs-oedb:${ABL_VERSION}_ent" bash -c 'cat /psc/dlc/version' | awk '{print $3}')
                 fi
             else
                 TARGET_VERSION=$ABL_VERSION
-                if [ "$EXISTING_VERSION" = "$TARGET_VERSION" ]; then
-                    echo "::notice file=$0::DLC directory $DLC already contains requested OpenEdge version $EXISTING_VERSION."
-                    echo "skipped=true" >> "$GITHUB_OUTPUT"
-                    return 0
-                fi
+            fi
+
+            if [ "$EXISTING_VERSION" = "$TARGET_VERSION" ]; then
+                echo "::notice file=$0::DLC directory $DLC already contains requested OpenEdge version $EXISTING_VERSION."
+                echo "skipped=true" >> "$GITHUB_OUTPUT"
+                return 0
             fi
         fi
         echo "::error file=$0::DLC directory $DLC already exists and is not empty. Please remove it or set DLC to a different location."
