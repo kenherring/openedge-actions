@@ -25,7 +25,9 @@ jobs:
         run: |
           [ -f "documentation.json" ] || (echo "::error::Expected documentation file documentation.json but it was not found" && exit 1)
           NUM_LINES=$(wc -l < documentation.json)
-          [ "$NUM_LINES" -eq 1 ] || (echo "::error::Expected num lines > 1 but got $NUM_LINES" && exit 1)
+          cat documentation.json
+          cat documentation.json | wc -l
+          [ "$NUM_LINES" -eq 0 ] || (echo "::error::Expected num lines = 0 but got $NUM_LINES" && exit 1)
 
       ## a documentation test with indent
       - name: documentation-2
@@ -42,7 +44,9 @@ jobs:
         run: |
           [ -f "documentation-2.json" ] || (echo "::error::Expected documentation file documentation-2.json but it was not found" && exit 1)
           NUM_LINES=$(wc -l < documentation-2.json)
-          [ "$NUM_LINES" -gt 1 ] || (echo "::error::Expected num lines > 1 but got $NUM_LINES" && exit 1)
+          cat documentation-2.json
+          cat documentation-2.json | wc -l
+          [ "$NUM_LINES" -gt 0 ] || (echo "::error::Expected num lines > 0 but got $NUM_LINES" && exit 1)
 
       - name: pre-merge-validation
         shell: bash

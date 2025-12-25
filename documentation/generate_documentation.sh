@@ -56,8 +56,6 @@ setup_params () {
     [ -n "${PCT_indent:-}" ] && LIBRARY_PARAMS+=("indent=\"${PCT_indent}\"")
 
     sed "s|params=\"PARAMS\"|${LIBRARY_PARAMS[*]}|" "$GITHUB_ACTION_PATH/build_template.xml" > "$RUNNER_TEMP/documentation.xml"
-
-    cat "$RUNNER_TEMP/documentation.xml"
 }
 
 generate_documentation () {
