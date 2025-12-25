@@ -14,7 +14,8 @@ initialize () {
 set_inputs () {
     [ -z "$PCT_dbName" ] && echo "dbName is not set and is required!" && exit 1
     [ "$PCT_destFile" = "schema/{db-name}.df" ] && PCT_destFile="schema/$PCT_dbName.df"
-    export PCT_destFile
+    PCT_destDir=$(dirname "$PCT_destFile")
+    export PCT_destFile PCT_destDir
 
     echo "schema-file=${PCT_destFile}" >> "$GITHUB_OUTPUT"
 }

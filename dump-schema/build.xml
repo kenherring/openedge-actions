@@ -6,7 +6,7 @@
 	<DlcHome value="${env.DLC}" />
 
 	<target name="dump-schema">
-		<mkdir dir="${env.PCT_destFile.parent}" />
+		<mkdir dir="${env.PCT_destDir}" />
 		<PCTDumpSchema destFile="${env.PCT_destFile}">
 			<DBConnection dbName="${env.PCT_dbName}" dbDir="${env.PCT_dbDir}" readOnly="true" />
 			<!--
