@@ -17,9 +17,10 @@ jobs:
         with:
             license: ${{ secrets.PROGRESS_CFG_LICENSE }}
             working-directory: documentation/test/test1
+            artifact-name: documentation-test-1
             # pct-buildDir: .
             pct-encoding: utf8
-      - name: test-1A
+      - name: test-1
         shell: bash
         working-directory: documentation/test/test1
         run: |

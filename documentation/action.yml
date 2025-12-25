@@ -132,7 +132,7 @@ runs:
       run: generate_documentation.sh
 
     - uses: actions/upload-artifact@v4
-      if: ${{ inputs.artifact-name && inputs.artifact-name != '' }}
+      if: inputs.artifact-name
       with:
         name: ${{ inputs.artifact-name }}
         path: |
