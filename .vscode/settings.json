@@ -1,7 +1,0 @@
-{
-    "github-actions.workflows.pinned.workflows": [
-        ".github/workflows/ci_ablunit.yml",
-        ".github/workflows/ci_run.yml",
-        ".github/workflows/ci_setup.yml",
-    ]
-}

@@ -1,1 +1,0 @@
-message "PROGRAM_3".
