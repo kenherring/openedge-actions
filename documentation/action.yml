@@ -56,24 +56,6 @@ inputs:
     description: JSON pretty-printing
     required: false
     default: "false"
-  ##### gh-pages #####
-  # deploy-gh-pages:
-  #   description: Deploy generated documentation to GitHub Pages
-  #   required: false
-  #   default: "false"
-  # gh-pages-path:
-  #   description: Path to generated documentation for GitHub Pages deployment
-  #   required: false
-  #   default: documentation.json
-  # gh-pages-branch: ## can we interpret this from the repo?
-  #   description: GitHub Pages branch
-  #   required: false
-  #   default: gh-pages
-  # gh-pages-deploy-branch:
-  #   description: Branch to deploy to GitHub Pages from
-  #   required: false
-  #   default: main
-
 
 runs:
   using: composite
