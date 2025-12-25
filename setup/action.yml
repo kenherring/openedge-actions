@@ -50,7 +50,7 @@ runs:
       env:
         DLC: ${{ inputs.dlc }}
         CACHE_KEY: ${{ inputs.cache-key }}
-        CACHE_TOKEN: ${{ inputs.cache-token || '0.0' }}
+        CACHE_TOKEN: ${{ inputs.cache-token }}
         INPUTS_DOWNLOAD_ADE_SOURCE: ${{ inputs.download-ade-source }}
         INPUTS_VERSION: ${{ inputs.version }}
         RUNNER_OS: ${{ runner.os }}
