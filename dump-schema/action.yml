@@ -1,0 +1,91 @@
+name: openedge-actions/dump-schema
+description: Dump schema from an openedge database
+author: kenherring
+
+inputs:
+  ##### actions-setup-abl #####
+  license:
+    description: Path to a license file or a secret value which is the base64 encoded license with newlines replaced with spaces
+    required: false
+  version:
+    description: The ABL version to use
+    required: false
+    default: latest
+  dlc:
+    description: Target path for ABL installation, defaults to /psc/dlc-${version}
+    required: false
+  cache-key:
+    description: An explicit key for a cache entry, or 'null' to disable caching
+    required: false
+  cache-token:
+    description: Value added to cache key, used to forcefully expire the cache if needed
+    required: false
+  ##### environment #####
+  working-directory:
+    description: The working directory to run the OpenEdge program in
+    required: false
+  artifact-name:
+    description: Artifact name for uploading schema
+    required: false
+    default: schema-artifact
+  ##### Dump Schema Options #####
+  db-name:
+    description: Database name
+    required: true
+  db-directory:
+    description: Database directory
+    required: false
+    default: db
+  dest-file:
+    description: Schema file
+    required: false
+    default: schema/{db-name}.df
+
+outputs:
+  schema-file:
+    description: Schema file path
+    value: ${{ steps.abl-dump-schema.outputs.schema-file }}
+
+runs:
+  using: composite
+  steps:
+
+    # - name: set-github-path
+    #   id: set-github-path
+    #   shell: bash
+    #   env:
+    #     ACTION_REF: ${{ github.action_ref }}
+    #     GITHUB_SHA: ${{ github.sha }}
+    #   run: |
+    #     echo '${{ github.action_path }}' >> "$GITHUB_PATH"
+    #     echo "action-ref=${ACTION_REF:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+    - uses: jenseng/dynamic-uses@v1.1.1
+      if: ${{ inputs.license }}
+      with:
+        uses: kenherring/openedge-actions/setup@${{ steps.set-github-path.outputs.action-ref }}
+        with: |
+          {  "license": "${{ inputs.license }}",
+              "version": ${{ inputs.version }},
+              "dlc": ${{ inputs.dlc }},
+              "download-ade-source": ${{ inputs.download-ade-source }},
+              "cache-key": ${{ inputs.cache-key }},
+              "cache-token": ${{ inputs.cache-token }}
+          }
+
+    - id: abl-dump-schema
+      name: abl-dump-schema
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        PCT_dbName: ${{ inputs.db-name }}
+        PCT_dbDir: ${{ inputs.db-directory }}
+        PCT_destFile: ${{ inputs.dest-file }}
+      run: ${{ github.action_path}}/dump-schema.sh
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ inputs.artifact-name != '' }}
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.working-directory }}/${{ steps.abl-dump-schema.outputs.schema-file }}
+        if-no-files-found: error

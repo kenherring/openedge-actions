@@ -1,0 +1,45 @@
+name: CI - Dump Schema
+
+on:
+  workflow_call
+
+jobs:
+  test-action:
+    name: test-action/dump-schema
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: setup-1
+        uses: ./setup
+        with:
+            license: ${{ secrets.PROGRESS_CFG_LICENSE }}
+
+      ## create a sports2000 database
+      - name: create-sports2000-db
+        shell: bash
+        working-directory: dump-schema/test/test1
+        run: ant
+
+      ## a simple dump-schema test
+      - name: dump-schema-1
+        id: dump-schema-1
+        uses: ./dump-schema
+        with:
+            working-directory: dump-schema/test/test1
+            db-name: sp2k
+            artifact-name: dump-schema-test-1
+      - name: test-1
+        shell: bash
+        working-directory: dump-schema/test/test1
+        run: |
+          [ "${{ steps.dump-schema-1.outputs.schema-file }}" = "schema/sp2k.df" ] || (echo "::error::Expected output schema-file 'schema/sp2k.df' but got '${{ steps.dump-schema-1.outputs.schema-file }}'" && exit 1)
+          if [ ! -f schema/sp2k.df ]; then
+            echo "::error file=$0::dump-schema failed to create schema/sp2k.df"
+            exit 1
+          fi
+
+      - name: pre-merge-validation
+        shell: bash
+        run: ./.github/workflows/pre_merge_validation.sh dump-schema
