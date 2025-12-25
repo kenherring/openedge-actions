@@ -1,7 +1,5 @@
 # kenherring/openedge-actions/database-create
 
-![CI](https://github.com/kenherring/openedge-actions/actions/workflows/ci_database_create.yml/badge.svg)
-
 Create an openedge database
 
 ## Sample
@@ -15,8 +13,7 @@ jobs:
       - uses: kenherring/openedge-actions/database-create@v0
         with:
           license: ${{ secrets.PROGRESS_CFG_LICENSE }}
-          dest-dir: 'rcode'
-          pct-destFile: my-library.pl
+          db-name: myDb
 ```
 
 ## Inputs
@@ -30,17 +27,5 @@ jobs:
 | `cache-token` | false | | Value added to cache key, used to forcefully expire the cache if needed |
 | `working-directory` | false | | The working directory to run the OpenEdge program in |
 | `artifact-name` | false | | Artifact name for uploading procedure library |
-| `pct-destFile` | false | `lib.pl` | R-code library to create |
-| `pct-sharedFile` | false | | Memory mapped library to create |
-| `pct-encoding` | false | | Character encoding used to store filenames. |
-| `pct-noCompress` | false | `false` | Disable library compression. |
-| `pct-cpInternal` | false | | Internal code page (-cpinternal parameter) |
-| `pct-cpStream` | false | | Stream code page (-cpstream parameter) |
-| `pct-cpColl` | false | | Collation table (-cpcoll parameter) |
-| `pct-cpCase` | false | | Case table (-cpcase parameter) |
-| `pct-basedir` | false | | The directory from which to store the files. |
-| `pct-includes` | false | | Comma- or space-separated list of patterns of files that must be included. All files are included when omitted. |
-| `pct-includesFile` | false | | The name of a file. Each line of this file is taken to be an include pattern. |
-| `pct-excludes` | false | `**/*.pl` | Comma- or space-separated list of patterns of files that must be excluded. No files (except default excludes) are excluded when omitted. |
-| `pct-excludesFile` | false | | The name of a file. Each line of this file is taken to be an exclude pattern. |
-| `pct-defaultExcludes` | false | `true` | Indicates whether default excludes should be used or not ("yes"/"no"). Default excludes are used when omitted. |
+| `db-name` | true | | Database name |
+| `db-directory` | false | `db` | Database directory |
