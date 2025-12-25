@@ -6,7 +6,7 @@
 	<DlcHome value="${env.DLC}" />
 
 	<target name="database-create">
-		<!-- <mkdir dir="${env.PCT_dbDir}" /> -->
+		<mkdir dir="${env.PCT_dbDir}" />
 		<PCTCreateDatabase dbName="${env.PCT_dbName}" destDir="${env.PCT_dbDir}" />
 	</target>
 
