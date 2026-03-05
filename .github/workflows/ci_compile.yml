@@ -73,7 +73,7 @@ jobs:
           pct-destDir: compiled.code
       - shell: bash
         run: find . -name "*.r" -delete
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: compiled_code_artifact
       - name: test-3
